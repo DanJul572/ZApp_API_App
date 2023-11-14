@@ -1,0 +1,22 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "array-bracket-spacing": "warn",
+        "comma-spacing": "warn",
+        "eqeqeq": "warn",
+        "func-call-spacing": "warn",
+        "key-spacing": "warn",
+        "no-unused-vars": "warn",
+        "object-curly-spacing": "warn",
+        "semi": "warn"
+    }
+}
