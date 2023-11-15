@@ -15,7 +15,6 @@
         "eqeqeq": "warn",
         "func-call-spacing": "warn",
         "key-spacing": "warn",
-        "no-unused-vars": "warn",
         "object-curly-spacing": "warn",
         "semi": "warn"
     }
