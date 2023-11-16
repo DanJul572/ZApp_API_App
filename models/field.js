@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         {
             name: DataTypes.STRING,
             label: DataTypes.STRING,
-            dataTypeId: DataTypes.INTEGER,
+            dataTypeVal: DataTypes.INTEGER,
             tableRef: DataTypes.STRING,
             tableRefKey: DataTypes.STRING,
             tableRefName: DataTypes.STRING,

@@ -14,10 +14,10 @@ module.exports = {
          */
 
         await queryInterface.bulkInsert(
-            'Modules',
+            'Roles',
             [
                 {
-                    name: 'Testing Module',
+                    label: 'Developer',
                 },
             ],
             {},
@@ -31,6 +31,7 @@ module.exports = {
          * Example:
          * await queryInterface.bulkDelete('People', null, {});
          */
-        await queryInterface.bulkDelete('Modules', null, {});
+
+        await queryInterface.bulkDelete('Roles', null, {});
     },
 };
