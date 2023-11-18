@@ -13,14 +13,21 @@ module.exports = (sequelize, DataTypes) => {
     }
     Field.init(
         {
+            moduleId: DataTypes.INTEGER,
             name: DataTypes.STRING,
             label: DataTypes.STRING,
-            dataTypeVal: DataTypes.INTEGER,
+            inputType: DataTypes.INTEGER,
+            dataType: DataTypes.INTEGER,
             tableRef: DataTypes.STRING,
             tableRefKey: DataTypes.STRING,
             tableRefName: DataTypes.STRING,
+            tableRefAlias: DataTypes.STRING,
+            tableRefFilter: DataTypes.STRING,
+            regex: DataTypes.STRING,
             multiSelect: DataTypes.BOOLEAN,
             identity: DataTypes.BOOLEAN,
+            notNull: DataTypes.BOOLEAN,
+            unique: DataTypes.BOOLEAN,
         },
         {
             sequelize,

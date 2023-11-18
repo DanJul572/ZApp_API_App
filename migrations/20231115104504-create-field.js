@@ -9,6 +9,10 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
+            moduleId: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+            },
             name: {
                 allowNull: false,
                 type: Sequelize.STRING,
@@ -17,7 +21,11 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING,
             },
-            dataTypeVal: {
+            inputType: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+            },
+            dataType: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
             },
@@ -28,6 +36,12 @@ module.exports = {
                 type: Sequelize.STRING,
             },
             tableRefName: {
+                type: Sequelize.STRING,
+            },
+            tableRefFilter: {
+                type: Sequelize.STRING,
+            },
+            regex: {
                 type: Sequelize.STRING,
             },
             multiSelect: {
@@ -41,6 +55,11 @@ module.exports = {
                 type: Sequelize.BOOLEAN,
             },
             notNull: {
+                allowNull: false,
+                defaultValue: false,
+                type: Sequelize.BOOLEAN,
+            },
+            unique: {
                 allowNull: false,
                 defaultValue: false,
                 type: Sequelize.BOOLEAN,
