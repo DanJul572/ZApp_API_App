@@ -38,6 +38,9 @@ module.exports = {
             tableRefName: {
                 type: Sequelize.STRING,
             },
+            tableRefAlias: {
+                type: Sequelize.STRING,
+            },
             tableRefFilter: {
                 type: Sequelize.STRING,
             },

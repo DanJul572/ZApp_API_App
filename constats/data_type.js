@@ -1,5 +1,6 @@
 module.exports = {
-    autoIncrement: 1,
-    varchar: 2,
-    boolean: 5,
+    varchar: 1,
+    text: 2,
+    integer: 3,
+    boolean: 4,
 };

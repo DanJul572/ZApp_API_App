@@ -1,4 +1,4 @@
-const {autoIncrement, varchar, boolean} = require('../constats/data_type');
+const {varchar, boolean, integer} = require('../constats/data_type');
 const db = require('../models');
 
 module.exports = {
@@ -7,31 +7,30 @@ module.exports = {
             /* set column */
             let columns = fields.map(field => {
                 let column = '';
-                if (field.dataTypeVal === autoIncrement) {
-                    column = `"${field.name}" integer NOT NULL DEFAULT nextval('"${name}_${field.name}_seq"'::regclass)`;
-                } else if (field.dataTypeVal === varchar) {
-                    column = `"${field.name}" character varying(255) COLLATE pg_catalog."default"`;
-                } else if (field.dataTypeVal === boolean) {
+                if (field.dataType === integer) {
+                    column = `"${field.name}" integer `;
+                } else if (field.dataType === varchar) {
+                    column = `"${field.name}" character varying(255) COLLATE pg_catalog."default" `;
+                } else if (field.dataType === boolean) {
                     column = `"${field.name}" boolean `;
                 }
 
-                if (field.notNull) column += 'NOT NULL ';
-                if (field.defaultValue) column += `DEFAULT ${field.defaultValue}`;
+                if (field.autoIncrement) column += ` DEFAULT nextval('"${name}_${field.name}_seq"'::regclass) `;
+                if (field.notNull) column += ' NOT NULL ';
+                if (field.defaultValue) column += ` DEFAULT ${field.defaultValue} `;
 
                 return column;
             });
 
             /* set default column */
-            columns.push([
-                `"createdAt" timestamp with time zone NOT NULL DEFAULT now()`,
-                `"updatedAt" timestamp with time zone NOT NULL DEFAULT now()`,
-            ]);
+            columns.push(`"createdAt" timestamp with time zone NOT NULL DEFAULT now()`);
+            columns.push(`"updatedAt" timestamp with time zone NOT NULL DEFAULT now()`);
 
             /* set primary */
             let primaryKey = fields.find(field => field.identity).name;
 
             /* set sequence */
-            let sequence = fields.find(field => field.dataTypeVal).name;
+            let sequence = fields.find(field => field.autoIncrement).name;
 
             /* build query */
             columns = columns.join(',');

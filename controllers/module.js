@@ -28,7 +28,7 @@ module.exports = {
             /* commit */
             await t.commit();
 
-            return res.status(200).send('Module has been deleted');
+            return res.status(200).send('Module has been created');
         } catch (error) {
             await t.rollback();
             return res.status(500).send(error.message);

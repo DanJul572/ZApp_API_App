@@ -3,6 +3,7 @@ var cookieParser = require('cookie-parser');
 var createError = require('http-errors');
 var express = require('express');
 var logger = require('morgan');
+var cors = require('cors');
 var multer = require('multer');
 var path = require('path');
 
@@ -11,6 +12,7 @@ var indexRouter = require('./routes/index');
 var app = express();
 var upload = multer();
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
