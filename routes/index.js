@@ -13,6 +13,7 @@ router.get('/', function (req, res) {
 router.post('/api/menu', menuController.list);
 
 /* Module Router */
+router.post('/api/module/list', moduleController.list);
 router.post('/api/module/create', moduleController.create);
 router.post('/api/module/delete', moduleController.delete);
 

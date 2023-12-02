@@ -5,6 +5,27 @@ const Module = db.Module;
 const Field = db.Field;
 
 module.exports = {
+    async list(req, res) {
+        try {
+            const request = req.body;
+            const limit = 10;
+            const offset = (request.page - 1) * limit;
+            const where = {
+                [request.search.column]: {
+                    [db.Sequelize.Op.iLike]: `%${request.search.value}%`,
+                },
+            };
+            const order = [[request.sort.column, request.sort.value]];
+            const attributes = ['id', 'name', 'label', 'description', 'createdAt', 'updatedAt'];
+
+            const modules = await Module.findAll({attributes, where, limit, offset, order});
+
+            return res.status(200).send(modules);
+        } catch (error) {
+            return res.status(500).send(error.message);
+        }
+    },
+
     async create(req, res) {
         const t = await db.sequelize.transaction();
         const request = req.body;
