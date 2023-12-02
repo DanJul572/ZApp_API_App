@@ -1,5 +1,6 @@
-const query = require('../helpers/query');
 const db = require('../models');
+const orm = require('../helpers/orm');
+const query = require('../helpers/query');
 
 const Module = db.Module;
 const Field = db.Field;
@@ -10,15 +11,11 @@ module.exports = {
             const request = req.body;
             const limit = 10;
             const offset = (request.page - 1) * limit;
-            const where = {
-                [request.search.column]: {
-                    [db.Sequelize.Op.iLike]: `%${request.search.value}%`,
-                },
-            };
-            const order = [[request.sort.column, request.sort.value]];
+            const where = orm.filter(request.filter);
+            const order = orm.sort(request.sort);
             const attributes = ['id', 'name', 'label', 'description', 'createdAt', 'updatedAt'];
 
-            const modules = await Module.findAll({attributes, where, limit, offset, order});
+            const modules = await Module.findAndCountAll({attributes, where, limit, offset, order});
 
             return res.status(200).send(modules);
         } catch (error) {
