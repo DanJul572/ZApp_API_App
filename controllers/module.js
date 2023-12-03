@@ -57,8 +57,28 @@ module.exports = {
         const request = req.body;
 
         try {
+            /* module info */
+            const module = await query.getModule(request.id);
+
+            /* module feld */
+            const fields = await query.getFields(module.id);
+
+            /* get identity field */
+            const identity = fields.find(field => field.identity);
+
+            /* delete module */
+            await Module.destroy({
+                transaction: t,
+                where: {
+                    id: module.id,
+                },
+            });
+
+            /* delete feld */
+            await query.deleteFields(module.id);
+
             /* delete table */
-            await query.dropTable(request.name, request.sequence, request.id);
+            await query.dropTable(module.name, identity.name);
 
             /* commit */
             await t.commit();

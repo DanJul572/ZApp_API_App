@@ -10,7 +10,7 @@ module.exports = {
         return obj;
     },
     sort(arr) {
-        if (!arr || arr.length <= 0) return {};
+        if (!arr || arr.length <= 0) return [];
 
         const result = [];
         for (let x = 0; x < arr.length; x++) {

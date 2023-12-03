@@ -36,7 +36,7 @@ module.exports = {
             columns = columns.join(',');
             const query = `
                 CREATE SEQUENCE "${name}_${sequence}_seq";
-                CREATE TABLE IF NOT EXISTS public."${name}" (${columns}, PRIMARY KEY (${primaryKey}))
+                CREATE TABLE IF NOT EXISTS public."${name}" (${columns}, PRIMARY KEY ("${primaryKey}"))
                 TABLESPACE pg_default;
                 ALTER TABLE IF EXISTS public."${name}" OWNER to postgres;
             `;
@@ -48,14 +48,52 @@ module.exports = {
             throw new Error(error.message);
         }
     },
-    async dropTable(table, sequence, id) {
+    async dropTable(table, sequence) {
         try {
             const query = `
-                DELETE FROM "Modules" WHERE "id" = ${id};
-                DELETE FROM "Fields" WHERE "moduleId" = ${id};
                 DROP TABLE IF EXISTS public."${table}";
-                DROP SEQUENCE "${table}_${sequence}_seq";
+                DROP SEQUENCE IF EXISTS "${table}_${sequence}_seq";
             `;
+            return db.sequelize.query(query).catch(error => {
+                throw new Error(error.message);
+            });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getModule(id) {
+        try {
+            const query = `SELECT * FROM "Modules" WHERE "id" = ${id}`;
+            return db.sequelize
+                .query(query)
+                .then(result => {
+                    return result.length > 0 ? result[0][0] : null;
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async getFields(id) {
+        try {
+            const query = `SELECT * FROM "Fields" WHERE "moduleId" = ${id}`;
+            return db.sequelize
+                .query(query)
+                .then(result => {
+                    return result.length > 0 ? result[0] : null;
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    async deleteFields(id) {
+        try {
+            const query = `DELETE FROM "Fields" WHERE "moduleId" = ${id}`;
             return db.sequelize.query(query).catch(error => {
                 throw new Error(error.message);
             });
