@@ -1,4 +1,4 @@
-const {varchar, boolean, integer} = require('../constats/data_type');
+const {varchar, boolean, integer, text, byte, datetime} = require('../constats/data_type');
 const db = require('../models');
 
 module.exports = {
@@ -13,6 +13,12 @@ module.exports = {
                     column = `"${field.name}" character varying(255) COLLATE pg_catalog."default" `;
                 } else if (field.dataType === boolean) {
                     column = `"${field.name}" boolean `;
+                } else if (field.dataType === text) {
+                    column = `"${field.name}" text `;
+                } else if (field.dataType === datetime) {
+                    column = `"${field.name}" timestamp with time zone NOT NULL DEFAULT now() `;
+                } else if (field.dataType === byte) {
+                    column = `"${field.name}" bytea `;
                 }
 
                 if (field.autoIncrement) column += ` DEFAULT nextval('"${name}_${field.name}_seq"'::regclass) `;
@@ -48,6 +54,7 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+
     async dropTable(table, sequence) {
         try {
             const query = `
@@ -61,6 +68,7 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+
     async getModule(id) {
         try {
             const query = `SELECT * FROM "Modules" WHERE "id" = ${id}`;
@@ -76,6 +84,7 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+
     async getFields(id) {
         try {
             const query = `SELECT * FROM "Fields" WHERE "moduleId" = ${id}`;
@@ -91,6 +100,7 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+
     async deleteFields(id) {
         try {
             const query = `DELETE FROM "Fields" WHERE "moduleId" = ${id}`;
