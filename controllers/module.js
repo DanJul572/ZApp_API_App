@@ -1,6 +1,7 @@
 const db = require('../models');
 const orm = require('../helpers/orm');
 const query = require('../helpers/query');
+const {rowsPerPage} = require('../constats/setting');
 
 const Module = db.Module;
 const Field = db.Field;
@@ -9,7 +10,7 @@ module.exports = {
     async list(req, res) {
         try {
             const request = req.body;
-            const limit = 10;
+            const limit = rowsPerPage;
             const offset = (request.page - 1) * limit;
             const where = orm.filter(request.filter);
             const order = orm.sort(request.sort);

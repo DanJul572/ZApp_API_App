@@ -17,32 +17,36 @@ module.exports = {
             'DataTypes',
             [
                 {
-                    label: 'Auto Increment',
+                    label: 'Varchar',
                     value: 1,
                 },
                 {
-                    label: 'Varchar',
+                    label: 'Text',
                     value: 2,
                 },
                 {
-                    label: 'Text',
+                    label: 'Integer',
                     value: 3,
                 },
                 {
                     value: 4,
-                    label: 'Integer',
-                },
-                {
-                    value: 5,
                     label: 'Boolean',
                 },
                 {
-                    value: 6,
+                    value: 5,
                     label: 'Table Reference',
                 },
                 {
-                    value: 7,
+                    value: 6,
                     label: 'Datetime',
+                },
+                {
+                    value: 7,
+                    label: 'Byte',
+                },
+                {
+                    value: 8,
+                    label: 'JSON',
                 },
             ],
             {},

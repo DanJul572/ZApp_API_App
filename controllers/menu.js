@@ -1,3 +1,5 @@
+const {rowsPerPage} = require('../constats/setting');
+
 const Op = require('sequelize').Op;
 
 const Menu = require('../models').Menu;
@@ -7,7 +9,7 @@ module.exports = {
     list(req, res) {
         try {
             const request = req.body;
-            const limit = 10;
+            const limit = rowsPerPage;
             const offset = (request.page - 1) * limit;
             const where = {
                 [request.search.column]: {
