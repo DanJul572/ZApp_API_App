@@ -1,7 +1,8 @@
-const dataType = require('../constats/data_type');
-const inputType = require('../constats/input_type');
+const dataType = require('../constats/dataType');
+const inputType = require('../constats/inputType');
 const {rowsPerPage} = require('../constats/setting');
 const db = require('../models');
+const builder = require('./builder');
 
 module.exports = {
     async createTable(name, fields) {
@@ -158,7 +159,7 @@ module.exports = {
             const offset = (page - 1) * rowsPerPage;
 
             let fields = await this.getFields(id);
-            fields = fields.map(field => `"${field.name}"`).join(',');
+            fields = fields.map(field => builder.field(field, module.name)).join(',');
 
             const countQuery = `SELECT count(*) AS "count" FROM "${module.name}"`;
             let rowsQuery = `SELECT ${fields} FROM "${module.name}"`;

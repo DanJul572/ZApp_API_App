@@ -1,7 +1,7 @@
 'use strict';
 
-const data_type = require('../constats/data_type');
-const input_type = require('../constats/input_type');
+const dataType = require('../constats/dataType');
+const inputType = require('../constats/inputType');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -22,8 +22,8 @@ module.exports = {
                     moduleId: 1,
                     name: 'id',
                     label: 'ID',
-                    inputType: input_type.number,
-                    dataType: data_type.integer,
+                    inputType: inputType.number,
+                    dataType: dataType.integer,
                     tableRef: null,
                     tableRefKey: null,
                     tableRefName: null,
@@ -39,8 +39,8 @@ module.exports = {
                     moduleId: 1,
                     name: 'moduleId',
                     label: 'Module ID',
-                    inputType: input_type.dropdown,
-                    dataType: data_type.tableReference,
+                    inputType: inputType.dropdown,
+                    dataType: dataType.tableReference,
                     tableRef: 'Modules',
                     tableRefKey: 'id',
                     tableRefName: 'name',
@@ -56,8 +56,8 @@ module.exports = {
                     moduleId: 1,
                     name: 'content',
                     label: 'Content',
-                    inputType: input_type.code,
-                    dataType: data_type.json,
+                    inputType: inputType.code,
+                    dataType: dataType.json,
                     tableRef: null,
                     tableRefKey: null,
                     tableRefName: null,
