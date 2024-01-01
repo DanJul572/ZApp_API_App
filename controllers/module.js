@@ -1,6 +1,7 @@
 const db = require('../models');
-const orm = require('../helpers/orm');
-const query = require('../helpers/query');
+const orm = require('../queries/orm');
+const moduleQuery = require('../queries/moduleQuery');
+const fieldQuery = require('../queries/fieldQuery');
 const {rowsPerPage} = require('../constats/setting');
 
 const Module = db.Module;
@@ -42,7 +43,7 @@ module.exports = {
             });
 
             /* create table */
-            await query.createTable(request.name, request.fields);
+            await moduleQuery.createTable(request.name, request.fields);
 
             /* commit */
             await t.commit();
@@ -59,10 +60,10 @@ module.exports = {
 
         try {
             /* module info */
-            const module = await query.getModule(request.id);
+            const module = await moduleQuery.getModule(request.id);
 
             /* module feld */
-            const fields = await query.getFields(module.id);
+            const fields = await fieldQuery.getFields(module.id);
 
             /* get identity field */
             const identity = fields.find(field => field.identity);
@@ -76,10 +77,10 @@ module.exports = {
             });
 
             /* delete feld */
-            await query.deleteFields(module.id);
+            await fieldQuery.deleteFields(module.id);
 
             /* delete table */
-            await query.dropTable(module.name, identity.name);
+            await moduleQuery.dropTable(module.name, identity.name);
 
             /* commit */
             await t.commit();

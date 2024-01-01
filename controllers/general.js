@@ -1,5 +1,5 @@
-const query = require('../helpers/query');
 const db = require('../models');
+const generalQuery = require('../queries/generalQuery');
 
 module.exports = {
     async rows(req, res) {
@@ -7,7 +7,7 @@ module.exports = {
         const request = req.body;
 
         try {
-            const data = await query.getRows(request.id, request.page, request.filter, request.sort);
+            const data = await generalQuery.getRows(request.id, request.page, request.filter, request.sort);
             t.commit();
 
             return res.status(200).send(data);
@@ -22,7 +22,7 @@ module.exports = {
         const request = req.body;
 
         try {
-            const data = await query.getColumns(request.id);
+            const data = await generalQuery.getColumns(request.id);
             t.commit();
 
             return res.status(200).send(data);

@@ -1,7 +1,13 @@
 const inputType = require('../constats/inputType');
 
 module.exports = {
-    field(field, module) {
+    findByModule(id) {
+        return `SELECT * FROM "Fields" WHERE "moduleId" = ${id}`;
+    },
+    deleteByModule(id) {
+        return `DELETE FROM "Fields" WHERE "moduleId" = ${id}`;
+    },
+    selectFormat(field, module) {
         if (field.inputType === inputType.code)
             return `
                 CASE
