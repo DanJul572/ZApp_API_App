@@ -13,7 +13,7 @@ module.exports = {
             fields = fields.map(field => fieldBuilder.selectFormat(field, module.name)).join(',');
 
             const countQuery = generalBuilder.getRowsCount(module.name);
-            const rowsQuery = generalBuilder.getRows(fields, page, filter, order);
+            const rowsQuery = generalBuilder.getRows(module.name, fields, page, filter, order);
 
             const count = await db.sequelize
                 .query(countQuery)

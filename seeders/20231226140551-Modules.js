@@ -16,8 +16,16 @@ module.exports = {
             'Modules',
             [
                 {
-                    name: 'View',
-                    label: 'View',
+                    name: 'Views',
+                    label: 'Views',
+                },
+                {
+                    name: 'Modules',
+                    label: 'Modules',
+                },
+                {
+                    name: 'Menus',
+                    label: 'Menus',
                 },
             ],
             {},

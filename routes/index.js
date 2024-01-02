@@ -19,7 +19,6 @@ router.post('/api/general/columns', generalController.columns);
 router.post('/api/menu', menuController.list);
 
 /* Module */
-router.post('/api/module/list', moduleController.list);
 router.post('/api/module/create', moduleController.create);
 router.post('/api/module/delete', moduleController.delete);
 

@@ -1,10 +1,10 @@
 const {rowsPerPage} = require('../constats/setting');
 
 module.exports = {
-    getRows(fields, page, filter, order) {
+    getRows(name, fields, page, filter, order) {
         const offset = (page - 1) * rowsPerPage;
 
-        let rowsQuery = `SELECT ${fields} FROM "${module.name}"`;
+        let rowsQuery = `SELECT ${fields} FROM "${name}"`;
 
         if (filter && filter.length) {
             const where = `"${filter.field}" ILIKE '%${filter.value}%'`;
