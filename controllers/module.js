@@ -1,30 +1,11 @@
 const db = require('../models');
-const orm = require('../queries/orm');
 const moduleQuery = require('../queries/moduleQuery');
 const fieldQuery = require('../queries/fieldQuery');
-const {rowsPerPage} = require('../constats/setting');
 
 const Module = db.Module;
 const Field = db.Field;
 
 module.exports = {
-    async list(req, res) {
-        try {
-            const request = req.body;
-            const limit = rowsPerPage;
-            const offset = (request.page - 1) * limit;
-            const where = orm.filter(request.filter);
-            const order = orm.sort(request.sort);
-            const attributes = ['id', 'name', 'label', 'description', 'createdAt', 'updatedAt'];
-
-            const modules = await Module.findAndCountAll({attributes, where, limit, offset, order});
-
-            return res.status(200).send(modules);
-        } catch (error) {
-            return res.status(500).send(error.message);
-        }
-    },
-
     async create(req, res) {
         const t = await db.sequelize.transaction();
         const request = req.body;
@@ -54,6 +35,7 @@ module.exports = {
             return res.status(500).send(error.message);
         }
     },
+
     async delete(req, res) {
         const t = await db.sequelize.transaction();
         const request = req.body;

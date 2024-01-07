@@ -16,7 +16,7 @@ module.exports = {
                         {
                             moduleId: id,
                             name: 'createdAt',
-                            label: 'Created dAt',
+                            label: 'Created At',
                             inputType: inputType.datetime,
                             dataType: dataType.datetime,
                             tableRef: null,
