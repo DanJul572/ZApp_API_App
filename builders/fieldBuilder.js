@@ -4,9 +4,11 @@ module.exports = {
     findByModule(id) {
         return `SELECT * FROM "Fields" WHERE "moduleId" = ${id}`;
     },
+
     deleteByModule(id) {
         return `DELETE FROM "Fields" WHERE "moduleId" = ${id}`;
     },
+
     selectFormat(field, module) {
         if (field.inputType === inputType.code)
             return `
@@ -25,5 +27,9 @@ module.exports = {
             ) AS "${field.name}"`;
 
         return `"${field.name}"`;
+    },
+
+    findPrimaryField(id) {
+        return `SELECT * FROM "Fields" WHERE "moduleId" = ${id} AND "identity" = true`;
     },
 };

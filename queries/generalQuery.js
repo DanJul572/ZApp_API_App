@@ -60,4 +60,22 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+
+    async getRowDetail(moduleId, id) {
+        try {
+            const module = await moduleQuery.getModule(moduleId);
+            const primaryField = await fieldQuery.getPrimaryField(moduleId);
+            const query = generalBuilder.getRowDetail(module.name, primaryField, id);
+            return await db.sequelize
+                .query(query)
+                .then(result => {
+                    return result.length > 0 ? result[0][0] : null;
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };

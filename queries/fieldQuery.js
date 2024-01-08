@@ -68,4 +68,20 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+
+    async getPrimaryField(id) {
+        try {
+            const query = fieldBuilder.findPrimaryField(id);
+            return db.sequelize
+                .query(query)
+                .then(result => {
+                    return result.length > 0 ? result[0][0].name : null;
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };

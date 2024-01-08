@@ -20,6 +20,11 @@ module.exports = {
 
         return rowsQuery;
     },
+
+    getRowDetail(name, field, id) {
+        return `SELECT * FROM "${name}" WHERE "${field}" = ${id}`;
+    },
+
     getRowsCount(name) {
         return `SELECT count(*) AS "count" FROM "${name}"`;
     },
