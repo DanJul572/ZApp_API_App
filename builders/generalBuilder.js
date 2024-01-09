@@ -1,10 +1,10 @@
 const {rowsPerPage} = require('../constats/setting');
 
 module.exports = {
-    getRows(name, fields, page, filter, order) {
+    getRows(table, fields, page, filter, order) {
         const offset = (page - 1) * rowsPerPage;
 
-        let rowsQuery = `SELECT ${fields} FROM "${name}"`;
+        let rowsQuery = `SELECT ${fields} FROM "${table}"`;
 
         if (filter && filter.length) {
             const where = `"${filter.field}" ILIKE '%${filter.value}%'`;
@@ -21,11 +21,15 @@ module.exports = {
         return rowsQuery;
     },
 
-    getRowDetail(name, field, id) {
-        return `SELECT * FROM "${name}" WHERE "${field}" = ${id}`;
+    getRowDetail(table, field, id) {
+        return `SELECT * FROM "${table}" WHERE "${field}" = ${id}`;
     },
 
-    getRowsCount(name) {
-        return `SELECT count(*) AS "count" FROM "${name}"`;
+    getRowsCount(table) {
+        return `SELECT count(*) AS "count" FROM "${table}"`;
+    },
+
+    deleteRow(table, field, id) {
+        return `DELETE FROM "${table}" WHERE "${field}" = ${id}`;
     },
 };

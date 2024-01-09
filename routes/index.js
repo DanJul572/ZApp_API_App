@@ -15,6 +15,7 @@ router.get('/', function (req, res) {
 router.post('/api/general/rows', generalController.rows);
 router.post('/api/general/columns', generalController.columns);
 router.post('/api/general/detail', generalController.detail);
+router.post('/api/general/delete', generalController.delete);
 
 /* Menu */
 router.post('/api/menu', menuController.list);

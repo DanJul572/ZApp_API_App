@@ -53,6 +53,7 @@ module.exports = {
                     minSize: 100,
                     maxSize: 200,
                     type: field.inputType,
+                    identity: field.identity,
                 };
             });
             return columns;
@@ -70,6 +71,24 @@ module.exports = {
                 .query(query)
                 .then(result => {
                     return result.length > 0 ? result[0][0] : null;
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+
+    async deleteRow(moduleId, id) {
+        try {
+            const module = await moduleQuery.getModule(moduleId);
+            const primaryField = await fieldQuery.getPrimaryField(moduleId);
+            const query = generalBuilder.deleteRow(module.name, primaryField, id);
+            return await db.sequelize
+                .query(query)
+                .then(() => {
+                    return 'Data has been deleted.';
                 })
                 .catch(error => {
                     throw new Error(error.message);

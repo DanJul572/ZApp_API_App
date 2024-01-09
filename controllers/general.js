@@ -46,4 +46,19 @@ module.exports = {
             return res.status(500).send(error.message);
         }
     },
+
+    async delete(req, res) {
+        const t = await db.sequelize.transaction();
+        const request = req.body;
+
+        try {
+            const data = await generalQuery.deleteRow(request.moduleId, request.id);
+            t.commit();
+
+            return res.status(200).send(data);
+        } catch (error) {
+            await t.rollback();
+            return res.status(500).send(error.message);
+        }
+    },
 };
