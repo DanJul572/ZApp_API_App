@@ -61,4 +61,19 @@ module.exports = {
             return res.status(500).send(error.message);
         }
     },
+
+    async options(req, res) {
+        const t = await db.sequelize.transaction();
+        const request = req.body;
+
+        try {
+            const data = await generalQuery.getOptions(request.id);
+            t.commit();
+
+            return res.status(200).send(data);
+        } catch (error) {
+            await t.rollback();
+            return res.status(500).send(error.message);
+        }
+    },
 };

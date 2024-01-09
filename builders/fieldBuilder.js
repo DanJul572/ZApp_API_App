@@ -5,6 +5,14 @@ module.exports = {
         return `SELECT * FROM "Fields" WHERE "moduleId" = ${id}`;
     },
 
+    findPrimaryField(id) {
+        return `SELECT * FROM "Fields" WHERE "moduleId" = ${id} AND "identity" = true`;
+    },
+
+    findById(id) {
+        return `SELECT * FROM "Fields" WHERE "id" = ${id}`;
+    },
+
     deleteByModule(id) {
         return `DELETE FROM "Fields" WHERE "moduleId" = ${id}`;
     },
@@ -27,9 +35,5 @@ module.exports = {
             ) AS "${field.name}"`;
 
         return `"${field.name}"`;
-    },
-
-    findPrimaryField(id) {
-        return `SELECT * FROM "Fields" WHERE "moduleId" = ${id} AND "identity" = true`;
     },
 };

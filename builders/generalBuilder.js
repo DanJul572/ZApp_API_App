@@ -32,4 +32,8 @@ module.exports = {
     deleteRow(table, field, id) {
         return `DELETE FROM "${table}" WHERE "${field}" = ${id}`;
     },
+
+    getOptions(table, value, label) {
+        return `SELECT "${value}" AS "value", "${label}" AS "label" FROM "${table}"`;
+    },
 };

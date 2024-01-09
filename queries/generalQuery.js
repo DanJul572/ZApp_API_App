@@ -97,4 +97,21 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+
+    async getOptions(id) {
+        try {
+            const field = await fieldQuery.getField(id);
+            const query = generalBuilder.getOptions(field.tableRef, field.tableRefKey, field.tableRefName);
+            return await db.sequelize
+                .query(query)
+                .then(result => {
+                    return result.length > 0 ? result[0] : null;
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };
