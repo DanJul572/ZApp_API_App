@@ -66,7 +66,7 @@ module.exports = {
         try {
             const module = await moduleQuery.getModule(moduleId);
             const primaryField = await fieldQuery.getPrimaryField(moduleId);
-            const query = generalBuilder.getRowDetail(module.name, primaryField, id);
+            const query = generalBuilder.getRowDetail(module.name, primaryField.name, id);
             return await db.sequelize
                 .query(query)
                 .then(result => {
@@ -106,6 +106,23 @@ module.exports = {
                 .query(query)
                 .then(result => {
                     return result.length > 0 ? result[0] : null;
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+
+    async insertRows(moduleId, data) {
+        try {
+            const module = await moduleQuery.getModule(moduleId);
+            const query = generalBuilder.insertRows(module.name, data);
+            return await db.sequelize
+                .query(query)
+                .then(() => {
+                    return 'Data has been created.';
                 })
                 .catch(error => {
                     throw new Error(error.message);

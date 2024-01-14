@@ -36,4 +36,22 @@ module.exports = {
     getOptions(table, value, label) {
         return `SELECT "${value}" AS "value", "${label}" AS "label" FROM "${table}"`;
     },
+
+    insertRows(table, data) {
+        let fieldQuery = '';
+        let valueQuery = '';
+
+        for (const key in data) {
+            if (Object.hasOwnProperty.call(data, key)) {
+                fieldQuery += `"${key}", `;
+                const value = typeof data[key] === 'string' ? `'${data[key]}'` : data[key];
+                valueQuery += `${value}, `;
+            }
+        }
+
+        fieldQuery = fieldQuery.slice(0, -2);
+        valueQuery = valueQuery.slice(0, -2);
+
+        return `INSERT INTO "${table}" (${fieldQuery}) VALUES (${valueQuery})`;
+    },
 };

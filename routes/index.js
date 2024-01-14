@@ -17,6 +17,7 @@ router.post('/api/general/columns', generalController.columns);
 router.post('/api/general/detail', generalController.detail);
 router.post('/api/general/delete', generalController.delete);
 router.post('/api/general/options', generalController.options);
+router.post('/api/general/create', generalController.create);
 
 /* Menu */
 router.post('/api/menu', menuController.list);
