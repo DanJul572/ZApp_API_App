@@ -1,5 +1,9 @@
 'use strict';
 
+const dayjs = require('dayjs');
+
+const datetimeFormat = require('../constats/datetimeFormat');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface) {
@@ -13,11 +17,15 @@ module.exports = {
          * }], {});
          */
 
+        const now = dayjs().format(datetimeFormat.datetime);
+
         await queryInterface.bulkInsert(
             'Roles',
             [
                 {
                     label: 'Developer',
+                    createdAt: now,
+                    updatedAt: now,
                 },
             ],
             {},

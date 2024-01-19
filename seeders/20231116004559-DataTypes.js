@@ -1,5 +1,9 @@
 'use strict';
 
+const dayjs = require('dayjs');
+
+const datetimeFormat = require('../constats/datetimeFormat');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface) {
@@ -13,40 +17,58 @@ module.exports = {
          * }], {});
          */
 
+        const now = dayjs().format(datetimeFormat.datetime);
+
         await queryInterface.bulkInsert(
             'DataTypes',
             [
                 {
                     label: 'Varchar',
                     value: 1,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     label: 'Text',
                     value: 2,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     label: 'Integer',
                     value: 3,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     value: 4,
                     label: 'Boolean',
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     value: 5,
                     label: 'Table Reference',
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     value: 6,
                     label: 'Datetime',
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     value: 7,
                     label: 'Byte',
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     value: 8,
                     label: 'JSON',
+                    createdAt: now,
+                    updatedAt: now,
                 },
             ],
             {},

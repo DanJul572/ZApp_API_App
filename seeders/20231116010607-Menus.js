@@ -1,5 +1,9 @@
 'use strict';
 
+const dayjs = require('dayjs');
+
+const datetimeFormat = require('../constats/datetimeFormat');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface) {
@@ -12,6 +16,7 @@ module.exports = {
          *   isBetaMember: false
          * }], {});
          */
+        const now = dayjs().format(datetimeFormat.datetime);
         const tree = JSON.stringify([
             {
                 id: '1',
@@ -44,6 +49,8 @@ module.exports = {
                     label: 'Dev Menu',
                     tree: tree,
                     roleId: 1,
+                    createdAt: now,
+                    updatedAt: now,
                 },
             ],
             {},

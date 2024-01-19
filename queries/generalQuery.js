@@ -1,8 +1,11 @@
+const dayjs = require('dayjs');
+
 const db = require('../models');
 const moduleQuery = require('./moduleQuery');
 const fieldQuery = require('./fieldQuery');
 const fieldBuilder = require('../builders/fieldBuilder');
 const generalBuilder = require('../builders/generalBuilder');
+const datetimeFormat = require('../constats/datetimeFormat');
 
 module.exports = {
     async getRows(id, page, filter, order) {
@@ -118,7 +121,12 @@ module.exports = {
     async insertRows(moduleId, data) {
         try {
             const module = await moduleQuery.getModule(moduleId);
+
+            data.createdAt = dayjs().format(datetimeFormat.datetime);
+            data.updatedAt = dayjs().format(datetimeFormat.datetime);
+
             const query = generalBuilder.insertRows(module.name, data);
+
             return await db.sequelize
                 .query(query)
                 .then(() => {

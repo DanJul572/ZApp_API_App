@@ -1,7 +1,10 @@
 'use strict';
 
+const dayjs = require('dayjs');
+
 const dataType = require('../constats/dataType');
 const inputType = require('../constats/inputType');
+const datetimeFormat = require('../constats/datetimeFormat');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -15,6 +18,8 @@ module.exports = {
          *   isBetaMember: false
          * }], {});
          */
+        const now = dayjs().format(datetimeFormat.datetime);
+
         await queryInterface.bulkInsert(
             'Fields',
             [
@@ -34,6 +39,8 @@ module.exports = {
                     identity: true,
                     notNull: true,
                     unique: true,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 1,
@@ -51,6 +58,8 @@ module.exports = {
                     identity: false,
                     notNull: true,
                     unique: false,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 1,
@@ -68,6 +77,8 @@ module.exports = {
                     identity: false,
                     notNull: false,
                     unique: false,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 2,
@@ -85,6 +96,8 @@ module.exports = {
                     identity: true,
                     notNull: true,
                     unique: true,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 2,
@@ -102,6 +115,8 @@ module.exports = {
                     identity: false,
                     notNull: true,
                     unique: true,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 2,
@@ -119,6 +134,8 @@ module.exports = {
                     identity: false,
                     notNull: true,
                     unique: false,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 2,
@@ -136,6 +153,8 @@ module.exports = {
                     identity: false,
                     notNull: false,
                     unique: false,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 3,
@@ -153,6 +172,8 @@ module.exports = {
                     identity: true,
                     notNull: true,
                     unique: true,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 3,
@@ -170,6 +191,8 @@ module.exports = {
                     identity: false,
                     notNull: true,
                     unique: false,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 3,
@@ -187,6 +210,8 @@ module.exports = {
                     identity: false,
                     notNull: false,
                     unique: false,
+                    createdAt: now,
+                    updatedAt: now,
                 },
                 {
                     moduleId: 3,
@@ -204,6 +229,8 @@ module.exports = {
                     identity: false,
                     notNull: true,
                     unique: false,
+                    createdAt: now,
+                    updatedAt: now,
                 },
             ],
             {},
