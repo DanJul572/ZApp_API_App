@@ -1,4 +1,5 @@
 const db = require('../models');
+
 const generalQuery = require('../queries/generalQuery');
 
 module.exports = {
@@ -37,7 +38,7 @@ module.exports = {
         const request = req.body;
 
         try {
-            const data = await generalQuery.getRowDetail(request.moduleId, request.id);
+            const data = await generalQuery.getRowDetail(request.moduleId, request.rowId);
             t.commit();
 
             return res.status(200).send(data);
@@ -82,7 +83,22 @@ module.exports = {
         const request = req.body;
 
         try {
-            const data = await generalQuery.insertRows(request.moduleId, request.data);
+            const data = await generalQuery.insertRow(request.moduleId, request.data);
+            t.commit();
+
+            return res.status(200).send(data);
+        } catch (error) {
+            await t.rollback();
+            return res.status(500).send(error.message);
+        }
+    },
+
+    async update(req, res) {
+        const t = await db.sequelize.transaction();
+        const request = req.body;
+
+        try {
+            const data = await generalQuery.updateRow(request.moduleId, request.rowId, request.data);
             t.commit();
 
             return res.status(200).send(data);

@@ -37,7 +37,7 @@ module.exports = {
         return `SELECT "${value}" AS "value", "${label}" AS "label" FROM "${table}"`;
     },
 
-    insertRows(table, data) {
+    insertRow(table, data) {
         let fieldQuery = '';
         let valueQuery = '';
 
@@ -53,5 +53,31 @@ module.exports = {
         valueQuery = valueQuery.slice(0, -2);
 
         return `INSERT INTO "${table}" (${fieldQuery}) VALUES (${valueQuery})`;
+    },
+
+    updateRow(table, newData, condition) {
+        let updateQuery = `UPDATE "${table}" SET `;
+
+        for (const key in newData) {
+            if (Object.hasOwnProperty.call(newData, key)) {
+                const value = typeof newData[key] === 'string' ? `'${newData[key]}'` : newData[key];
+                updateQuery += `"${key}" = ${value}, `;
+            }
+        }
+
+        updateQuery = updateQuery.slice(0, -2);
+
+        if (condition) {
+            updateQuery += ' WHERE ';
+            for (const key in condition) {
+                if (Object.hasOwnProperty.call(condition, key)) {
+                    const value = typeof condition[key] === 'string' ? `'${condition[key]}'` : condition[key];
+                    updateQuery += `"${key}" = ${value} AND `;
+                }
+            }
+            updateQuery = updateQuery.slice(0, -5);
+        }
+
+        return updateQuery;
     },
 };

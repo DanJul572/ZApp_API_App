@@ -1,20 +1,20 @@
 const inputType = require('../constats/inputType');
 
 module.exports = {
-    findByModule(id) {
-        return `SELECT * FROM "Fields" WHERE "moduleId" = ${id}`;
+    findByModule(moduleId) {
+        return `SELECT * FROM "Fields" WHERE "moduleId" = ${moduleId}`;
     },
 
-    findPrimaryField(id) {
-        return `SELECT * FROM "Fields" WHERE "moduleId" = ${id} AND "identity" = true`;
+    findPrimaryField(moduleId) {
+        return `SELECT * FROM "Fields" WHERE "moduleId" = ${moduleId} AND "identity" = true`;
     },
 
-    findById(id) {
-        return `SELECT * FROM "Fields" WHERE "id" = ${id}`;
+    findById(moduleId) {
+        return `SELECT * FROM "Fields" WHERE "id" = ${moduleId}`;
     },
 
-    deleteByModule(id) {
-        return `DELETE FROM "Fields" WHERE "moduleId" = ${id}`;
+    deleteByModule(moduleId) {
+        return `DELETE FROM "Fields" WHERE "moduleId" = ${moduleId}`;
     },
 
     selectFormat(field, module) {

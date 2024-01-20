@@ -87,7 +87,7 @@ module.exports = {
         try {
             const module = await moduleQuery.getModule(moduleId);
             const primaryField = await fieldQuery.getPrimaryField(moduleId);
-            const query = generalBuilder.deleteRow(module.name, primaryField, id);
+            const query = generalBuilder.deleteRow(module.name, primaryField.name, id);
             return await db.sequelize
                 .query(query)
                 .then(() => {
@@ -118,19 +118,45 @@ module.exports = {
         }
     },
 
-    async insertRows(moduleId, data) {
+    async insertRow(moduleId, data) {
         try {
             const module = await moduleQuery.getModule(moduleId);
 
             data.createdAt = dayjs().format(datetimeFormat.datetime);
             data.updatedAt = dayjs().format(datetimeFormat.datetime);
 
-            const query = generalBuilder.insertRows(module.name, data);
+            const query = generalBuilder.insertRow(module.name, data);
 
             return await db.sequelize
                 .query(query)
                 .then(() => {
                     return 'Data has been created.';
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+
+    async updateRow(moduleId, rowId, data) {
+        try {
+            const module = await moduleQuery.getModule(moduleId);
+            const primaryField = await fieldQuery.getPrimaryField(moduleId);
+
+            const condition = {
+                [primaryField.name]: rowId,
+            };
+
+            data.updatedAt = dayjs().format(datetimeFormat.datetime);
+
+            const query = generalBuilder.updateRow(module.name, data, condition);
+
+            return await db.sequelize
+                .query(query)
+                .then(() => {
+                    return 'Data has been updated.';
                 })
                 .catch(error => {
                     throw new Error(error.message);
