@@ -1,0 +1,67 @@
+const dayjs = require('dayjs');
+
+const dataType = require('../../constats/dataType');
+const inputType = require('../../constats/inputType');
+const datetimeFormat = require('../../constats/datetimeFormat');
+
+const now = dayjs().format(datetimeFormat.datetime);
+
+module.exports = [
+    {
+        moduleId: 9,
+        name: 'id',
+        label: 'ID',
+        inputType: inputType.number,
+        dataType: dataType.integer,
+        tableRef: null,
+        tableRefKey: null,
+        tableRefName: null,
+        tableRefAlias: null,
+        tableRefFilter: null,
+        regex: null,
+        multiSelect: false,
+        identity: true,
+        notNull: true,
+        unique: true,
+        createdAt: now,
+        updatedAt: now,
+    },
+    {
+        moduleId: 9,
+        name: 'userId',
+        label: 'User ID',
+        inputType: inputType.dropdown,
+        dataType: dataType.integer,
+        tableRef: 'Users',
+        tableRefKey: 'id',
+        tableRefName: 'name',
+        tableRefAlias: null,
+        tableRefFilter: null,
+        regex: null,
+        multiSelect: false,
+        identity: false,
+        notNull: true,
+        unique: false,
+        createdAt: now,
+        updatedAt: now,
+    },
+    {
+        moduleId: 9,
+        name: 'token',
+        label: 'Token',
+        inputType: inputType.shortText,
+        dataType: dataType.varchar,
+        tableRef: null,
+        tableRefKey: null,
+        tableRefName: null,
+        tableRefAlias: null,
+        tableRefFilter: null,
+        regex: null,
+        multiSelect: false,
+        identity: false,
+        notNull: true,
+        unique: false,
+        createdAt: now,
+        updatedAt: now,
+    },
+];

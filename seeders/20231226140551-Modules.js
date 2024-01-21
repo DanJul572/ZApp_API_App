@@ -22,20 +22,56 @@ module.exports = {
             'Modules',
             [
                 {
-                    name: 'Views',
-                    label: 'Views',
-                    createdAt: now,
-                    updatedAt: now,
-                },
-                {
                     name: 'Modules',
                     label: 'Modules',
                     createdAt: now,
                     updatedAt: now,
                 },
                 {
+                    name: 'Roles',
+                    label: 'Roles',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'InputTypes',
+                    label: 'Input Types',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'DataTypes',
+                    label: 'Data Types',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'Fields',
+                    label: 'Fields',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'Views',
+                    label: 'Views',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
                     name: 'Menus',
                     label: 'Menus',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'Users',
+                    label: 'Users',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'Tokens',
+                    label: 'Tokens',
                     createdAt: now,
                     updatedAt: now,
                 },
