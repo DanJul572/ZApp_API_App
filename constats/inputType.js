@@ -12,4 +12,5 @@ module.exports = {
     checkbox: 11,
     code: 12,
     datetime: 13,
+    password: 14,
 };
