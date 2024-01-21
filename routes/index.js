@@ -10,11 +10,6 @@ router.post('/api/auth/login', authController.login);
 router.post('/api/auth/register', authController.register);
 router.post('/api/auth/logout', authController.authenticateToken, authController.logout);
 
-/* Home */
-router.get('/', function (req, res) {
-    res.render('index', {title: 'Express'});
-});
-
 /*  General */
 router.post('/api/general/rows', authController.authenticateToken, generalController.rows);
 router.post('/api/general/update', authController.authenticateToken, generalController.update);
