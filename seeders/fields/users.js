@@ -3,12 +3,13 @@ const dayjs = require('dayjs');
 const dataType = require('../../constats/dataType');
 const inputType = require('../../constats/inputType');
 const datetimeFormat = require('../../constats/datetimeFormat');
+const moduleId = require('../../constats/moduleId');
 
 const now = dayjs().format(datetimeFormat.datetime);
 
 module.exports = [
     {
-        moduleId: 8,
+        moduleId: moduleId.users,
         name: 'id',
         label: 'ID',
         inputType: inputType.number,
@@ -27,7 +28,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 8,
+        moduleId: moduleId.users,
         name: 'name',
         label: 'Name',
         inputType: inputType.shortText,
@@ -46,7 +47,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 8,
+        moduleId: moduleId.users,
         name: 'email',
         label: 'Email',
         inputType: inputType.shortText,
@@ -65,7 +66,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 8,
+        moduleId: moduleId.users,
         name: 'password',
         label: 'Password',
         inputType: inputType.shortText,
@@ -84,7 +85,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 8,
+        moduleId: moduleId.users,
         name: 'roleId',
         label: 'Role ID',
         inputType: inputType.dropdown,

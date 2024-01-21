@@ -4,11 +4,13 @@ const dataType = require('../../constats/dataType');
 const inputType = require('../../constats/inputType');
 const datetimeFormat = require('../../constats/datetimeFormat');
 
+const moduleId = require('../../constats/moduleId');
+
 const now = dayjs().format(datetimeFormat.datetime);
 
 const list = [
     {
-        moduleId: 6,
+        moduleId: moduleId.views,
         name: 'id',
         label: 'ID',
         inputType: inputType.number,
@@ -27,7 +29,7 @@ const list = [
         updatedAt: now,
     },
     {
-        moduleId: 6,
+        moduleId: moduleId.views,
         name: 'moduleId',
         label: 'Module ID',
         inputType: inputType.dropdown,
@@ -46,7 +48,7 @@ const list = [
         updatedAt: now,
     },
     {
-        moduleId: 6,
+        moduleId: moduleId.views,
         name: 'content',
         label: 'Content',
         inputType: inputType.code,

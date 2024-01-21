@@ -3,12 +3,13 @@ const dayjs = require('dayjs');
 const dataType = require('../../constats/dataType');
 const inputType = require('../../constats/inputType');
 const datetimeFormat = require('../../constats/datetimeFormat');
+const moduleId = require('../../constats/moduleId');
 
 const now = dayjs().format(datetimeFormat.datetime);
 
 module.exports = [
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'id',
         label: 'ID',
         inputType: inputType.number,
@@ -27,7 +28,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'moduleId',
         label: 'Module ID',
         inputType: inputType.dropdown,
@@ -46,7 +47,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'name',
         label: 'Name',
         inputType: inputType.shortText,
@@ -65,7 +66,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'label',
         label: 'Label',
         inputType: inputType.shortText,
@@ -84,7 +85,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'inputType',
         label: 'Input Type',
         inputType: inputType.dropdown,
@@ -103,7 +104,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'inputType',
         label: 'Input Type',
         inputType: inputType.dropdown,
@@ -122,7 +123,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'tableRef',
         label: 'Table Ref',
         inputType: inputType.shortText,
@@ -141,7 +142,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'tableRefKey',
         label: 'Table Ref Key',
         inputType: inputType.shortText,
@@ -160,7 +161,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'tableRefName',
         label: 'Table Ref Name',
         inputType: inputType.shortText,
@@ -179,7 +180,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'tableRefAlias',
         label: 'Table Ref Alias',
         inputType: inputType.shortText,
@@ -198,7 +199,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'tableRefFilter',
         label: 'Table Ref Filter',
         inputType: inputType.shortText,
@@ -217,7 +218,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'regex',
         label: 'Regex',
         inputType: inputType.shortText,
@@ -236,7 +237,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'multiSelect',
         label: 'Multi Select',
         inputType: inputType.toggle,
@@ -255,7 +256,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'identity',
         label: 'Identity',
         inputType: inputType.toggle,
@@ -274,7 +275,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'notNull',
         label: 'Not Null',
         inputType: inputType.toggle,
@@ -293,7 +294,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: 5,
+        moduleId: moduleId.fields,
         name: 'unique',
         label: 'Unique',
         inputType: inputType.toggle,

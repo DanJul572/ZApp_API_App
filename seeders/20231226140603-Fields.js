@@ -2,6 +2,7 @@
 
 const modules = require('./fields/modules');
 const roles = require('./fields/roles');
+const inputTypes = require('./fields/inputTypes');
 const dataTypes = require('./fields/dataTypes');
 const fields = require('./fields/fields');
 const views = require('./fields/views');
@@ -21,7 +22,7 @@ module.exports = {
          *   isBetaMember: false
          * }], {});
          */
-        const combine = modules.concat(roles, dataTypes, fields, views, menus, users, tokens);
+        const combine = modules.concat(roles, inputTypes, dataTypes, fields, views, menus, users, tokens);
         await queryInterface.bulkInsert('Fields', combine, {});
     },
 
