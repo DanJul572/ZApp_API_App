@@ -1,6 +1,8 @@
 const db = require('../models');
+const jwt = require('jsonwebtoken');
 
 const generalQuery = require('../queries/generalQuery');
+const auth = require('../constats/auth');
 
 module.exports = {
     async rows(req, res) {
@@ -99,6 +101,23 @@ module.exports = {
 
         try {
             const data = await generalQuery.updateRow(request.moduleId, request.rowId, request.data);
+            t.commit();
+
+            return res.status(200).send(data);
+        } catch (error) {
+            await t.rollback();
+            return res.status(500).send(error.message);
+        }
+    },
+
+    async menu(req, res) {
+        const t = await db.sequelize.transaction();
+        const token = req.header('Authorization');
+
+        try {
+            const decoded = jwt.verify(token, auth.secretKey);
+
+            const data = await generalQuery.getMenu(decoded.roleId);
             t.commit();
 
             return res.status(200).send(data);

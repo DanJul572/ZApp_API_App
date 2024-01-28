@@ -80,4 +80,8 @@ module.exports = {
 
         return updateQuery;
     },
+
+    getMenu(roleId) {
+        return `SELECT * FROM "Menus" WHERE "roleId" = ${roleId}`;
+    },
 };

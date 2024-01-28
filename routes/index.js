@@ -18,6 +18,7 @@ router.post('/api/general/delete', authController.authenticateToken, generalCont
 router.post('/api/general/detail', authController.authenticateToken, generalController.detail);
 router.post('/api/general/options', authController.authenticateToken, generalController.options);
 router.post('/api/general/columns', authController.authenticateToken, generalController.columns);
+router.get('/api/general/menu', authController.authenticateToken, generalController.menu);
 
 /* Module */
 router.post('/api/module/create', authController.authenticateToken, moduleController.create);

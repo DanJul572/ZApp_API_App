@@ -165,4 +165,21 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+
+    async getMenu(roleId) {
+        try {
+            const query = generalBuilder.getMenu(roleId);
+
+            return await db.sequelize
+                .query(query)
+                .then(result => {
+                    return result.length > 0 ? result[0][0] : null;
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };
