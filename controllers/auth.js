@@ -36,7 +36,7 @@ async function findValidTokenForUser(userId) {
             return false;
         }
     } catch (error) {
-        throw new Error(error.message);
+        return false;
     }
 }
 
@@ -73,7 +73,7 @@ async function login(req, res) {
             }
         } else {
             t.commit();
-            return res.status(200).send('Invalid Email or Password');
+            return res.status(500).send('Invalid Email or Password');
         }
     } catch (error) {
         await t.rollback();
