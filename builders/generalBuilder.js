@@ -1,18 +1,19 @@
 const {rowsPerPage} = require('../constats/setting');
 
 module.exports = {
-    getRows(table, fields, page, filter, order) {
+    getRows(table, fields, page, filter, sort) {
         const offset = (page - 1) * rowsPerPage;
 
         let rowsQuery = `SELECT ${fields} FROM "${table}"`;
 
         if (filter && filter.length) {
-            const where = `"${filter.field}" ILIKE '%${filter.value}%'`;
+            const where = `${filter.map(condition => `"${condition.id}" ILIKE '%${condition.value}%'`).join(' AND ')}`;
             rowsQuery += ` WHERE ${where}`;
         }
 
-        if (order && filter.length) {
-            const orderBy = `"${order.field}" ${order.value}`;
+        if (sort && sort.length) {
+            const ascdesc = sort[0].desc ? 'DESC' : 'ASC';
+            const orderBy = `"${sort[0].id}" ${ascdesc}`;
             rowsQuery += ` ORDER BY ${orderBy}`;
         }
 
