@@ -122,8 +122,8 @@ module.exports = {
         try {
             const module = await moduleQuery.getModule(moduleId);
 
-            data.createdAt = dayjs().format(datetimeFormat.datetime);
-            data.updatedAt = dayjs().format(datetimeFormat.datetime);
+            data.createdAt = dayjs().format(datetimeFormat.datetime.value);
+            data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
             const query = generalBuilder.insertRow(module.name, data);
 
@@ -149,7 +149,7 @@ module.exports = {
                 [primaryField.name]: rowId,
             };
 
-            data.updatedAt = dayjs().format(datetimeFormat.datetime);
+            data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
             const query = generalBuilder.updateRow(module.name, data, condition);
 

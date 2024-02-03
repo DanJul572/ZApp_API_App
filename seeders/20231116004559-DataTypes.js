@@ -17,7 +17,7 @@ module.exports = {
          * }], {});
          */
 
-        const now = dayjs().format(datetimeFormat.datetime);
+        const now = dayjs().format(datetimeFormat.datetime.value);
 
         await queryInterface.bulkInsert(
             'DataTypes',

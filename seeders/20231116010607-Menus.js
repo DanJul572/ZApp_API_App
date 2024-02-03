@@ -16,7 +16,7 @@ module.exports = {
          *   isBetaMember: false
          * }], {});
          */
-        const now = dayjs().format(datetimeFormat.datetime);
+        const now = dayjs().format(datetimeFormat.datetime.value);
         const tree = JSON.stringify([
             {
                 id: '1',

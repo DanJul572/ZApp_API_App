@@ -1,3 +1,4 @@
+const datetimeFormat = require('../constats/datetimeFormat');
 const inputType = require('../constats/inputType');
 
 module.exports = {
@@ -33,6 +34,15 @@ module.exports = {
                 FROM "${field.tableRef}"
                 WHERE CAST("${field.tableRef}"."${field.tableRefKey}" AS VARCHAR(255)) = CAST("${module}"."${field.name}" AS VARCHAR(255))
             ) AS "${field.name}"`;
+
+        if (field.inputType === inputType.datetime)
+            return `TO_CHAR("${field.name}", '${datetimeFormat.datetime.display}') AS "${field.name}"`;
+
+        if (field.inputType === inputType.date)
+            return `TO_CHAR("${field.name}", '${datetimeFormat.date.display}') AS "${field.name}"`;
+
+        if (field.inputType === inputType.time)
+            return `TO_CHAR("${field.name}", '${datetimeFormat.time.display}') AS "${field.name}"`;
 
         return `"${field.name}"`;
     },

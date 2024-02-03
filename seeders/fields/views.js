@@ -6,7 +6,7 @@ const datetimeFormat = require('../../constats/datetimeFormat');
 
 const moduleId = require('../../constats/moduleId');
 
-const now = dayjs().format(datetimeFormat.datetime);
+const now = dayjs().format(datetimeFormat.datetime.value);
 
 const list = [
     {
