@@ -61,8 +61,6 @@ module.exports = {
             return `TO_CHAR("${field.name}", '${datetimeFormat.date.display}') AS "${field.name}"`;
         } else if (field.inputType === inputType.time) {
             return `TO_CHAR("${field.name}", '${datetimeFormat.time.display}') AS "${field.name}"`;
-        } else if (field.inputType === inputType.number) {
-            return `TO_CHAR("${field.name}", '999,999,999') AS "${field.name}"`;
         } else {
             return `"${field.name}"`;
         }
