@@ -19,7 +19,7 @@ module.exports = {
     },
 
     selectFormat(field, module) {
-        if (field.inputType === inputType.code)
+        if (field.inputType === inputType.code || field.inputType === inputType.richText) {
             return `
                 CASE
                     WHEN "${field.name}" IS NOT NULL
@@ -27,23 +27,44 @@ module.exports = {
                     ELSE NULL
                 END AS "${field.name}"
             `;
-
-        if (field.inputType === inputType.dropdown)
+        } else if (field.inputType === inputType.toggle) {
+            return `
+                CASE
+                    WHEN "${field.name}" = 1
+                    THEN 'Yes'
+                    ELSE 'No'
+                END AS "${field.name}"
+            `;
+        } else if (field.inputType === inputType.password) {
+            return `
+                CASE
+                    WHEN "${field.name}" IS NOT NULL
+                    THEN '********'
+                    ELSE NULL
+                END AS "${field.name}"
+            `;
+        } else if (field.inputType === inputType.dropdown || field.inputType === inputType) {
             return `(
                 SELECT CONCAT('(', "${field.tableRef}"."${field.tableRefKey}", ') - ', "${field.tableRef}"."${field.tableRefName}")
                 FROM "${field.tableRef}"
                 WHERE CAST("${field.tableRef}"."${field.tableRefKey}" AS VARCHAR(255)) = CAST("${module}"."${field.name}" AS VARCHAR(255))
             ) AS "${field.name}"`;
-
-        if (field.inputType === inputType.datetime)
+        } else if (field.inputType === inputType.checkbox) {
+            return `
+                SELECT STRING_AGG(CONCAT('(', "${field.tableRef}"."${field.tableRefKey}", ') - ', "${field.tableRef}"."${field.tableRefName}"), ', ') AS "${field.name}"
+                FROM "${field.tableRef}"
+                WHERE "${field.tableRef}"."${field.tableRefKey}" IN ("${module}"."${field.name}");
+            `;
+        } else if (field.inputType === inputType.datetime) {
             return `TO_CHAR("${field.name}", '${datetimeFormat.datetime.display}') AS "${field.name}"`;
-
-        if (field.inputType === inputType.date)
+        } else if (field.inputType === inputType.date) {
             return `TO_CHAR("${field.name}", '${datetimeFormat.date.display}') AS "${field.name}"`;
-
-        if (field.inputType === inputType.time)
+        } else if (field.inputType === inputType.time) {
             return `TO_CHAR("${field.name}", '${datetimeFormat.time.display}') AS "${field.name}"`;
-
-        return `"${field.name}"`;
+        } else if (field.inputType === inputType.number) {
+            return `TO_CHAR("${field.name}", '999,999,999') AS "${field.name}"`;
+        } else {
+            return `"${field.name}"`;
+        }
     },
 };
