@@ -55,12 +55,12 @@ module.exports = {
                 FROM "${field.tableRef}"
                 WHERE "${field.tableRef}"."${field.tableRefKey}" IN ("${module}"."${field.name}");
             `;
-        } else if (field.inputType === inputType.datetime) {
+        } else if (
+            field.inputType === inputType.datetime ||
+            field.inputType === inputType.date ||
+            field.inputType === inputType.time
+        ) {
             return `TO_CHAR("${field.name}", '${datetimeFormat.datetime.display}') AS "${field.name}"`;
-        } else if (field.inputType === inputType.date) {
-            return `TO_CHAR("${field.name}", '${datetimeFormat.date.display}') AS "${field.name}"`;
-        } else if (field.inputType === inputType.time) {
-            return `TO_CHAR("${field.name}", '${datetimeFormat.time.display}') AS "${field.name}"`;
         } else {
             return `"${field.name}"`;
         }
