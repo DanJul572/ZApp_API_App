@@ -69,7 +69,7 @@ module.exports = [
         moduleId: moduleId.users,
         name: 'password',
         label: 'Password',
-        inputType: inputType.shortText,
+        inputType: inputType.password,
         dataType: dataType.varchar,
         tableRef: null,
         tableRefKey: null,
