@@ -8,4 +8,5 @@ module.exports = {
     menus: 7,
     users: 8,
     tokens: 9,
+    script: 18,
 };
