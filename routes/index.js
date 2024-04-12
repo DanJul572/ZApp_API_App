@@ -17,7 +17,7 @@ router.post('/api/general/update', authController.authenticateToken, generalCont
 router.post('/api/general/create', authController.authenticateToken, generalController.create);
 router.post('/api/general/delete', authController.authenticateToken, generalController.delete);
 router.post('/api/general/detail', authController.authenticateToken, generalController.detail);
-router.post('/api/general/options', authController.authenticateToken, generalController.options);
+router.post('/api/general/options', generalController.options);
 router.post('/api/general/columns', authController.authenticateToken, generalController.columns);
 router.get('/api/general/menu', authController.authenticateToken, generalController.menu);
 
