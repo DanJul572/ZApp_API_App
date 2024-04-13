@@ -35,7 +35,7 @@ async function findValidTokenForUser(userId) {
         } else {
             return false;
         }
-    } catch (error) {
+    } catch {
         return false;
     }
 }
