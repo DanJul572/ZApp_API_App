@@ -8,6 +8,7 @@ const generalQuery = require('../queries/generalQuery');
 
 const auth = require('../constats/auth');
 const moduleId = require('../constats/moduleId');
+const menuQuery = require('../queries/menuQuery');
 
 function authenticateToken(req, res, next) {
     const token = req.header('Authorization');
@@ -68,8 +69,17 @@ async function login(req, res) {
                     userId: user.id,
                     token: accessToken,
                 });
+
+                const menu = await menuQuery.findByRoleId(user.roleId);
+
+                const response = {
+                    afterLogin: menu.afterLogin,
+                    accessToken: accessToken,
+                };
+
                 t.commit();
-                return res.json({accessToken: accessToken});
+
+                return res.json(response);
             }
         } else {
             t.commit();
