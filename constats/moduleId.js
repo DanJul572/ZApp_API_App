@@ -9,4 +9,7 @@ module.exports = {
     users: 8,
     tokens: 9,
     script: 18,
+    actions: 19,
+    validationTime: 20,
+    validation: 21,
 };
