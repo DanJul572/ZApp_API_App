@@ -6,7 +6,7 @@ const auth = require('../constats/auth');
 
 module.exports = {
     async rows(req, res) {
-        const request = req.query;
+        const request = req.body;
         try {
             const data = await generalQuery.getRows(request.id, request.page, request.filter, request.sort);
             return res.status(200).send(data);

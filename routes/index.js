@@ -16,9 +16,9 @@ router.get('/api/general/columns', authController.authenticateToken, generalCont
 router.get('/api/general/detail', authController.authenticateToken, generalController.detail);
 router.get('/api/general/menu', authController.authenticateToken, generalController.menu);
 router.get('/api/general/options', generalController.options);
-router.get('/api/general/rows', authController.authenticateToken, generalController.rows);
 router.post('/api/general/create', authController.authenticateToken, generalController.create);
 router.post('/api/general/delete', authController.authenticateToken, generalController.delete);
+router.post('/api/general/rows', authController.authenticateToken, generalController.rows);
 router.post('/api/general/update', authController.authenticateToken, generalController.update);
 
 /* script */
