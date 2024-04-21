@@ -6,7 +6,7 @@ const auth = require('../constats/auth');
 
 module.exports = {
     async rows(req, res) {
-        const request = req.body;
+        const request = req.query;
         try {
             const data = await generalQuery.getRows(request.id, request.page, request.filter, request.sort);
             return res.status(200).send(data);
@@ -16,7 +16,7 @@ module.exports = {
     },
 
     async columns(req, res) {
-        const request = req.body;
+        const request = req.query;
         try {
             const data = await generalQuery.getColumns(request.id);
             return res.status(200).send(data);
@@ -26,7 +26,7 @@ module.exports = {
     },
 
     async detail(req, res) {
-        const request = req.body;
+        const request = req.query;
         try {
             const data = await generalQuery.getRowDetail(request.moduleId, request.rowId);
             return res.status(200).send(data);
@@ -49,7 +49,7 @@ module.exports = {
     },
 
     async options(req, res) {
-        const request = req.body;
+        const request = req.query;
         try {
             const data = await generalQuery.getOptions(request.id);
             return res.status(200).send(data);
