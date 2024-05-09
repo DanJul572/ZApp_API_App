@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const authQuery = require('../queries/authQuery');
-const generalQuery = require('../queries/generalQuery');
+const commonQuery = require('../queries/commonQuery');
 
 const auth = require('../constats/auth');
 const moduleId = require('../constats/moduleId');
@@ -65,7 +65,7 @@ async function login(req, res) {
                 };
                 const accessToken = jwt.sign(tokenInfo, auth.secretKey, tokenOptions);
 
-                await generalQuery.insertRow(moduleId.tokens, {
+                await commonQuery.insertRow(moduleId.tokens, {
                     userId: user.id,
                     token: accessToken,
                 });
@@ -99,7 +99,7 @@ async function register(req, res) {
         const hashedPassword = await bcrypt.hash(request.password, auth.salt);
         request.password = hashedPassword;
 
-        const data = await generalQuery.insertRow(moduleId.users, request);
+        const data = await commonQuery.insertRow(moduleId.users, request);
         t.commit();
 
         return res.status(200).send(data);

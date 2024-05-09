@@ -1,13 +1,13 @@
 const moduleId = require('../constats/moduleId');
 
-const generalQuery = require('../queries/generalQuery');
+const commonQuery = require('../queries/commonQuery');
 const scriptQuery = require('../queries/scriptQuery');
 
 module.exports = {
     async run(req, res) {
         const param = req.query;
         try {
-            const script = await generalQuery.getRowDetail(moduleId.script, param.id);
+            const script = await commonQuery.getRowDetail(moduleId.script, param.id);
             const data = await scriptQuery.run(script.sql);
 
             return res.status(200).send(data);

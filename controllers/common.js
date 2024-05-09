@@ -1,14 +1,14 @@
 const db = require('../models');
 const jwt = require('jsonwebtoken');
 
-const generalQuery = require('../queries/generalQuery');
+const commonQuery = require('../queries/commonQuery');
 const auth = require('../constats/auth');
 
 module.exports = {
     async rows(req, res) {
         const request = req.body;
         try {
-            const data = await generalQuery.getRows(request.id, request.page, request.filter, request.sort);
+            const data = await commonQuery.getRows(request.id, request.page, request.filter, request.sort);
             return res.status(200).send(data);
         } catch (error) {
             return res.status(500).send(error.message);
@@ -18,7 +18,7 @@ module.exports = {
     async columns(req, res) {
         const request = req.query;
         try {
-            const data = await generalQuery.getColumns(request.id);
+            const data = await commonQuery.getColumns(request.id);
             return res.status(200).send(data);
         } catch (error) {
             return res.status(500).send(error.message);
@@ -28,7 +28,7 @@ module.exports = {
     async detail(req, res) {
         const request = req.query;
         try {
-            const data = await generalQuery.getRowDetail(request.moduleId, request.rowId);
+            const data = await commonQuery.getRowDetail(request.moduleId, request.rowId);
             return res.status(200).send(data);
         } catch (error) {
             return res.status(500).send(error.message);
@@ -39,7 +39,7 @@ module.exports = {
         const t = await db.sequelize.transaction();
         const request = req.body;
         try {
-            const data = await generalQuery.deleteRow(request.moduleId, request.id);
+            const data = await commonQuery.deleteRow(request.moduleId, request.id);
             t.commit();
             return res.status(200).send(data);
         } catch (error) {
@@ -51,7 +51,7 @@ module.exports = {
     async options(req, res) {
         const request = req.query;
         try {
-            const data = await generalQuery.getOptions(request.id);
+            const data = await commonQuery.getOptions(request.id);
             return res.status(200).send(data);
         } catch (error) {
             return res.status(500).send(error.message);
@@ -62,7 +62,7 @@ module.exports = {
         const t = await db.sequelize.transaction();
         const request = req.body;
         try {
-            const data = await generalQuery.insertRow(request.moduleId, request.data);
+            const data = await commonQuery.insertRow(request.moduleId, request.data);
             t.commit();
             return res.status(200).send(data);
         } catch (error) {
@@ -75,7 +75,7 @@ module.exports = {
         const t = await db.sequelize.transaction();
         const request = req.body;
         try {
-            const data = await generalQuery.updateRow(request.moduleId, request.rowId, request.data);
+            const data = await commonQuery.updateRow(request.moduleId, request.rowId, request.data);
             t.commit();
             return res.status(200).send(data);
         } catch (error) {
@@ -88,7 +88,7 @@ module.exports = {
         const token = req.header('Authorization');
         try {
             const decoded = jwt.verify(token, auth.secretKey);
-            const data = await generalQuery.getMenu(decoded.roleId);
+            const data = await commonQuery.getMenu(decoded.roleId);
             return res.status(200).send(data);
         } catch (error) {
             return res.status(500).send(error.message);

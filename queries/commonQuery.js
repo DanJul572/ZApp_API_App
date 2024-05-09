@@ -7,7 +7,7 @@ const moduleQuery = require('./moduleQuery');
 const validationQuery = require('./validationQuery');
 
 const fieldBuilder = require('../builders/fieldBuilder');
-const generalBuilder = require('../builders/generalBuilder');
+const commonBuilder = require('../builders/commonBuilder');
 
 const actionId = require('../constats/actionId');
 const datetimeFormat = require('../constats/datetimeFormat');
@@ -21,8 +21,8 @@ module.exports = {
             let fields = await fieldQuery.getFields(id);
             fields = fields.map(field => fieldBuilder.selectFormat(field, module.name)).join(',');
 
-            const countQuery = generalBuilder.getRowsCount(module.name);
-            const rowsQuery = generalBuilder.getRows(module.name, fields, page, filter, order);
+            const countQuery = commonBuilder.getRowsCount(module.name);
+            const rowsQuery = commonBuilder.getRows(module.name, fields, page, filter, order);
 
             const count = await db.sequelize
                 .query(countQuery)
@@ -75,7 +75,7 @@ module.exports = {
         try {
             const module = await moduleQuery.getModule(moduleId);
             const primaryField = await fieldQuery.getPrimaryField(moduleId);
-            const query = generalBuilder.getRowDetail(module.name, primaryField.name, id);
+            const query = commonBuilder.getRowDetail(module.name, primaryField.name, id);
             return await db.sequelize
                 .query(query)
                 .then(result => {
@@ -93,7 +93,7 @@ module.exports = {
         try {
             const module = await moduleQuery.getModule(moduleId);
             const primaryField = await fieldQuery.getPrimaryField(moduleId);
-            const query = generalBuilder.deleteRow(module.name, primaryField.name, id);
+            const query = commonBuilder.deleteRow(module.name, primaryField.name, id);
             return await db.sequelize
                 .query(query)
                 .then(() => {
@@ -110,7 +110,7 @@ module.exports = {
     async getOptions(id) {
         try {
             const field = await fieldQuery.getField(id);
-            const query = generalBuilder.getOptions(field.tableRef, field.tableRefKey, field.tableRefName);
+            const query = commonBuilder.getOptions(field.tableRef, field.tableRefKey, field.tableRefName);
             return await db.sequelize
                 .query(query)
                 .then(result => {
@@ -135,7 +135,7 @@ module.exports = {
             data.createdAt = dayjs().format(datetimeFormat.datetime.value);
             data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
-            const query = generalBuilder.insertRow(module.name, data);
+            const query = commonBuilder.insertRow(module.name, data);
 
             // after validation
             await validationQuery.runValidation(data, moduleId, actionId.create, validationTimeId.after);
@@ -164,7 +164,7 @@ module.exports = {
 
             data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
-            const query = generalBuilder.updateRow(module.name, data, condition);
+            const query = commonBuilder.updateRow(module.name, data, condition);
 
             return await db.sequelize
                 .query(query)
@@ -181,7 +181,7 @@ module.exports = {
 
     async getMenu(roleId) {
         try {
-            const query = generalBuilder.getMenu(roleId);
+            const query = commonBuilder.getMenu(roleId);
 
             return await db.sequelize
                 .query(query)
