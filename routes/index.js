@@ -3,6 +3,7 @@ var router = express.Router();
 
 const authController = require('../controllers').auth;
 const commonController = require('../controllers').common;
+const fieldController = require('../controllers').field;
 const moduleController = require('../controllers').modules;
 const scriptController = require('../controllers').script;
 
@@ -20,6 +21,9 @@ router.post('/api/common/create', authController.authenticateToken, commonContro
 router.post('/api/common/delete', authController.authenticateToken, commonController.delete);
 router.post('/api/common/rows', authController.authenticateToken, commonController.rows);
 router.post('/api/common/update', authController.authenticateToken, commonController.update);
+
+/* field */
+router.get('/api/field/rows', authController.authenticateToken, fieldController.rows);
 
 /* script */
 router.get('/api/script/run', authController.authenticateToken, scriptController.run);
