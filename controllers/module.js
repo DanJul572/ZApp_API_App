@@ -6,6 +6,19 @@ const Module = db.Module;
 const Field = db.Field;
 
 module.exports = {
+    async detail(req, res) {
+        const request = req.query;
+        try {
+            const module = await moduleQuery.getModule(request.moduleId);
+            const fields = await fieldQuery.getFields(request.moduleId);
+            module.fields = fields;
+
+            return res.status(200).send(module);
+        } catch (error) {
+            return res.status(500).send(error.message);
+        }
+    },
+
     async create(req, res) {
         const t = await db.sequelize.transaction();
         const request = req.body;

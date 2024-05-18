@@ -29,6 +29,7 @@ router.get('/api/field/rows', authController.authenticateToken, fieldController.
 router.get('/api/script/run', authController.authenticateToken, scriptController.run);
 
 /* Module */
+router.get('/api/module/detail', authController.authenticateToken, moduleController.detail);
 router.post('/api/module/create', authController.authenticateToken, moduleController.create);
 router.post('/api/module/delete', authController.authenticateToken, moduleController.delete);
 
