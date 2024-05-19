@@ -24,10 +24,12 @@ module.exports = (sequelize, DataTypes) => {
             tableRefAlias: DataTypes.STRING,
             tableRefFilter: DataTypes.STRING,
             regex: DataTypes.STRING,
+            sequence: DataTypes.INTEGER,
             multiSelect: DataTypes.BOOLEAN,
             identity: DataTypes.BOOLEAN,
             notNull: DataTypes.BOOLEAN,
             unique: DataTypes.BOOLEAN,
+            autoIncrement: DataTypes.BOOLEAN,
         },
         {
             sequelize,

@@ -25,10 +25,12 @@ module.exports = {
                             tableRefAlias: null,
                             tableRefFilter: null,
                             regex: null,
+                            sequence: null,
                             multiSelect: false,
                             identity: false,
                             notNull: false,
                             unique: false,
+                            autoIncrement: false,
                         },
                         {
                             moduleId: id,
@@ -42,10 +44,12 @@ module.exports = {
                             tableRefAlias: null,
                             tableRefFilter: null,
                             regex: null,
+                            srquence: null,
                             multiSelect: false,
                             identity: false,
                             notNull: false,
                             unique: false,
+                            autoIncrement: false,
                         },
                     ];
                     return fields.concat(timestampFields);

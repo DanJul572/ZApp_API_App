@@ -3,7 +3,7 @@ const inputType = require('../constats/inputType');
 
 module.exports = {
     findByModule(moduleId) {
-        return `SELECT * FROM "Fields" WHERE "moduleId" = ${moduleId}`;
+        return `SELECT * FROM "Fields" WHERE "moduleId" = ${moduleId} ORDER BY "sequence" ASC`;
     },
 
     findPrimaryField(moduleId) {
