@@ -27,8 +27,11 @@ module.exports = {
 
     async detail(req, res) {
         const request = req.query;
+        const token = req.header('Authorization');
+        const user = jwt.verify(token, auth.secretKey);
+
         try {
-            const data = await commonQuery.getRowDetail(request.moduleId, request.rowId);
+            const data = await commonQuery.getRowDetail(user, request.moduleId, request.rowId);
             return res.status(200).send(data);
         } catch (error) {
             return res.status(500).send(error.message);
@@ -61,8 +64,11 @@ module.exports = {
     async create(req, res) {
         const t = await db.sequelize.transaction();
         const request = req.body;
+        const token = req.header('Authorization');
+        const user = jwt.verify(token, auth.secretKey);
+
         try {
-            const data = await commonQuery.insertRow(request.moduleId, request.data);
+            const data = await commonQuery.insertRow(user, request.moduleId, request.data);
             t.commit();
             return res.status(200).send(data);
         } catch (error) {
