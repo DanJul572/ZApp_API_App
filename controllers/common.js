@@ -68,7 +68,7 @@ module.exports = {
         const user = jwt.verify(token, auth.secretKey);
 
         try {
-            const data = await commonQuery.insertRow(user, request.moduleId, request.data);
+            const data = await commonQuery.insertRow(request.moduleId, request.data, user);
             t.commit();
             return res.status(200).send(data);
         } catch (error) {

@@ -78,7 +78,7 @@ module.exports = {
                 rowId: rowId,
                 moduleId: moduleId,
             };
-            await validationQuery.runValidation(user, data, moduleId, actionId.detail, validationTimeId.before);
+            await validationQuery.runValidation(data, moduleId, actionId.detail, validationTimeId.before, user);
 
             const module = await moduleQuery.getModule(moduleId);
             const primaryField = await fieldQuery.getPrimaryField(moduleId);
@@ -132,12 +132,12 @@ module.exports = {
         }
     },
 
-    async insertRow(user, moduleId, data) {
+    async insertRow(moduleId, data, user = null) {
         try {
             const module = await moduleQuery.getModule(moduleId);
 
             // before validation
-            await validationQuery.runValidation(user, data, moduleId, actionId.create, validationTimeId.before);
+            await validationQuery.runValidation(data, moduleId, actionId.create, validationTimeId.before, user);
 
             // insert
             data.createdAt = dayjs().format(datetimeFormat.datetime.value);
@@ -146,7 +146,7 @@ module.exports = {
             const query = commonBuilder.insertRow(module.name, data);
 
             // after validation
-            await validationQuery.runValidation(user, data, moduleId, actionId.create, validationTimeId.after);
+            await validationQuery.runValidation(data, moduleId, actionId.create, validationTimeId.after, user);
 
             return await db.sequelize
                 .query(query)

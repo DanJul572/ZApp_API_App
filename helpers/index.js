@@ -1,6 +1,12 @@
-function replacePlaceholders(user, str, obj) {
+function replacePlaceholders(str, obj, user = null) {
     const placeholderRegex = /@(\w+)@/g;
-    const combinedObj = {...user, ...obj};
+    let combinedObj = null;
+
+    if (!user) {
+        combinedObj = {...obj};
+    } else {
+        combinedObj = {...user, ...obj};
+    }
 
     return str.replace(placeholderRegex, (match, placeholder) => {
         return combinedObj[placeholder] !== undefined ? combinedObj[placeholder] : match;

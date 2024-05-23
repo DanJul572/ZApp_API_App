@@ -20,13 +20,13 @@ function getValidations(moduleId, actionId, validationTimeId) {
     }
 }
 
-async function runValidation(user, data, moduleId, actionId, validationTimeId) {
+async function runValidation(data, moduleId, actionId, validationTimeId, user = null) {
     try {
         const validations = await getValidations(moduleId, actionId, validationTimeId);
         if (validations && validations.length > 0) {
             for (let index = 0; index < validations.length; index++) {
                 const validation = validations[index];
-                validation.sql = helpers.replacePlaceholders(user, validation.sql, data);
+                validation.sql = helpers.replacePlaceholders(validation.sql, data, user);
 
                 await db.sequelize.query(validation.sql).catch(error => {
                     throw new Error(error.message);
