@@ -1,12 +1,13 @@
 const {rowsPerPage} = require('../constats/setting');
 
-function getRows(table, fields, page, filter, sort) {
+function getRows(table, fields, page, filter, sort, defaultFilter) {
     const offset = (page - 1) * rowsPerPage;
 
     let rowsQuery = `SELECT ${fields} FROM "${table}"`;
 
-    if (filter && filter.length) {
-        const where = `${filter.map(condition => `"${condition.id}" ILIKE '%${condition.value}%'`).join(' AND ')}`;
+    const combinedFilters = [...(defaultFilter || []), ...(filter || [])];
+    if (combinedFilters.length) {
+        const where = combinedFilters.map(condition => `"${condition.id}" = '${condition.value}'`).join(' AND ');
         rowsQuery += ` WHERE ${where}`;
     }
 

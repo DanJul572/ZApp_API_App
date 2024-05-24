@@ -8,7 +8,13 @@ module.exports = {
     async rows(req, res) {
         const request = req.body;
         try {
-            const data = await commonQuery.getRows(request.id, request.page, request.filter, request.sort);
+            const data = await commonQuery.getRows(
+                request.id,
+                request.page,
+                request.filter,
+                request.sort,
+                request.defaultFilter,
+            );
             return res.status(200).send(data);
         } catch (error) {
             return res.status(500).send(error.message);
