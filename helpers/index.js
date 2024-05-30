@@ -1,18 +1,29 @@
-function replacePlaceholders(str, obj, user = null) {
-    const placeholderRegex = /@(\w+)@/g;
-    let combinedObj = null;
+function replacePlaceholders(str, obj, user = {}) {
+    const combinedObj = {...user, ...obj};
+    return str.replace(/@(\w+)@/g, (match, placeholder) =>
+        combinedObj[placeholder] !== undefined ? combinedObj[placeholder] : match,
+    );
+}
 
-    if (!user) {
-        combinedObj = {...obj};
-    } else {
-        combinedObj = {...user, ...obj};
+function getErrorResponse(error) {
+    const separatorIndex = error.indexOf(':');
+    if (separatorIndex === -1) {
+        return {
+            message: error,
+            code: 500,
+        };
     }
 
-    return str.replace(placeholderRegex, (match, placeholder) => {
-        return combinedObj[placeholder] !== undefined ? combinedObj[placeholder] : match;
-    });
+    const code = error.substring(0, separatorIndex);
+    const message = error.substring(separatorIndex + 1);
+
+    return {
+        message,
+        code: parseInt(code),
+    };
 }
 
 module.exports = {
     replacePlaceholders,
+    getErrorResponse,
 };

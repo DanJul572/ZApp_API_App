@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const commonQuery = require('../queries/commonQuery');
 const auth = require('../constats/auth');
 
+const {getErrorResponse} = require('../helpers');
+
 module.exports = {
     async rows(req, res) {
         const request = req.body;
@@ -40,7 +42,8 @@ module.exports = {
             const data = await commonQuery.getRowDetail(user, request.moduleId, request.rowId);
             return res.status(200).send(data);
         } catch (error) {
-            return res.status(500).send(error.message);
+            const response = getErrorResponse(error.message);
+            return res.status(response.code).send(response.message);
         }
     },
 
@@ -79,7 +82,8 @@ module.exports = {
             return res.status(200).send(data);
         } catch (error) {
             await t.rollback();
-            return res.status(500).send(error.message);
+            const response = getErrorResponse(error.message);
+            return res.status(response.code).send(response.message);
         }
     },
 
