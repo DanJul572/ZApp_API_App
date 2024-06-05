@@ -1,22 +1,45 @@
 const {rowsPerPage} = require('../constats/setting');
+const fieldBuilder = require('./fieldBuilder');
+const jsonToWhereClause = require('../helpers/jsonToWhereClause');
 
-function getRows(table, fields, page, filter, sort, defaultFilter) {
+function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter) {
     const offset = (page - 1) * rowsPerPage;
 
-    let rowsQuery = `SELECT ${fields} FROM "${table}"`;
+    // Format fields
+    const fieldsFormat = fields.map(field => fieldBuilder.selectFormat(field, module.name)).join(',');
 
+    // Initiation Query
+    let rowsQuery = `SELECT ${fieldsFormat} FROM "${table}"`;
+
+    // Generate the advance filter clause
+    const advanceFilterFormat = jsonToWhereClause(advanceFilter);
+
+    // Combine default filters and filters provided
     const combinedFilters = [...(defaultFilter || []), ...(filter || [])];
+    let whereClauses = [];
+
     if (combinedFilters.length) {
-        const where = combinedFilters.map(condition => `"${condition.id}" = '${condition.value}'`).join(' AND ');
-        rowsQuery += ` WHERE ${where}`;
+        const combinedWhere = combinedFilters.map(condition => `"${condition.id}" = '${condition.value}'`).join(' AND ');
+        whereClauses.push(combinedWhere);
     }
 
+    // Add the advance filter format to where clauses if it exists
+    if (advanceFilterFormat) {
+        whereClauses.push(advanceFilterFormat);
+    }
+
+    if (whereClauses.length) {
+        rowsQuery += ` WHERE ${whereClauses.join(' AND ')}`;
+    }
+
+    // Add sorting if provided
     if (sort && sort.length) {
         const ascdesc = sort[0].desc ? 'DESC' : 'ASC';
         const orderBy = `"${sort[0].id}" ${ascdesc}`;
         rowsQuery += ` ORDER BY ${orderBy}`;
     }
 
+    // Add pagination
     rowsQuery += ` LIMIT ${rowsPerPage} OFFSET ${offset}`;
 
     return rowsQuery;

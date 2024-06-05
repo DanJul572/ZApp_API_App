@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const commonQuery = require('../queries/commonQuery');
 const auth = require('../constats/auth');
 
-const {getErrorResponse} = require('../helpers');
+const getErrorResponse = require('../helpers/getErrorResponse');
 
 module.exports = {
     async rows(req, res) {
@@ -13,6 +13,7 @@ module.exports = {
             const data = await commonQuery.getRows(
                 request.id,
                 request.page,
+                request.advanceFilter,
                 request.filter,
                 request.sort,
                 request.defaultFilter,

@@ -1,10 +1,3 @@
-function replacePlaceholders(str, obj, user = {}) {
-    const combinedObj = {...user, ...obj};
-    return str.replace(/@(\w+)@/g, (match, placeholder) =>
-        combinedObj[placeholder] !== undefined ? combinedObj[placeholder] : match,
-    );
-}
-
 function getErrorResponse(error) {
     const separatorIndex = error.indexOf(':');
     if (separatorIndex === -1) {
@@ -23,7 +16,4 @@ function getErrorResponse(error) {
     };
 }
 
-module.exports = {
-    replacePlaceholders,
-    getErrorResponse,
-};
+module.exports = getErrorResponse;

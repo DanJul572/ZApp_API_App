@@ -6,7 +6,6 @@ const fieldQuery = require('./fieldQuery');
 const moduleQuery = require('./moduleQuery');
 const validationQuery = require('./validationQuery');
 
-const fieldBuilder = require('../builders/fieldBuilder');
 const commonBuilder = require('../builders/commonBuilder');
 
 const actionId = require('../constats/actionId');
@@ -14,15 +13,12 @@ const datetimeFormat = require('../constats/datetimeFormat');
 const validationTimeId = require('../constats/validationTimeId');
 
 module.exports = {
-    async getRows(id, page, filter, order, defaultFilter) {
+    async getRows(id, page, advanceFilter, filter, order, defaultFilter) {
         try {
             const module = await moduleQuery.getModule(id);
-
-            let fields = await fieldQuery.getFields(id);
-            fields = fields.map(field => fieldBuilder.selectFormat(field, module.name)).join(',');
-
+            const fields = await fieldQuery.getFields(id);
             const countQuery = commonBuilder.getRowsCount(module.name);
-            const rowsQuery = commonBuilder.getRows(module.name, fields, page, filter, order, defaultFilter);
+            const rowsQuery = commonBuilder.getRows(module.name, fields, page, advanceFilter, filter, order, defaultFilter);
 
             const count = await db.sequelize
                 .query(countQuery)

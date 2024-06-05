@@ -1,8 +1,8 @@
 const db = require('../models');
 
-const validationBuilder = require('../builders/validationBuilder');
+const replacePlaceholders = require('../helpers/replacePlaceholders');
 
-const helpers = require('../helpers');
+const validationBuilder = require('../builders/validationBuilder');
 
 function getValidations(moduleId, actionId, validationTimeId) {
     try {
@@ -26,7 +26,7 @@ async function runValidation(data, moduleId, actionId, validationTimeId, user = 
         if (validations && validations.length > 0) {
             for (let index = 0; index < validations.length; index++) {
                 const validation = validations[index];
-                validation.sql = helpers.replacePlaceholders(validation.sql, data, user);
+                validation.sql = replacePlaceholders(validation.sql, data, user);
 
                 await db.sequelize.query(validation.sql).catch(error => {
                     throw new Error(error.message);
