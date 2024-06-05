@@ -5,6 +5,4 @@ function replacePlaceholders(str, obj, user = {}) {
     );
 }
 
-module.exports = {
-    replacePlaceholders,
-};
+module.exports = replacePlaceholders;

@@ -63,46 +63,55 @@ function getOptions(table, value, label) {
 
 function insertRow(table, data) {
     let fieldQuery = '';
-    let valueQuery = '';
+    let valuePlaceholders = '';
+    const values = [];
 
+    let index = 1; // Index for parameterized values
     for (const key in data) {
         if (Object.hasOwnProperty.call(data, key)) {
             fieldQuery += `"${key}", `;
-            const value = typeof data[key] === 'string' ? `'${data[key]}'` : data[key];
-            valueQuery += `${value}, `;
+            valuePlaceholders += `$${index}, `;
+            values.push(data[key]);
+            index++;
         }
     }
 
     fieldQuery = fieldQuery.slice(0, -2);
-    valueQuery = valueQuery.slice(0, -2);
+    valuePlaceholders = valuePlaceholders.slice(0, -2);
 
-    return `INSERT INTO "${table}" (${fieldQuery}) VALUES (${valueQuery})`;
+    const query = `INSERT INTO "${table}" (${fieldQuery}) VALUES (${valuePlaceholders})`;
+
+    return {query, values};
 }
 
 function updateRow(table, newData, condition) {
-    let updateQuery = `UPDATE "${table}" SET `;
+    let query = `UPDATE "${table}" SET `;
+    const values = [];
+    let index = 1; // Index for parameterized values
 
     for (const key in newData) {
         if (Object.hasOwnProperty.call(newData, key)) {
-            const value = typeof newData[key] === 'string' ? `'${newData[key]}'` : newData[key];
-            updateQuery += `"${key}" = ${value}, `;
+            query += `"${key}" = $${index}, `;
+            values.push(newData[key]);
+            index++;
         }
     }
 
-    updateQuery = updateQuery.slice(0, -2);
+    query = query.slice(0, -2); // Remove trailing comma and space
 
     if (condition) {
-        updateQuery += ' WHERE ';
+        query += ' WHERE ';
         for (const key in condition) {
             if (Object.hasOwnProperty.call(condition, key)) {
-                const value = typeof condition[key] === 'string' ? `'${condition[key]}'` : condition[key];
-                updateQuery += `"${key}" = ${value} AND `;
+                query += `"${key}" = $${index} AND `;
+                values.push(condition[key]);
+                index++;
             }
         }
-        updateQuery = updateQuery.slice(0, -5);
+        query = query.slice(0, -5); // Remove trailing ' AND '
     }
 
-    return updateQuery;
+    return {query, values};
 }
 
 function getMenu(roleId) {

@@ -139,13 +139,16 @@ module.exports = {
             data.createdAt = dayjs().format(datetimeFormat.datetime.value);
             data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
-            const query = commonBuilder.insertRow(module.name, data);
+            const {query, values} = commonBuilder.insertRow(module.name, data);
 
             // after validation
             await validationQuery.runValidation(data, moduleId, actionId.create, validationTimeId.after, user);
 
             return await db.sequelize
-                .query(query)
+                .query(query, {
+                    bind: values,
+                    type: db.sequelize.QueryTypes.INSERT,
+                })
                 .then(() => {
                     return 'Data has been created.';
                 })
@@ -168,10 +171,13 @@ module.exports = {
 
             data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
-            const query = commonBuilder.updateRow(module.name, data, condition);
+            const {query, values} = commonBuilder.updateRow(module.name, data, condition);
 
             return await db.sequelize
-                .query(query)
+                .query(query, {
+                    bind: values,
+                    type: db.sequelize.QueryTypes.UPDATE,
+                })
                 .then(() => {
                     return 'Data has been updated.';
                 })
