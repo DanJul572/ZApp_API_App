@@ -1,11 +1,11 @@
 module.exports = {
-    getValidations(moduleId, actionId, validationTimeId) {
+    getValidations() {
         return `SELECT "Scripts"."sql" FROM "Validations"
             JOIN "Scripts"
             ON "Validations"."scriptId" = "Scripts"."id"
-            WHERE "Validations"."moduleId" = ${moduleId}
-            AND "Validations"."actionId" = ${actionId}
-            AND "Validations"."validationTimeId" = ${validationTimeId}
+            WHERE "Validations"."moduleId" = $1
+            AND "Validations"."actionId" = $2
+            AND "Validations"."validationTimeId" = $3
             ORDER BY "Validations"."id" ASC;
         `;
     },

@@ -6,11 +6,14 @@ const validationBuilder = require('../builders/validationBuilder');
 
 function getValidations(moduleId, actionId, validationTimeId) {
     try {
-        const query = validationBuilder.getValidations(moduleId, actionId, validationTimeId);
+        const query = validationBuilder.getValidations();
         return db.sequelize
-            .query(query)
+            .query(query, {
+                bind: [moduleId, actionId, validationTimeId],
+                type: db.sequelize.QueryTypes.SELECT,
+            })
             .then(result => {
-                return result.length > 0 ? result[0] : null;
+                return result.length > 0 ? result : null;
             })
             .catch(error => {
                 throw new Error(error.message);

@@ -89,12 +89,15 @@ module.exports = {
 
             const module = await moduleQuery.getModule(moduleId);
             const primaryField = await fieldQuery.getPrimaryField(moduleId);
-            const query = commonBuilder.getRowDetail(module.name, primaryField.name, rowId);
+            const query = commonBuilder.getRowDetail(module.name, primaryField.name);
 
             return await db.sequelize
-                .query(query)
+                .query(query, {
+                    bind: [rowId],
+                    type: db.sequelize.QueryTypes.SELECT,
+                })
                 .then(result => {
-                    return result.length > 0 ? result[0][0] : null;
+                    return result.length > 0 ? result[0] : null;
                 })
                 .catch(error => {
                     throw new Error(error.message);
@@ -108,9 +111,12 @@ module.exports = {
         try {
             const module = await moduleQuery.getModule(moduleId);
             const primaryField = await fieldQuery.getPrimaryField(moduleId);
-            const query = commonBuilder.deleteRow(module.name, primaryField.name, id);
+            const query = commonBuilder.deleteRow(module.name, primaryField.name);
             return await db.sequelize
-                .query(query)
+                .query(query, {
+                    bind: [id],
+                    type: db.sequelize.QueryTypes.DELETE,
+                })
                 .then(() => {
                     return 'Data has been deleted.';
                 })
@@ -202,12 +208,15 @@ module.exports = {
 
     async getMenu(roleId) {
         try {
-            const query = commonBuilder.getMenu(roleId);
+            const query = commonBuilder.getMenu();
 
             return await db.sequelize
-                .query(query)
+                .query(query, {
+                    bind: [roleId],
+                    type: db.sequelize.QueryTypes.SELECT,
+                })
                 .then(result => {
-                    return result.length > 0 ? result[0][0] : null;
+                    return result.length > 0 ? result[0] : null;
                 })
                 .catch(error => {
                     throw new Error(error.message);

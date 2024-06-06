@@ -6,12 +6,15 @@ const fieldBuilder = require('../builders/fieldBuilder');
 module.exports = {
     async getFields(id) {
         try {
-            const query = fieldBuilder.findByModule(id);
+            const query = fieldBuilder.findByModule();
             return db.sequelize
-                .query(query)
+                .query(query, {
+                    bind: [id],
+                    type: db.sequelize.QueryTypes.SELECT,
+                })
                 .then(result => {
                     if (result.length <= 0) return [];
-                    const fields = result[0];
+                    const fields = result;
                     const timestampFields = [
                         {
                             moduleId: id,
@@ -64,10 +67,15 @@ module.exports = {
 
     async deleteFields(id) {
         try {
-            const query = fieldBuilder.deleteByModule(id);
-            return db.sequelize.query(query).catch(error => {
-                throw new Error(error.message);
-            });
+            const query = fieldBuilder.deleteByModule();
+            return db.sequelize
+                .query(query, {
+                    bind: [id],
+                    type: db.sequelize.QueryTypes.SELECT,
+                })
+                .catch(error => {
+                    throw new Error(error.message);
+                });
         } catch (error) {
             throw new Error(error.message);
         }
@@ -75,11 +83,14 @@ module.exports = {
 
     async getPrimaryField(id) {
         try {
-            const query = fieldBuilder.findPrimaryField(id);
+            const query = fieldBuilder.findPrimaryField();
             return db.sequelize
-                .query(query)
+                .query(query, {
+                    bind: [id],
+                    type: db.sequelize.QueryTypes.SELECT,
+                })
                 .then(result => {
-                    return result.length > 0 ? result[0][0] : null;
+                    return result.length > 0 ? result[0] : null;
                 })
                 .catch(error => {
                     throw new Error(error.message);
@@ -91,11 +102,14 @@ module.exports = {
 
     async getField(id) {
         try {
-            const query = fieldBuilder.findById(id);
+            const query = fieldBuilder.findById();
             return db.sequelize
-                .query(query)
+                .query(query, {
+                    bind: [id],
+                    type: db.sequelize.QueryTypes.SELECT,
+                })
                 .then(result => {
-                    return result.length > 0 ? result[0][0] : null;
+                    return result.length > 0 ? result[0] : null;
                 })
                 .catch(error => {
                     throw new Error(error.message);

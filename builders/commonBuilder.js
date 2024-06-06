@@ -51,16 +51,16 @@ function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter
     return {rowsQuery, rowsValues};
 }
 
-function getRowDetail(table, field, id) {
-    return `SELECT * FROM "${table}" WHERE "${field}" = ${id}`;
+function getRowDetail(table, field) {
+    return `SELECT * FROM "${table}" WHERE "${field}" = $1`;
 }
 
 function getRowsCount(table) {
     return `SELECT count(*) AS "count" FROM "${table}"`;
 }
 
-function deleteRow(table, field, id) {
-    return `DELETE FROM "${table}" WHERE "${field}" = ${id}`;
+function deleteRow(table, field) {
+    return `DELETE FROM "${table}" WHERE "${field}" = $1`;
 }
 
 function getOptions(table, value, label) {
@@ -120,8 +120,8 @@ function updateRow(table, newData, condition) {
     return {query, values};
 }
 
-function getMenu(roleId) {
-    return `SELECT * FROM "Menus" WHERE "roleId" = ${roleId}`;
+function getMenu() {
+    return `SELECT * FROM "Menus" WHERE "roleId" = $1`;
 }
 
 module.exports = {

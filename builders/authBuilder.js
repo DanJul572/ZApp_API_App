@@ -1,13 +1,13 @@
 module.exports = {
-    findByEmail(email) {
-        return `SELECT * FROM "Users" WHERE "email" = '${email}';`;
+    findByEmail() {
+        return `SELECT * FROM "Users" WHERE "email" = $1;`;
     },
 
-    findTokenByUserId(userId) {
-        return `SELECT * FROM "Tokens" WHERE "userId" = ${userId};`;
+    findTokenByUserId() {
+        return `SELECT * FROM "Tokens" WHERE "userId" = $1;`;
     },
 
-    deleteTokenByUserId(userId) {
-        return `DELETE FROM "Tokens" WHERE "userId" = ${userId};`;
+    deleteTokenByUserId() {
+        return `DELETE FROM "Tokens" WHERE "userId" = $1;`;
     },
 };

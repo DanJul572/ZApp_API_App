@@ -1,8 +1,8 @@
 const dataType = require('../constats/dataType');
 
 module.exports = {
-    findOne(id) {
-        return `SELECT * FROM "Modules" WHERE "id" = ${id}`;
+    findOne() {
+        return `SELECT * FROM "Modules" WHERE "id" = $1`;
     },
 
     createTable(name, fields) {

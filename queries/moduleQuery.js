@@ -26,11 +26,14 @@ module.exports = {
 
     async getModule(id) {
         try {
-            const query = moduleBuilder.findOne(id);
+            const query = moduleBuilder.findOne();
             return db.sequelize
-                .query(query)
+                .query(query, {
+                    bind: [id],
+                    type: db.sequelize.QueryTypes.SELECT,
+                })
                 .then(result => {
-                    return result.length > 0 ? result[0][0] : null;
+                    return result.length > 0 ? result[0] : null;
                 })
                 .catch(error => {
                     throw new Error(error.message);

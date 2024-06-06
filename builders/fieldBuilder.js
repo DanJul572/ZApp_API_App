@@ -2,20 +2,20 @@ const datetimeFormat = require('../constats/datetimeFormat');
 const inputType = require('../constats/inputType');
 
 module.exports = {
-    findByModule(moduleId) {
-        return `SELECT * FROM "Fields" WHERE "moduleId" = ${moduleId} ORDER BY "sequence" ASC`;
+    findByModule() {
+        return `SELECT * FROM "Fields" WHERE "moduleId" = $1 ORDER BY "sequence" ASC`;
     },
 
-    findPrimaryField(moduleId) {
-        return `SELECT * FROM "Fields" WHERE "moduleId" = ${moduleId} AND "identity" = true`;
+    findPrimaryField() {
+        return `SELECT * FROM "Fields" WHERE "moduleId" = $1 AND "identity" = true`;
     },
 
-    findById(moduleId) {
-        return `SELECT * FROM "Fields" WHERE "id" = ${moduleId}`;
+    findById() {
+        return `SELECT * FROM "Fields" WHERE "id" = $1`;
     },
 
-    deleteByModule(moduleId) {
-        return `DELETE FROM "Fields" WHERE "moduleId" = ${moduleId}`;
+    deleteByModule() {
+        return `DELETE FROM "Fields" WHERE "moduleId" = $1`;
     },
 
     selectFormat(field, module) {

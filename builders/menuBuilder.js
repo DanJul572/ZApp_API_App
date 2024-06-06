@@ -1,5 +1,5 @@
 module.exports = {
-    findByRoleId(roleId) {
-        return `SELECT * FROM "Menus" WHERE "roleId" = '${roleId}';`;
+    findByRoleId() {
+        return `SELECT * FROM "Menus" WHERE "roleId" = $1;`;
     },
 };
