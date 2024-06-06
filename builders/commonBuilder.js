@@ -4,6 +4,7 @@ const jsonToWhereClause = require('../helpers/jsonToWhereClause');
 
 function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter) {
     const offset = (page - 1) * rowsPerPage;
+    const rowsValues = []; // Array untuk menyimpan nilai parameter
 
     // Format fields
     const fieldsFormat = fields.map(field => fieldBuilder.selectFormat(field, table)).join(',');
@@ -17,9 +18,13 @@ function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter
     // Combine default filters and filters provided
     const combinedFilters = [...(defaultFilter || []), ...(filter || [])];
     let whereClauses = [];
-
     if (combinedFilters.length) {
-        const combinedWhere = combinedFilters.map(condition => `"${condition.id}" = '${condition.value}'`).join(' AND ');
+        const combinedWhere = combinedFilters
+            .map(condition => {
+                rowsValues.push(condition.value);
+                return `"${condition.id}" = $${rowsValues.length}`;
+            })
+            .join(' AND ');
         whereClauses.push(combinedWhere);
     }
 
@@ -40,9 +45,10 @@ function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter
     }
 
     // Add pagination
-    rowsQuery += ` LIMIT ${rowsPerPage} OFFSET ${offset}`;
+    rowsValues.push(offset);
+    rowsQuery += ` LIMIT ${rowsPerPage} OFFSET $${rowsValues.length}`;
 
-    return rowsQuery;
+    return {rowsQuery, rowsValues};
 }
 
 function getRowDetail(table, field, id) {

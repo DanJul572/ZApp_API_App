@@ -18,7 +18,15 @@ module.exports = {
             const module = await moduleQuery.getModule(id);
             const fields = await fieldQuery.getFields(id);
             const countQuery = commonBuilder.getRowsCount(module.name);
-            const rowsQuery = commonBuilder.getRows(module.name, fields, page, advanceFilter, filter, order, defaultFilter);
+            const {rowsQuery, rowsValues} = commonBuilder.getRows(
+                module.name,
+                fields,
+                page,
+                advanceFilter,
+                filter,
+                order,
+                defaultFilter,
+            );
 
             const count = await db.sequelize
                 .query(countQuery)
@@ -30,9 +38,12 @@ module.exports = {
                 });
 
             const rows = await db.sequelize
-                .query(rowsQuery)
+                .query(rowsQuery, {
+                    bind: rowsValues,
+                    type: db.sequelize.QueryTypes.SELECT,
+                })
                 .then(result => {
-                    return result.length > 0 ? result[0] : [];
+                    return result.length > 0 ? result : [];
                 })
                 .catch(error => {
                     throw new Error(error.message);
