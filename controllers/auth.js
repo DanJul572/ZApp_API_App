@@ -43,7 +43,7 @@ async function findValidTokenForUser(userId) {
 
 async function login(req, res) {
     const t = await db.sequelize.transaction();
-    const request = req.body;
+    const request = JSON.parse(req.body.data);
 
     try {
         const user = await authQuery.findByEmail(request.email);
@@ -93,7 +93,7 @@ async function login(req, res) {
 
 async function register(req, res) {
     const t = await db.sequelize.transaction();
-    const request = req.body;
+    const request = JSON.parse(req.body.data);
 
     try {
         const hashedPassword = await bcrypt.hash(request.password, auth.salt);

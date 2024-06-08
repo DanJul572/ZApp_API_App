@@ -2,13 +2,15 @@ const db = require('../models');
 const jwt = require('jsonwebtoken');
 
 const commonQuery = require('../queries/commonQuery');
+const filesQuery = require('../queries/filesQuery');
+
 const auth = require('../constats/auth');
 
 const getErrorResponse = require('../helpers/getErrorResponse');
 
 module.exports = {
     async rows(req, res) {
-        const request = req.body;
+        const request = JSON.parse(req.body.data);
         try {
             const data = await commonQuery.getRows(
                 request.id,
@@ -50,7 +52,7 @@ module.exports = {
 
     async delete(req, res) {
         const t = await db.sequelize.transaction();
-        const request = req.body;
+        const request = JSON.parse(req.body.data);
         try {
             const data = await commonQuery.deleteRow(request.moduleId, request.id);
             t.commit();
@@ -73,12 +75,18 @@ module.exports = {
 
     async create(req, res) {
         const t = await db.sequelize.transaction();
-        const request = req.body;
+        const request = JSON.parse(req.body.data);
+        const files = req.files;
         const token = req.header('Authorization');
         const user = jwt.verify(token, auth.secretKey);
 
         try {
+            if (files && files.length > 0) {
+                filesQuery.save(files);
+            }
+
             const data = await commonQuery.insertRow(request.moduleId, request.data, user);
+            
             t.commit();
             return res.status(200).send(data);
         } catch (error) {
@@ -90,7 +98,7 @@ module.exports = {
 
     async update(req, res) {
         const t = await db.sequelize.transaction();
-        const request = req.body;
+        const request = JSON.parse(req.body.data);
         try {
             const data = await commonQuery.updateRow(request.moduleId, request.rowId, request.data);
             t.commit();

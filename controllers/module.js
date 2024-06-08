@@ -21,7 +21,7 @@ module.exports = {
 
     async create(req, res) {
         const t = await db.sequelize.transaction();
-        const request = req.body;
+        const request = JSON.parse(req.body.data);
 
         try {
             /* validation */
@@ -51,7 +51,7 @@ module.exports = {
 
     async delete(req, res) {
         const t = await db.sequelize.transaction();
-        const request = req.body;
+        const request = JSON.parse(req.body.data);
 
         try {
             /* module info */
