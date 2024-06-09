@@ -20,6 +20,18 @@ module.exports = {
         return {query, values};
     },
 
+    delete(files) {
+        let query = 'DELETE FROM "Files" WHERE "name" IN (';
+        for (let index = 0; index < files.length; index++) {
+            query += `$${index + 1}`;
+            if (index + 1 < files.length) {
+                query += ', ';
+            }
+        }
+        query += ')';
+        return query;
+    },
+
     download() {
         return 'SELECT "data" from "Files" WHERE "name" = $1';
     },

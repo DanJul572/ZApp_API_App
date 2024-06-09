@@ -4,12 +4,12 @@ const inputType = require('../constats/inputType');
 const fieldBuilder = require('../builders/fieldBuilder');
 
 module.exports = {
-    async getFields(id) {
+    async getFields(moduleId) {
         try {
             const query = fieldBuilder.findByModule();
             return db.sequelize
                 .query(query, {
-                    bind: [id],
+                    bind: [moduleId],
                     type: db.sequelize.QueryTypes.SELECT,
                 })
                 .then(result => {
@@ -17,7 +17,7 @@ module.exports = {
                     const fields = result;
                     const timestampFields = [
                         {
-                            moduleId: id,
+                            moduleId: moduleId,
                             name: 'createdAt',
                             label: 'Created At',
                             inputType: inputType.datetime,
@@ -36,7 +36,7 @@ module.exports = {
                             autoIncrement: false,
                         },
                         {
-                            moduleId: id,
+                            moduleId: moduleId,
                             name: 'updatedAt',
                             label: 'Updated At',
                             inputType: inputType.datetime,

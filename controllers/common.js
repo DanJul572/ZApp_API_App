@@ -2,7 +2,6 @@ const db = require('../models');
 const jwt = require('jsonwebtoken');
 
 const commonQuery = require('../queries/commonQuery');
-const filesQuery = require('../queries/filesQuery');
 
 const auth = require('../constats/auth');
 
@@ -81,12 +80,8 @@ module.exports = {
         const user = jwt.verify(token, auth.secretKey);
 
         try {
-            if (files && files.length > 0) {
-                filesQuery.save(files);
-            }
+            const data = await commonQuery.insertRow(request.moduleId, request.data, user, files);
 
-            const data = await commonQuery.insertRow(request.moduleId, request.data, user);
-            
             t.commit();
             return res.status(200).send(data);
         } catch (error) {
