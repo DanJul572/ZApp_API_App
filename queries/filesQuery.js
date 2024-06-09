@@ -30,7 +30,7 @@ module.exports = {
         try {
             const fileFields = fields.filter(field => field.inputType === inputType.file);
 
-            if (!fields || !fields.length || !row) return;
+            if (!fileFields || !fileFields.length || !row) return;
 
             const deletedFiles = fileFields.map(field => row[field.name]);
             const query = filesBuilder.delete(deletedFiles);
