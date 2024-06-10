@@ -80,7 +80,6 @@ async function getColumns(id) {
 
 async function getRowDetail(user, moduleId, rowId) {
     try {
-        // before validation
         const data = {
             rowId: rowId,
             moduleId: moduleId,
