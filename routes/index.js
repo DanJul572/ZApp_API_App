@@ -4,7 +4,7 @@ var router = express.Router();
 const authController = require('../controllers').auth;
 const commonController = require('../controllers').common;
 const fieldController = require('../controllers').field;
-const filesController = require('../controllers').files;
+const fileController = require('../controllers').file;
 const moduleController = require('../controllers').modules;
 const scriptController = require('../controllers').script;
 
@@ -30,7 +30,7 @@ router.get('/api/field/rows', authController.authenticateToken, fieldController.
 router.get('/api/script/run', authController.authenticateToken, scriptController.run);
 
 /* script */
-router.get('/api/files/download', authController.authenticateToken, filesController.download);
+router.get('/api/file/download', authController.authenticateToken, fileController.download);
 
 /* Module */
 router.get('/api/module/detail', authController.authenticateToken, moduleController.detail);

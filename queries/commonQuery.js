@@ -3,7 +3,7 @@ const dayjs = require('dayjs');
 const db = require('../models');
 
 const fieldQuery = require('./fieldQuery');
-const filesQuery = require('./filesQuery');
+const fileQuery = require('./fileQuery');
 const moduleQuery = require('./moduleQuery');
 const validationQuery = require('./validationQuery');
 
@@ -116,7 +116,7 @@ async function deleteRow(moduleId, rowId) {
         const primaryField = moduleFields.find(field => field.identity);
 
         // Delete Files
-        filesQuery.delete(moduleFields, rowDetail);
+        fileQuery.delete(moduleFields, rowDetail);
 
         // Delete Rows
         const query = commonBuilder.deleteRow(module.name, primaryField.name);
@@ -162,7 +162,7 @@ async function insertRow(moduleId, data, user = null, files = []) {
         await validationQuery.runValidation(data, moduleId, actionId.create, validationTimeId.before, user);
 
         // save files
-        filesQuery.save(files);
+        fileQuery.save(files);
 
         // insert
         data.createdAt = dayjs().format(datetimeFormat.datetime.value);

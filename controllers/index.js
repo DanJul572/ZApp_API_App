@@ -1,7 +1,7 @@
 const auth = require('./auth');
 const common = require('./common');
 const field = require('./field');
-const files = require('./files');
+const file = require('./file');
 const modules = require('./module');
 const script = require('./script');
 
@@ -11,5 +11,5 @@ module.exports = {
     field,
     modules,
     script,
-    files,
+    file,
 };

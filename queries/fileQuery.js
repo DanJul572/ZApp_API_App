@@ -1,6 +1,6 @@
 const db = require('../models');
 
-const filesBuilder = require('../builders/filesBuilder');
+const filesBuilder = require('../builders/fileBuilder');
 
 const inputType = require('../constats/inputType');
 
