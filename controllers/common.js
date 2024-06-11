@@ -41,7 +41,7 @@ module.exports = {
         const user = jwt.verify(token, auth.secretKey);
 
         try {
-            const data = await commonQuery.getRowDetail(user, request.moduleId, request.rowId);
+            const data = await commonQuery.getRowDetail(request.moduleId, request.rowId, true, user);
             return res.status(200).send(data);
         } catch (error) {
             const response = getErrorResponse(error.message);

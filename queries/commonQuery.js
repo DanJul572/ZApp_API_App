@@ -78,13 +78,16 @@ async function getColumns(id) {
     }
 }
 
-async function getRowDetail(user, moduleId, rowId) {
+async function getRowDetail(moduleId, rowId, withValidation = true, user = null) {
     try {
         const data = {
             rowId: rowId,
             moduleId: moduleId,
         };
-        await validationQuery.runValidation(data, moduleId, actionId.detail, validationTimeId.before, user);
+
+        if (withValidation) {
+            await validationQuery.runValidation(data, moduleId, actionId.detail, validationTimeId.before, user);
+        }
 
         const module = await moduleQuery.getModule(moduleId);
         const primaryField = await fieldQuery.getPrimaryField(moduleId);
@@ -110,7 +113,7 @@ async function deleteRow(moduleId, rowId) {
     try {
         const module = await moduleQuery.getModule(moduleId);
         const moduleFields = await fieldQuery.getFields(moduleId);
-        const rowDetail = await getRowDetail(null, moduleId, rowId);
+        const rowDetail = await getRowDetail(moduleId, rowId, false);
 
         // Get Primary Field
         const primaryField = moduleFields.find(field => field.identity);
