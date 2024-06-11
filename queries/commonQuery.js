@@ -13,11 +13,23 @@ const actionId = require('../constats/actionId');
 const datetimeFormat = require('../constats/datetimeFormat');
 const validationTimeId = require('../constats/validationTimeId');
 
-async function getRows(id, page, advanceFilter, filter, order, defaultFilter) {
+async function getRows(moduleId, page, advanceFilter, filter, order, defaultFilter) {
     try {
-        const module = await moduleQuery.getModule(id);
-        const fields = await fieldQuery.getFields(id);
+        const module = await moduleQuery.getModule(moduleId);
+        const fields = await fieldQuery.getFields(moduleId);
         const countQuery = commonBuilder.getRowsCount(module.name);
+
+        // default sorting
+        if (!order || order.length <= 0) {
+            const primaryField = await fieldQuery.getPrimaryField(moduleId);
+            order = [
+                {
+                    id: primaryField.name,
+                    desc: false,
+                },
+            ];
+        }
+
         const {rowsQuery, rowsValues} = commonBuilder.getRows(
             module.name,
             fields,

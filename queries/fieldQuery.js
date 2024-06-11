@@ -81,12 +81,12 @@ module.exports = {
         }
     },
 
-    async getPrimaryField(id) {
+    async getPrimaryField(moduleId) {
         try {
             const query = fieldBuilder.findPrimaryField();
             return db.sequelize
                 .query(query, {
-                    bind: [id],
+                    bind: [moduleId],
                     type: db.sequelize.QueryTypes.SELECT,
                 })
                 .then(result => {
