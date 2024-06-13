@@ -140,7 +140,7 @@ async function deleteRow(moduleId, rowId) {
         const primaryField = moduleFields.find(field => field.identity);
 
         // Delete Files
-        fileQuery.delete(moduleFields, rowDetail);
+        await fileQuery.delete(moduleFields, rowDetail);
 
         // Delete Rows
         const query = commonBuilder.deleteRow(module.name, primaryField.name);
@@ -186,7 +186,7 @@ async function insertRow(moduleId, data, user = null, files = []) {
         await validationQuery.runValidation(data, moduleId, actionId.create, validationTimeId.before, user);
 
         // save files
-        fileQuery.save(files);
+        await fileQuery.save(files, moduleId);
 
         // insert
         data.createdAt = dayjs().format(datetimeFormat.datetime.value);
@@ -225,10 +225,10 @@ async function updateRow(moduleId, rowId, data, files = []) {
         const primaryField = moduleFields.find(field => field.identity);
 
         // delete files
-        fileQuery.delete(moduleFields, rowDetail);
+        await fileQuery.delete(moduleFields, rowDetail);
 
         // insert files
-        fileQuery.save(files);
+        await fileQuery.save(files, moduleId);
 
         // update row
         const condition = {

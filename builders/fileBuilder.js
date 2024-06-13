@@ -1,33 +1,18 @@
 module.exports = {
-    save(files) {
-        let query = 'INSERT INTO "Files" ("name", "data", "type", "encoding", "size") VALUES ';
-
+    save(files, moduleId) {
+        let query = 'INSERT INTO "Files" ("name", "data", "type", "encoding", "size", "moduleId") VALUES ';
         const values = [];
 
-        for (let index = 0; index < files.length; index++) {
-            const file = files[index];
-
+        files.forEach((file, index) => {
             const fileBuffer = Buffer.from(file.buffer, 'base64');
 
-            const filename = file.originalname;
-            const mimetype = file.mimetype;
-            const encoding = file.encoding;
-            const size = file.size;
+            query += `($${index * 6 + 1}, $${index * 6 + 2}, $${index * 6 + 3}, $${index * 6 + 4}, $${index * 6 + 5}, $${
+                index * 6 + 6
+            })${index + 1 < files.length ? ', ' : ''}`;
 
-            query += `($${index * 5 + 1}, $${index * 5 + 2}, $${index * 5 + 3}, $${index * 5 + 4}, $${index * 5 + 5})`;
+            values.push(file.originalname, fileBuffer, file.mimetype, file.encoding, file.size, moduleId);
+        });
 
-            if (index + 1 < files.length) {
-                query += ', ';
-            }
-
-            values.push(filename);
-            values.push(fileBuffer);
-            values.push(mimetype);
-            values.push(encoding);
-            values.push(size);
-        }
-
-        // Return query and values array
         return {query, values};
     },
 
@@ -41,6 +26,10 @@ module.exports = {
         }
         query += ')';
         return query;
+    },
+
+    deleteByModuleId() {
+        return 'DELETE FROM "Files" WHERE "moduleId" = $1';
     },
 
     download() {

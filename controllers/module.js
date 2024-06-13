@@ -1,6 +1,8 @@
 const db = require('../models');
-const moduleQuery = require('../queries/moduleQuery');
+
 const fieldQuery = require('../queries/fieldQuery');
+const fileQuery = require('../queries/fileQuery');
+const moduleQuery = require('../queries/moduleQuery');
 
 const Module = db.Module;
 const Field = db.Field;
@@ -54,16 +56,16 @@ module.exports = {
         const request = JSON.parse(req.body.data);
 
         try {
-            /* module info */
+            // get module
             const module = await moduleQuery.getModule(request.id);
 
-            /* module feld */
+            // get module fields
             const fields = await fieldQuery.getFields(module.id);
 
-            /* get identity field */
+            // get identity field
             const identity = fields.find(field => field.identity);
 
-            /* delete module */
+            // delete module
             await Module.destroy({
                 transaction: t,
                 where: {
@@ -71,13 +73,16 @@ module.exports = {
                 },
             });
 
-            /* delete feld */
+            // delete files
+            await fileQuery.deleteByModuleId(module.id);
+
+            // delete feld
             await fieldQuery.deleteFields(module.id);
 
-            /* delete table */
+            // delete table
             await moduleQuery.dropTable(module.name, identity.name);
 
-            /* commit */
+            // commit
             await t.commit();
 
             return res.status(200).send('Module has been deleted');
