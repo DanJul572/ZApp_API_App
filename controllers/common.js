@@ -41,7 +41,7 @@ module.exports = {
         const user = jwt.verify(token, auth.secretKey);
 
         try {
-            const data = await commonQuery.getRowDetail(request.moduleId, request.rowId, true, user);
+            const data = await commonQuery.getRowDetail(request.moduleId, request.rowId, user);
             return res.status(200).send(data);
         } catch (error) {
             const response = getErrorResponse(error.message);
@@ -94,8 +94,10 @@ module.exports = {
     async update(req, res) {
         const t = await db.sequelize.transaction();
         const request = JSON.parse(req.body.data);
+        const files = req.files;
+
         try {
-            const data = await commonQuery.updateRow(request.moduleId, request.rowId, request.data);
+            const data = await commonQuery.updateRow(request.moduleId, request.rowId, request.data, files);
             t.commit();
             return res.status(200).send(data);
         } catch (error) {

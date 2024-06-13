@@ -90,14 +90,21 @@ async function getColumns(id) {
     }
 }
 
-async function getRowDetail(moduleId, rowId, withValidation = true, user = null) {
+async function getRowDetail(
+    moduleId,
+    rowId,
+    user = null,
+    options = {
+        withValidation: true,
+    },
+) {
     try {
         const data = {
             rowId: rowId,
             moduleId: moduleId,
         };
 
-        if (withValidation) {
+        if (options.withValidation) {
             await validationQuery.runValidation(data, moduleId, actionId.detail, validationTimeId.before, user);
         }
 
@@ -125,7 +132,9 @@ async function deleteRow(moduleId, rowId) {
     try {
         const module = await moduleQuery.getModule(moduleId);
         const moduleFields = await fieldQuery.getFields(moduleId);
-        const rowDetail = await getRowDetail(moduleId, rowId, false);
+        const rowDetail = await getRowDetail(moduleId, rowId, null, {
+            withValidation: false,
+        });
 
         // Get Primary Field
         const primaryField = moduleFields.find(field => field.identity);
@@ -204,11 +213,24 @@ async function insertRow(moduleId, data, user = null, files = []) {
     }
 }
 
-async function updateRow(moduleId, rowId, data) {
+async function updateRow(moduleId, rowId, data, files = []) {
     try {
         const module = await moduleQuery.getModule(moduleId);
-        const primaryField = await fieldQuery.getPrimaryField(moduleId);
+        const moduleFields = await fieldQuery.getFields(moduleId);
+        const rowDetail = await getRowDetail(moduleId, rowId, null, {
+            withValidation: false,
+        });
 
+        // get primary field
+        const primaryField = moduleFields.find(field => field.identity);
+
+        // delete files
+        fileQuery.delete(moduleFields, rowDetail);
+
+        // insert files
+        fileQuery.save(files);
+
+        // update row
         const condition = {
             [primaryField.name]: rowId,
         };

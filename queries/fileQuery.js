@@ -26,6 +26,7 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+
     delete(fields, row) {
         try {
             const fileFields = fields.filter(field => field.inputType === inputType.file);
@@ -50,6 +51,7 @@ module.exports = {
             throw new Error(error.message);
         }
     },
+    
     download(name) {
         try {
             const query = filesBuilder.download();
