@@ -7,8 +7,9 @@ const fieldController = require('../controllers').field;
 const fileController = require('../controllers').file;
 const moduleController = require('../controllers').modules;
 const scriptController = require('../controllers').script;
+const viewController = require('../controllers').view;
 
-/* Authentication */
+/* authentication */
 router.post('/api/auth/login', authController.login);
 router.post('/api/auth/register', authController.register);
 router.post('/api/auth/logout', authController.authenticateToken, authController.logout);
@@ -26,13 +27,16 @@ router.post('/api/common/update', authController.authenticateToken, commonContro
 /* field */
 router.get('/api/field/rows', authController.authenticateToken, fieldController.rows);
 
+/* view */
+router.get('/api/view/options', authController.authenticateToken, viewController.options);
+
 /* script */
 router.get('/api/script/run', authController.authenticateToken, scriptController.run);
 
 /* script */
 router.get('/api/file/download', authController.authenticateToken, fileController.download);
 
-/* Module */
+/* module */
 router.get('/api/module/detail', authController.authenticateToken, moduleController.detail);
 router.post('/api/module/create', authController.authenticateToken, moduleController.create);
 router.post('/api/module/delete', authController.authenticateToken, moduleController.delete);
