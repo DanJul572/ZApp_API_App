@@ -188,10 +188,11 @@ async function insertRow(moduleId, data, user = null, files = []) {
         // save files
         await fileQuery.save(files, moduleId);
 
-        // insert
+        // add value for default field
         data.createdAt = dayjs().format(datetimeFormat.datetime.value);
         data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
+        // insert process
         const {query, values} = commonBuilder.insertRow(module.name, data);
 
         // after validation
@@ -215,8 +216,13 @@ async function insertRow(moduleId, data, user = null, files = []) {
 
 async function updateRow(moduleId, rowId, data, files = []) {
     try {
+        // get module
         const module = await moduleQuery.getModule(moduleId);
+
+        // get module fields
         const moduleFields = await fieldQuery.getFields(moduleId);
+
+        // get row detail
         const rowDetail = await getRowDetail(moduleId, rowId, null, {
             withValidation: false,
         });
@@ -230,13 +236,15 @@ async function updateRow(moduleId, rowId, data, files = []) {
         // insert files
         await fileQuery.save(files, moduleId);
 
-        // update row
+        // add update condition by primary field
         const condition = {
             [primaryField.name]: rowId,
         };
 
+        // update value for default field
         data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
+        // update process
         const {query, values} = commonBuilder.updateRow(module.name, data, condition);
 
         return await db.sequelize
