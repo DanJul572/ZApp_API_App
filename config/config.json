@@ -2,8 +2,8 @@
     "development": {
         "username": "postgres",
         "password": "postgres",
-        "database": "postgres",
-        "port": "5433",
+        "database": "zapp",
+        "port": "5432",
         "host": "localhost",
         "dialect": "postgres",
         "logging": false
@@ -11,18 +11,18 @@
     "test": {
         "username": "postgres",
         "password": "postgres",
-        "database": "postgres",
+        "database": "zapp",
         "host": "localhost",
-        "port": "5433",
+        "port": "5432",
         "dialect": "postgres",
         "logging": false
     },
     "production": {
         "username": "postgres",
         "password": "postgres",
-        "database": "postgres",
+        "database": "zapp",
         "host": "localhost",
-        "port": "5433",
+        "port": "5432",
         "dialect": "postgres",
         "logging": false
     }

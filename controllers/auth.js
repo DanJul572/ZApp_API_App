@@ -1,6 +1,6 @@
 const db = require('../models');
 
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const authQuery = require('../queries/authQuery');
@@ -47,7 +47,7 @@ async function login(req, res) {
 
     try {
         const user = await authQuery.findByEmail(request.email);
-        const password = await bcrypt.compare(request.password, user.password);
+        const password = await bcryptjs.compare(request.password, user.password);
 
         if (user && password) {
             const existingToken = await findValidTokenForUser(user.id);
@@ -96,7 +96,7 @@ async function register(req, res) {
     const request = JSON.parse(req.body.data);
 
     try {
-        const hashedPassword = await bcrypt.hash(request.password, auth.salt);
+        const hashedPassword = await bcryptjs.hash(request.password, auth.salt);
         request.password = hashedPassword;
 
         const data = await commonQuery.insertRow(moduleId.users, request);
