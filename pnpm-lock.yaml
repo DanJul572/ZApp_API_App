@@ -48,14 +48,14 @@ importers:
         specifier: ^1.4.5-lts.2
         version: 1.4.5-lts.2
       pg:
-        specifier: ^8.14.1
-        version: 8.15.5
+        specifier: ^8.15.6
+        version: 8.15.6
       pg-hstore:
         specifier: ^2.3.4
         version: 2.3.4
       sequelize:
         specifier: ^6.37.7
-        version: 6.37.7(pg-hstore@2.3.4)(pg@8.15.5)
+        version: 6.37.7(pg-hstore@2.3.4)(pg@8.15.6)
     devDependencies:
       '@eslint/js':
         specifier: ^9.25.1
@@ -923,8 +923,8 @@ packages:
     resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
     engines: {node: '>=4.0.0'}
 
-  pg-pool@3.9.5:
-    resolution: {integrity: sha512-DxyAlOgvUzRFpFAZjbCc8fUfG7BcETDHgepFPf724B0i08k9PAiZV1tkGGgQIL0jbMEuR9jW1YN7eX+WgXxCsQ==}
+  pg-pool@3.9.6:
+    resolution: {integrity: sha512-rFen0G7adh1YmgvrmE5IPIqbb+IgEzENUm+tzm6MLLDSlPRoZVhzU1WdML9PV2W5GOdRA9qBKURlbt1OsXOsPw==}
     peerDependencies:
       pg: '>=8.0'
 
@@ -935,8 +935,8 @@ packages:
     resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
     engines: {node: '>=4'}
 
-  pg@8.15.5:
-    resolution: {integrity: sha512-EpAhHFQc+aH9VfeffWIVC+XXk6lmAhS9W1FxtxcPXs94yxhrI1I6w/zkWfIOII/OkBv3Be04X3xMOj0kQ78l6w==}
+  pg@8.15.6:
+    resolution: {integrity: sha512-yvao7YI3GdmmrslNVsZgx9PfntfWrnXwtR+K/DjI0I/sTKif4Z623um+sjVZ1hk5670B+ODjvHDAckKdjmPTsg==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       pg-native: '>=3.0.1'
@@ -2142,9 +2142,9 @@ snapshots:
 
   pg-int8@1.0.1: {}
 
-  pg-pool@3.9.5(pg@8.15.5):
+  pg-pool@3.9.6(pg@8.15.6):
     dependencies:
-      pg: 8.15.5
+      pg: 8.15.6
 
   pg-protocol@1.9.5: {}
 
@@ -2156,10 +2156,10 @@ snapshots:
       postgres-date: 1.0.7
       postgres-interval: 1.2.0
 
-  pg@8.15.5:
+  pg@8.15.6:
     dependencies:
       pg-connection-string: 2.8.5
-      pg-pool: 3.9.5(pg@8.15.5)
+      pg-pool: 3.9.6(pg@8.15.6)
       pg-protocol: 1.9.5
       pg-types: 2.2.0
       pgpass: 1.0.5
@@ -2274,7 +2274,7 @@ snapshots:
 
   sequelize-pool@7.1.0: {}
 
-  sequelize@6.37.7(pg-hstore@2.3.4)(pg@8.15.5):
+  sequelize@6.37.7(pg-hstore@2.3.4)(pg@8.15.6):
     dependencies:
       '@types/debug': 4.1.12
       '@types/validator': 13.15.0
@@ -2293,7 +2293,7 @@ snapshots:
       validator: 13.15.0
       wkx: 0.5.0
     optionalDependencies:
-      pg: 8.15.5
+      pg: 8.15.6
       pg-hstore: 2.3.4
     transitivePeerDependencies:
       - supports-color
