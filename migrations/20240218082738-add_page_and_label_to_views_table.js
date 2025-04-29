@@ -16,7 +16,7 @@ module.exports = {
             }),
             queryInterface.addColumn('Views', 'page', {
                 allowNull: true,
-                type: Sequelize.JSON,
+                type: Sequelize.TEXT,
             }),
         ]);
     },
