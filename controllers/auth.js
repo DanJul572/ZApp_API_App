@@ -48,12 +48,16 @@ async function login(req, res) {
     try {
         const user = await authQuery.findByEmail(request.email);
         const password = await bcryptjs.compare(request.password, user.password);
+        const menu = await menuQuery.findByRoleId(user.roleId);
 
         if (user && password) {
             const existingToken = await findValidTokenForUser(user.id);
             if (existingToken) {
                 t.commit();
-                return res.json({accessToken: existingToken});
+                return res.json({
+                    accessToken: existingToken,
+                    afterLogin: menu.afterLogin
+                });
             } else {
                 const tokenInfo = {
                     userId: user.id,
@@ -70,16 +74,12 @@ async function login(req, res) {
                     token: accessToken,
                 });
 
-                const menu = await menuQuery.findByRoleId(user.roleId);
-
-                const response = {
-                    afterLogin: menu.afterLogin,
-                    accessToken: accessToken,
-                };
-
                 t.commit();
 
-                return res.json(response);
+                return res.json({
+                    afterLogin: menu.afterLogin,
+                    accessToken: accessToken,
+                });
             }
         } else {
             t.commit();
