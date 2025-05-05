@@ -48,8 +48,8 @@ importers:
         specifier: ^1.4.5-lts.2
         version: 1.4.5-lts.2
       nodemailer:
-        specifier: ^7.0.0
-        version: 7.0.0
+        specifier: ^7.0.2
+        version: 7.0.2
       pg:
         specifier: ^8.15.6
         version: 8.15.6
@@ -57,8 +57,8 @@ importers:
         specifier: ^2.3.4
         version: 2.3.4
       redis:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^5.0.1
+        version: 5.0.1
       sequelize:
         specifier: ^6.37.7
         version: 6.37.7(pg-hstore@2.3.4)(pg@8.15.6)
@@ -154,33 +154,33 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@redis/bloom@5.0.0':
-    resolution: {integrity: sha512-YHlra6a7+brJ3Ustqa+jC68Pdnw2/wbnVLeULN0llP3gHpKxOSmiDyLwuHq5t/jFi6QUgjSprUQi2a8CieKFIA==}
+  '@redis/bloom@5.0.1':
+    resolution: {integrity: sha512-F7L+rnuJvq/upKaVoEgsf8VT7g5pLQYWRqSUOV3uO4vpVtARzSKJ7CLyJjVsQS+wZVCGxsLMh8DwAIDcny1B+g==}
     engines: {node: '>= 18'}
     peerDependencies:
-      '@redis/client': ^5.0.0
+      '@redis/client': ^5.0.1
 
-  '@redis/client@5.0.0':
-    resolution: {integrity: sha512-1MqfzOOoFBwWprigJ3S5hM+LuzaWwxyyx+74NDzCpmjKWyjjC07xkWsd5E9fr+61NUDtvUivRiyAxGiRIwJCaQ==}
+  '@redis/client@5.0.1':
+    resolution: {integrity: sha512-k0EJvlMGEyBqUD3orKe0UMZ66fPtfwqPIr+ZSd853sXj2EyhNtPXSx+J6sENXJNgAlEBhvD+57Dwt0qTisKB0A==}
     engines: {node: '>= 18'}
 
-  '@redis/json@5.0.0':
-    resolution: {integrity: sha512-8YFjshsvWR9dWjOiQ50TfBxfl+z1mjCae8jDnfOYN1aCvUZWJXqM1OpL56v6mWRyXwZ5C9qJJKDGmHTr4PVskQ==}
-    engines: {node: '>= 18'}
-    peerDependencies:
-      '@redis/client': ^5.0.0
-
-  '@redis/search@5.0.0':
-    resolution: {integrity: sha512-oEop/S/0NB5p7vpTTlp5X5LQO4oTomJnFEOaKhQ5xZWROLXTgEVvPSfXVNBbtr9maU2+OupxXQR63HW3MGeTUg==}
+  '@redis/json@5.0.1':
+    resolution: {integrity: sha512-t94HOTk5myfhvaHZzlUzk2hoUvH2jsjftcnMgJWuHL/pzjAJQoZDCUJzjkoXIUjWXuyJixTguaaDyOZWwqH2Kg==}
     engines: {node: '>= 18'}
     peerDependencies:
-      '@redis/client': ^5.0.0
+      '@redis/client': ^5.0.1
 
-  '@redis/time-series@5.0.0':
-    resolution: {integrity: sha512-DNsP4DH5CRfXlQDyvLJm2DltZm3kjpVKZsNTI3SPdbRxhc9i2c0NehUbM/gDECnEfG+jkNN/LUv6Em4LaLwPBQ==}
+  '@redis/search@5.0.1':
+    resolution: {integrity: sha512-wipK6ZptY7K68B7YLVhP5I/wYCDUU+mDJMyJiUcQLuOs7/eKOBc8lTXKUSssor8QnzZSPy4A5ulcC5PZY22Zgw==}
     engines: {node: '>= 18'}
     peerDependencies:
-      '@redis/client': ^5.0.0
+      '@redis/client': ^5.0.1
+
+  '@redis/time-series@5.0.1':
+    resolution: {integrity: sha512-k6PgbrakhnohsEWEAdQZYt3e5vSKoIzpKvgQt8//lnWLrTZx+c3ed2sj0+pKIF4FvnSeuXLo4bBWcH0Z7Urg1A==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      '@redis/client': ^5.0.1
 
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
@@ -895,8 +895,8 @@ packages:
   next-tick@1.1.0:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
 
-  nodemailer@7.0.0:
-    resolution: {integrity: sha512-9QyEp969UmUWVDB2gVQvxHm1bqkyuC5YZIyX/ySJUpIVyXpuEFyBAuoFFs+G5/C2ZaUp9F5A65DPfxedfVHXXQ==}
+  nodemailer@7.0.2:
+    resolution: {integrity: sha512-SYsisPeLFYli5Q+BCGSyHT5CVvezPmQjHgINV9KVvVLV1aktuoD4E0Np9Q3ND9I481qIHzUQzVT+Tl/Tw7Ivdg==}
     engines: {node: '>=6.0.0'}
 
   nopt@7.2.1:
@@ -1060,8 +1060,8 @@ packages:
   readable-stream@2.3.8:
     resolution: {integrity: sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA==}
 
-  redis@5.0.0:
-    resolution: {integrity: sha512-J/fzf0cYeFw5NP4aYIvv9owYOcNUsaDqF4qmwbSuaV4yKBLaIHJQIFbAKLgjn99GDXdJBbfqCRXE7+BIlkpATA==}
+  redis@5.0.1:
+    resolution: {integrity: sha512-J8nqUjrfSq0E8NQkcHDZ4HdEQk5RMYjP3jZq02PE+ERiRxolbDNxPaTT4xh6tdrme+lJ86Goje9yMt9uzh23hQ==}
     engines: {node: '>= 18'}
 
   require-directory@2.1.1:
@@ -1426,25 +1426,25 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@redis/bloom@5.0.0(@redis/client@5.0.0)':
+  '@redis/bloom@5.0.1(@redis/client@5.0.1)':
     dependencies:
-      '@redis/client': 5.0.0
+      '@redis/client': 5.0.1
 
-  '@redis/client@5.0.0':
+  '@redis/client@5.0.1':
     dependencies:
       cluster-key-slot: 1.1.2
 
-  '@redis/json@5.0.0(@redis/client@5.0.0)':
+  '@redis/json@5.0.1(@redis/client@5.0.1)':
     dependencies:
-      '@redis/client': 5.0.0
+      '@redis/client': 5.0.1
 
-  '@redis/search@5.0.0(@redis/client@5.0.0)':
+  '@redis/search@5.0.1(@redis/client@5.0.1)':
     dependencies:
-      '@redis/client': 5.0.0
+      '@redis/client': 5.0.1
 
-  '@redis/time-series@5.0.0(@redis/client@5.0.0)':
+  '@redis/time-series@5.0.1(@redis/client@5.0.1)':
     dependencies:
-      '@redis/client': 5.0.0
+      '@redis/client': 5.0.1
 
   '@types/debug@4.1.12':
     dependencies:
@@ -2196,7 +2196,7 @@ snapshots:
 
   next-tick@1.1.0: {}
 
-  nodemailer@7.0.0: {}
+  nodemailer@7.0.2: {}
 
   nopt@7.2.1:
     dependencies:
@@ -2345,13 +2345,13 @@ snapshots:
       string_decoder: 1.1.1
       util-deprecate: 1.0.2
 
-  redis@5.0.0:
+  redis@5.0.1:
     dependencies:
-      '@redis/bloom': 5.0.0(@redis/client@5.0.0)
-      '@redis/client': 5.0.0
-      '@redis/json': 5.0.0(@redis/client@5.0.0)
-      '@redis/search': 5.0.0(@redis/client@5.0.0)
-      '@redis/time-series': 5.0.0(@redis/client@5.0.0)
+      '@redis/bloom': 5.0.1(@redis/client@5.0.1)
+      '@redis/client': 5.0.1
+      '@redis/json': 5.0.1(@redis/client@5.0.1)
+      '@redis/search': 5.0.1(@redis/client@5.0.1)
+      '@redis/time-series': 5.0.1(@redis/client@5.0.1)
 
   require-directory@2.1.1: {}
 
