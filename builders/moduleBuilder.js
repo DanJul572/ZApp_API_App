@@ -19,11 +19,21 @@ module.exports = {
                 column = `"${field.name}" text `;
             } else if (field.dataType === dataType.datetime) {
                 column = `"${field.name}" timestamp with time zone NOT NULL DEFAULT now() `;
+            } else if (field.dataType === dataType.json) {
+                column = `"${field.name}" jsonb `;
             }
 
-            if (field.autoIncrement) column += ` DEFAULT nextval('"${name}_${field.name}_seq"'::regclass) `;
-            if (field.notNull) column += ' NOT NULL ';
-            if (field.defaultValue) column += ` DEFAULT ${field.defaultValue} `;
+            if (field.autoIncrement) {
+                column += ` DEFAULT nextval('"${name}_${field.name}_seq"'::regclass) `;
+            }
+
+            if (field.notNull) {
+                column += ' NOT NULL ';
+            }
+
+            if (field.defaultValue) {
+                column += ` DEFAULT ${field.defaultValue} `;
+            }
 
             return column;
         });
