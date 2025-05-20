@@ -12,4 +12,5 @@ module.exports = {
     actions: 19,
     validationTime: 20,
     validation: 21,
+    logError: 27,
 };

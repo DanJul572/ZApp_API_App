@@ -1,11 +1,11 @@
-const db = require('../models');
 const jwt = require('jsonwebtoken');
 
+const db = require('../models');
 const commonQuery = require('../queries/commonQuery');
-
 const auth = require('../constats/auth');
 
 const getErrorResponse = require('../helpers/getErrorResponse');
+const insertError = require('../helpers/insertError');
 
 module.exports = {
     async rows(req, res) {
@@ -45,6 +45,7 @@ module.exports = {
             return res.status(200).send(data);
         } catch (error) {
             const response = getErrorResponse(error.message);
+            await insertError(req, response.code, error.message);
             return res.status(response.code).send(response.message);
         }
     },
