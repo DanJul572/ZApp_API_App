@@ -11,9 +11,9 @@ function insertError(req, code, message) {
     const data = {
         url,
         method,
-        message
+        message,
     };
     return commonQuery.insertRow(moduleId.logError, data);
-};
+}
 
 module.exports = insertError;

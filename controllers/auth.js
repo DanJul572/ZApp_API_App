@@ -56,7 +56,7 @@ async function login(req, res) {
                 t.commit();
                 return res.json({
                     accessToken: existingToken,
-                    afterLogin: menu.afterLogin
+                    afterLogin: menu.afterLogin,
                 });
             } else {
                 const tokenInfo = {
