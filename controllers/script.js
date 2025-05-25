@@ -8,7 +8,7 @@ module.exports = {
         const param = req.query;
         try {
             const script = await commonQuery.getRowDetail(
-                moduleId.script,
+                moduleId.scripts,
                 param.id,
                 null,
                 {

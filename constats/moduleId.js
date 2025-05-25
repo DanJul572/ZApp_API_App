@@ -8,9 +8,9 @@ module.exports = {
     menus: 7,
     users: 8,
     tokens: 9,
-    script: 18,
+    scripts: 18,
     actions: 19,
-    validationTime: 20,
-    validation: 21,
+    validationTimes: 20,
+    validations: 21,
     logError: 27,
 };
