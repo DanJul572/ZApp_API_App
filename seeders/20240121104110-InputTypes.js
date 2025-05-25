@@ -105,6 +105,18 @@ module.exports = {
                     createdAt: now,
                     updatedAt: now,
                 },
+                {
+                    value: 15,
+                    label: 'Slider',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    value: 16,
+                    label: 'Ratings',
+                    createdAt: now,
+                    updatedAt: now,
+                },
             ],
             {},
         );
