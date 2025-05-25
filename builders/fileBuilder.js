@@ -1,6 +1,7 @@
 module.exports = {
     save(files, moduleId) {
-        let query = 'INSERT INTO "Files" ("name", "data", "type", "encoding", "size", "moduleId") VALUES ';
+        let query =
+            'INSERT INTO "Files" ("name", "data", "type", "encoding", "size", "moduleId") VALUES ';
         const values = [];
 
         files.forEach((file, index) => {
@@ -10,7 +11,14 @@ module.exports = {
                 index * 6 + 6
             })${index + 1 < files.length ? ', ' : ''}`;
 
-            values.push(file.originalname, fileBuffer, file.mimetype, file.encoding, file.size, moduleId);
+            values.push(
+                file.originalname,
+                fileBuffer,
+                file.mimetype,
+                file.encoding,
+                file.size,
+                moduleId,
+            );
         });
 
         return {query, values};

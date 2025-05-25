@@ -12,33 +12,93 @@ const viewController = require('../controllers').view;
 /* authentication */
 router.post('/api/auth/login', authController.login);
 router.post('/api/auth/register', authController.register);
-router.post('/api/auth/logout', authController.authenticateToken, authController.logout);
+router.post(
+    '/api/auth/logout',
+    authController.authenticateToken,
+    authController.logout,
+);
 
 /*  common */
-router.get('/api/common/columns', authController.authenticateToken, commonController.columns);
-router.get('/api/common/detail', authController.authenticateToken, commonController.detail);
-router.get('/api/common/menu', authController.authenticateToken, commonController.menu);
+router.get(
+    '/api/common/columns',
+    authController.authenticateToken,
+    commonController.columns,
+);
+router.get(
+    '/api/common/detail',
+    authController.authenticateToken,
+    commonController.detail,
+);
+router.get(
+    '/api/common/menu',
+    authController.authenticateToken,
+    commonController.menu,
+);
 router.get('/api/common/options', commonController.options);
-router.post('/api/common/create', authController.authenticateToken, commonController.create);
-router.post('/api/common/delete', authController.authenticateToken, commonController.delete);
-router.post('/api/common/rows', authController.authenticateToken, commonController.rows);
-router.post('/api/common/update', authController.authenticateToken, commonController.update);
+router.post(
+    '/api/common/create',
+    authController.authenticateToken,
+    commonController.create,
+);
+router.post(
+    '/api/common/delete',
+    authController.authenticateToken,
+    commonController.delete,
+);
+router.post(
+    '/api/common/rows',
+    authController.authenticateToken,
+    commonController.rows,
+);
+router.post(
+    '/api/common/update',
+    authController.authenticateToken,
+    commonController.update,
+);
 
 /* field */
-router.get('/api/field/rows', authController.authenticateToken, fieldController.rows);
+router.get(
+    '/api/field/rows',
+    authController.authenticateToken,
+    fieldController.rows,
+);
 
 /* view */
-router.get('/api/view/options', authController.authenticateToken, viewController.options);
+router.get(
+    '/api/view/options',
+    authController.authenticateToken,
+    viewController.options,
+);
 
 /* script */
-router.get('/api/script/run', authController.authenticateToken, scriptController.run);
+router.get(
+    '/api/script/run',
+    authController.authenticateToken,
+    scriptController.run,
+);
 
 /* script */
-router.get('/api/file/download', authController.authenticateToken, fileController.download);
+router.get(
+    '/api/file/download',
+    authController.authenticateToken,
+    fileController.download,
+);
 
 /* module */
-router.get('/api/module/detail', authController.authenticateToken, moduleController.detail);
-router.post('/api/module/create', authController.authenticateToken, moduleController.create);
-router.post('/api/module/delete', authController.authenticateToken, moduleController.delete);
+router.get(
+    '/api/module/detail',
+    authController.authenticateToken,
+    moduleController.detail,
+);
+router.post(
+    '/api/module/create',
+    authController.authenticateToken,
+    moduleController.create,
+);
+router.post(
+    '/api/module/delete',
+    authController.authenticateToken,
+    moduleController.delete,
+);
 
 module.exports = router;

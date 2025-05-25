@@ -2,12 +2,22 @@ const {rowsPerPage} = require('../constats/setting');
 const fieldBuilder = require('./fieldBuilder');
 const jsonToWhereClause = require('../helpers/jsonToWhereClause');
 
-function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter) {
+function getRows(
+    table,
+    fields,
+    page,
+    advanceFilter,
+    filter,
+    sort,
+    defaultFilter,
+) {
     const offset = (page - 1) * rowsPerPage;
     const rowsValues = []; // Array untuk menyimpan nilai parameter
 
     // Format fields
-    const fieldsFormat = fields.map(field => fieldBuilder.selectFormat(field, table)).join(',');
+    const fieldsFormat = fields
+        .map(field => fieldBuilder.selectFormat(field, table))
+        .join(',');
 
     // Initiation Query
     let rowsQuery = `SELECT ${fieldsFormat} FROM "${table}"`;

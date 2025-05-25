@@ -13,7 +13,14 @@ const actionId = require('../constats/actionId');
 const datetimeFormat = require('../constats/datetimeFormat');
 const validationTimeId = require('../constats/validationTimeId');
 
-async function getRows(moduleId, page, advanceFilter, filter, order, defaultFilter) {
+async function getRows(
+    moduleId,
+    page,
+    advanceFilter,
+    filter,
+    order,
+    defaultFilter,
+) {
     try {
         const module = await moduleQuery.getModule(moduleId);
         const fields = await fieldQuery.getFields(moduleId);
@@ -105,12 +112,21 @@ async function getRowDetail(
         };
 
         if (options.withValidation) {
-            await validationQuery.runValidation(data, moduleId, actionId.detail, validationTimeId.before, user);
+            await validationQuery.runValidation(
+                data,
+                moduleId,
+                actionId.detail,
+                validationTimeId.before,
+                user,
+            );
         }
 
         const module = await moduleQuery.getModule(moduleId);
         const primaryField = await fieldQuery.getPrimaryField(moduleId);
-        const query = commonBuilder.getRowDetail(module.name, primaryField.name);
+        const query = commonBuilder.getRowDetail(
+            module.name,
+            primaryField.name,
+        );
 
         return await db.sequelize
             .query(query, {
@@ -164,7 +180,11 @@ async function deleteRow(moduleId, rowId) {
 async function getOptions(id) {
     try {
         const field = await fieldQuery.getField(id);
-        const query = commonBuilder.getOptions(field.tableRef, field.tableRefKey, field.tableRefName);
+        const query = commonBuilder.getOptions(
+            field.tableRef,
+            field.tableRefKey,
+            field.tableRefName,
+        );
         return await db.sequelize
             .query(query)
             .then(result => {
@@ -183,7 +203,13 @@ async function insertRow(moduleId, data, user = null, files = []) {
         const module = await moduleQuery.getModule(moduleId);
 
         // before validation
-        await validationQuery.runValidation(data, moduleId, actionId.create, validationTimeId.before, user);
+        await validationQuery.runValidation(
+            data,
+            moduleId,
+            actionId.create,
+            validationTimeId.before,
+            user,
+        );
 
         // save files
         await fileQuery.save(files, moduleId);
@@ -196,7 +222,13 @@ async function insertRow(moduleId, data, user = null, files = []) {
         const {query, values} = commonBuilder.insertRow(module.name, data);
 
         // after validation
-        await validationQuery.runValidation(data, moduleId, actionId.create, validationTimeId.after, user);
+        await validationQuery.runValidation(
+            data,
+            moduleId,
+            actionId.create,
+            validationTimeId.after,
+            user,
+        );
 
         return await db.sequelize
             .query(query, {
@@ -245,7 +277,11 @@ async function updateRow(moduleId, rowId, data, files = []) {
         data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
         // update process
-        const {query, values} = commonBuilder.updateRow(module.name, data, condition);
+        const {query, values} = commonBuilder.updateRow(
+            module.name,
+            data,
+            condition,
+        );
 
         return await db.sequelize
             .query(query, {

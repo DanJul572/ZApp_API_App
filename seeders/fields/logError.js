@@ -3,14 +3,13 @@ const dayjs = require('dayjs');
 const dataType = require('../../constats/dataType');
 const inputType = require('../../constats/inputType');
 const datetimeFormat = require('../../constats/datetimeFormat');
-
 const moduleId = require('../../constats/moduleId');
 
 const now = dayjs().format(datetimeFormat.datetime.value);
 
-const list = [
+module.exports = [
     {
-        moduleId: moduleId.views,
+        moduleId: moduleId.logError,
         name: 'id',
         label: 'ID',
         inputType: inputType.number,
@@ -29,33 +28,14 @@ const list = [
         updatedAt: now,
     },
     {
-        moduleId: moduleId.views,
-        name: 'label',
-        label: 'Label',
+        moduleId: moduleId.logError,
+        name: 'url',
+        label: 'URL',
         inputType: inputType.shortText,
         dataType: dataType.varchar,
         tableRef: null,
         tableRefKey: null,
         tableRefName: null,
-        tableRefAlias: null,
-        tableRefFilter: null,
-        regex: null,
-        multiSelect: false,
-        identity: false,
-        notNull: false,
-        unique: false,
-        createdAt: now,
-        updatedAt: now,
-    },
-    {
-        moduleId: moduleId.views,
-        name: 'moduleId',
-        label: 'Module ID',
-        inputType: inputType.dropdown,
-        dataType: dataType.tableReference,
-        tableRef: 'Modules',
-        tableRefKey: 'id',
-        tableRefName: 'name',
         tableRefAlias: null,
         tableRefFilter: null,
         regex: null,
@@ -67,11 +47,11 @@ const list = [
         updatedAt: now,
     },
     {
-        moduleId: moduleId.views,
-        name: 'content',
-        label: 'Content',
-        inputType: inputType.longText,
-        dataType: dataType.text,
+        moduleId: moduleId.logError,
+        name: 'method',
+        label: 'Method',
+        inputType: inputType.shortText,
+        dataType: dataType.varchar,
         tableRef: null,
         tableRefKey: null,
         tableRefName: null,
@@ -80,15 +60,15 @@ const list = [
         regex: null,
         multiSelect: false,
         identity: false,
-        notNull: false,
+        notNull: true,
         unique: false,
         createdAt: now,
         updatedAt: now,
     },
     {
-        moduleId: moduleId.views,
-        name: 'page',
-        label: 'Page',
+        moduleId: moduleId.logError,
+        name: 'message',
+        label: 'Message',
         inputType: inputType.longText,
         dataType: dataType.text,
         tableRef: null,
@@ -99,11 +79,9 @@ const list = [
         regex: null,
         multiSelect: false,
         identity: false,
-        notNull: false,
+        notNull: true,
         unique: false,
         createdAt: now,
         updatedAt: now,
     },
 ];
-
-module.exports = list;

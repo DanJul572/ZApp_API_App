@@ -9,11 +9,17 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
+            label: {
+                type: Sequelize.STRING,
+            },
             moduleId: {
                 allowNull: false,
                 type: Sequelize.STRING,
             },
             content: {
+                type: Sequelize.TEXT,
+            },
+            page: {
                 type: Sequelize.TEXT,
             },
             createdAt: {

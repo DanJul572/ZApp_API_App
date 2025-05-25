@@ -9,6 +9,10 @@ const views = require('./fields/views');
 const menus = require('./fields/menus');
 const users = require('./fields/users');
 const tokens = require('./fields/tokens');
+const logError = require('./fields/logError');
+const script = require('./fields/script');
+const actions = require('./fields/actions');
+const validationTime = require('./fields/validationTime');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -22,7 +26,20 @@ module.exports = {
          *   isBetaMember: false
          * }], {});
          */
-        const combine = modules.concat(roles, inputTypes, dataTypes, fields, views, menus, users, tokens);
+        const combine = modules.concat(
+            roles,
+            inputTypes,
+            dataTypes,
+            fields,
+            views,
+            menus,
+            users,
+            tokens,
+            logError,
+            script,
+            actions,
+            validationTime,
+        );
         await queryInterface.bulkInsert('Fields', combine, {});
     },
 

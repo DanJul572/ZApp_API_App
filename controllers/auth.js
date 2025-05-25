@@ -47,7 +47,10 @@ async function login(req, res) {
 
     try {
         const user = await authQuery.findByEmail(request.email);
-        const password = await bcryptjs.compare(request.password, user.password);
+        const password = await bcryptjs.compare(
+            request.password,
+            user.password,
+        );
         const menu = await menuQuery.findByRoleId(user.roleId);
 
         if (user && password) {
@@ -67,7 +70,11 @@ async function login(req, res) {
                 const tokenOptions = {
                     expiresIn: auth.expiredIn,
                 };
-                const accessToken = jwt.sign(tokenInfo, auth.secretKey, tokenOptions);
+                const accessToken = jwt.sign(
+                    tokenInfo,
+                    auth.secretKey,
+                    tokenOptions,
+                );
 
                 await commonQuery.insertRow(moduleId.tokens, {
                     userId: user.id,

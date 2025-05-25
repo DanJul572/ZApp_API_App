@@ -75,6 +75,36 @@ module.exports = {
                     createdAt: now,
                     updatedAt: now,
                 },
+                {
+                    name: 'Script',
+                    label: 'Script',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'Actions',
+                    label: 'Actions',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'ValidationTime',
+                    label: 'ValidationTime',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'Validation',
+                    label: 'Validation',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'LogError',
+                    label: 'Log Error',
+                    createdAt: now,
+                    updatedAt: now,
+                },
             ],
             {},
         );

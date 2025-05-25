@@ -3,14 +3,13 @@ const dayjs = require('dayjs');
 const dataType = require('../../constats/dataType');
 const inputType = require('../../constats/inputType');
 const datetimeFormat = require('../../constats/datetimeFormat');
-
 const moduleId = require('../../constats/moduleId');
 
 const now = dayjs().format(datetimeFormat.datetime.value);
 
-const list = [
+module.exports = [
     {
-        moduleId: moduleId.views,
+        moduleId: moduleId.script,
         name: 'id',
         label: 'ID',
         inputType: inputType.number,
@@ -29,7 +28,7 @@ const list = [
         updatedAt: now,
     },
     {
-        moduleId: moduleId.views,
+        moduleId: moduleId.script,
         name: 'label',
         label: 'Label',
         inputType: inputType.shortText,
@@ -42,20 +41,20 @@ const list = [
         regex: null,
         multiSelect: false,
         identity: false,
-        notNull: false,
+        notNull: true,
         unique: false,
         createdAt: now,
         updatedAt: now,
     },
     {
-        moduleId: moduleId.views,
-        name: 'moduleId',
-        label: 'Module ID',
-        inputType: inputType.dropdown,
-        dataType: dataType.tableReference,
-        tableRef: 'Modules',
-        tableRefKey: 'id',
-        tableRefName: 'name',
+        moduleId: moduleId.script,
+        name: 'sql',
+        label: 'SQL',
+        inputType: inputType.code,
+        dataType: dataType.text,
+        tableRef: null,
+        tableRefKey: null,
+        tableRefName: null,
         tableRefAlias: null,
         tableRefFilter: null,
         regex: null,
@@ -66,44 +65,4 @@ const list = [
         createdAt: now,
         updatedAt: now,
     },
-    {
-        moduleId: moduleId.views,
-        name: 'content',
-        label: 'Content',
-        inputType: inputType.longText,
-        dataType: dataType.text,
-        tableRef: null,
-        tableRefKey: null,
-        tableRefName: null,
-        tableRefAlias: null,
-        tableRefFilter: null,
-        regex: null,
-        multiSelect: false,
-        identity: false,
-        notNull: false,
-        unique: false,
-        createdAt: now,
-        updatedAt: now,
-    },
-    {
-        moduleId: moduleId.views,
-        name: 'page',
-        label: 'Page',
-        inputType: inputType.longText,
-        dataType: dataType.text,
-        tableRef: null,
-        tableRefKey: null,
-        tableRefName: null,
-        tableRefAlias: null,
-        tableRefFilter: null,
-        regex: null,
-        multiSelect: false,
-        identity: false,
-        notNull: false,
-        unique: false,
-        createdAt: now,
-        updatedAt: now,
-    },
 ];
-
-module.exports = list;

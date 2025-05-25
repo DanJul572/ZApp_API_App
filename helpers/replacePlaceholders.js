@@ -7,7 +7,9 @@ function replacePlaceholders(str, obj, user = null) {
     }
     const combinedObj = {...userFormat, ...obj};
     return str.replace(/@(\w+)@/g, (match, placeholder) =>
-        combinedObj[placeholder] !== undefined ? combinedObj[placeholder] : match,
+        combinedObj[placeholder] !== undefined
+            ? combinedObj[placeholder]
+            : match,
     );
 }
 

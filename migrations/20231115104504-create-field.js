@@ -57,6 +57,10 @@ module.exports = {
                 defaultValue: false,
                 type: Sequelize.BOOLEAN,
             },
+            autoIncrement: {
+                defaultValue: false,
+                type: Sequelize.BOOLEAN,
+            },
             notNull: {
                 allowNull: false,
                 defaultValue: false,
@@ -66,6 +70,10 @@ module.exports = {
                 allowNull: false,
                 defaultValue: false,
                 type: Sequelize.BOOLEAN,
+            },
+            sequence: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
             },
             createdAt: {
                 allowNull: false,

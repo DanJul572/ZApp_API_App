@@ -19,7 +19,10 @@ module.exports = {
     },
 
     selectFormat(field, module) {
-        if (field.inputType === inputType.code || field.inputType === inputType.richText) {
+        if (
+            field.inputType === inputType.code ||
+            field.inputType === inputType.richText
+        ) {
             return `
                 CASE
                     WHEN "${field.name}" IS NOT NULL
@@ -43,7 +46,10 @@ module.exports = {
                     ELSE NULL
                 END AS "${field.name}"
             `;
-        } else if (field.inputType === inputType.dropdown || field.inputType === inputType) {
+        } else if (
+            field.inputType === inputType.dropdown ||
+            field.inputType === inputType
+        ) {
             return `(
                 SELECT CONCAT('(', "${field.tableRef}"."${field.tableRefKey}", ') - ', "${field.tableRef}"."${field.tableRefName}")
                 FROM "${field.tableRef}"

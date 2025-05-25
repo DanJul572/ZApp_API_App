@@ -41,7 +41,11 @@ module.exports = {
         const user = jwt.verify(token, auth.secretKey);
 
         try {
-            const data = await commonQuery.getRowDetail(request.moduleId, request.rowId, user);
+            const data = await commonQuery.getRowDetail(
+                request.moduleId,
+                request.rowId,
+                user,
+            );
             return res.status(200).send(data);
         } catch (error) {
             const response = getErrorResponse(error.message);
@@ -54,7 +58,10 @@ module.exports = {
         const t = await db.sequelize.transaction();
         const request = JSON.parse(req.body.data);
         try {
-            const data = await commonQuery.deleteRow(request.moduleId, request.id);
+            const data = await commonQuery.deleteRow(
+                request.moduleId,
+                request.id,
+            );
             t.commit();
             return res.status(200).send(data);
         } catch (error) {
@@ -81,7 +88,12 @@ module.exports = {
         const user = jwt.verify(token, auth.secretKey);
 
         try {
-            const data = await commonQuery.insertRow(request.moduleId, request.data, user, files);
+            const data = await commonQuery.insertRow(
+                request.moduleId,
+                request.data,
+                user,
+                files,
+            );
 
             t.commit();
             return res.status(200).send(data);
@@ -98,7 +110,12 @@ module.exports = {
         const files = req.files;
 
         try {
-            const data = await commonQuery.updateRow(request.moduleId, request.rowId, request.data, files);
+            const data = await commonQuery.updateRow(
+                request.moduleId,
+                request.rowId,
+                request.data,
+                files,
+            );
             t.commit();
             return res.status(200).send(data);
         } catch (error) {

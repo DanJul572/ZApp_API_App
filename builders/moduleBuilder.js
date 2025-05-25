@@ -15,7 +15,10 @@ module.exports = {
                 column = `"${field.name}" character varying(255) COLLATE pg_catalog."default" `;
             } else if (field.dataType === dataType.boolean) {
                 column = `"${field.name}" boolean `;
-            } else if (field.dataType === dataType.text || field.dataType === dataType.byte) {
+            } else if (
+                field.dataType === dataType.text ||
+                field.dataType === dataType.byte
+            ) {
                 column = `"${field.name}" text `;
             } else if (field.dataType === dataType.datetime) {
                 column = `"${field.name}" timestamp with time zone NOT NULL DEFAULT now() `;
@@ -39,8 +42,12 @@ module.exports = {
         });
 
         /* set default column */
-        columns.push(`"createdAt" timestamp with time zone NOT NULL DEFAULT now()`);
-        columns.push(`"updatedAt" timestamp with time zone NOT NULL DEFAULT now()`);
+        columns.push(
+            `"createdAt" timestamp with time zone NOT NULL DEFAULT now()`,
+        );
+        columns.push(
+            `"updatedAt" timestamp with time zone NOT NULL DEFAULT now()`,
+        );
 
         /* set primary */
         let primaryKey = fields.find(field => field.identity).name;
