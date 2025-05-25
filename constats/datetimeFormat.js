@@ -6,7 +6,7 @@ module.exports = {
         value: 'YYYY-MM-DDT00:00:00',
     },
     datetime: {
-        display: 'FMMonth FMDD, YYYY HH12:MI:SS',
+        display: 'DD Mon YYYY HH24:MI:SS',
         value: 'YYYY-MM-DDTHH:mm:ss',
     },
 };
