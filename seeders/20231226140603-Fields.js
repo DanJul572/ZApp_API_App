@@ -1,55 +1,47 @@
 'use strict';
 
-const modules = require('./fields/modules');
-const roles = require('./fields/roles');
-const inputTypes = require('./fields/inputTypes');
+const access = require('./fields/access');
+const actions = require('./fields/actions');
 const dataTypes = require('./fields/dataTypes');
 const fields = require('./fields/fields');
-const views = require('./fields/views');
-const menus = require('./fields/menus');
-const users = require('./fields/users');
-const tokens = require('./fields/tokens');
+const files = require('./fields/files');
+const inputTypes = require('./fields/inputTypes');
 const logError = require('./fields/logError');
+const menus = require('./fields/menus');
+const modules = require('./fields/modules');
+const roles = require('./fields/roles');
 const script = require('./fields/script');
-const actions = require('./fields/actions');
+const tokens = require('./fields/tokens');
+const users = require('./fields/users');
+const validation = require('./fields/validation');
 const validationTime = require('./fields/validationTime');
+const views = require('./fields/views');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface) {
-        /**
-         * Add seed commands here.
-         *
-         * Example:
-         * await queryInterface.bulkInsert('People', [{
-         *   name: 'John Doe',
-         *   isBetaMember: false
-         * }], {});
-         */
         const combine = modules.concat(
-            roles,
-            inputTypes,
+            access,
+            actions,
             dataTypes,
             fields,
-            views,
-            menus,
-            users,
-            tokens,
+            files,
+            inputTypes,
             logError,
+            menus,
+            modules,
+            roles,
             script,
-            actions,
+            tokens,
+            users,
+            validation,
             validationTime,
+            views,
         );
         await queryInterface.bulkInsert('Fields', combine, {});
     },
 
     async down(queryInterface) {
-        /**
-         * Add commands to revert seed here.
-         *
-         * Example:
-         * await queryInterface.bulkDelete('People', null, {});
-         */
         await queryInterface.bulkDelete('Fields', null, {});
     },
 };
