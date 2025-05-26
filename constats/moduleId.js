@@ -3,7 +3,7 @@ module.exports = {
     actions: 19,
     dataTypes: 4,
     fields: 5,
-    filed: 25,
+    files: 25,
     inputTypes: 3,
     logError: 27,
     menus: 7,
