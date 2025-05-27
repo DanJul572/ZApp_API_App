@@ -5,8 +5,7 @@
         "database": "zapp",
         "port": "5432",
         "host": "localhost",
-        "dialect": "postgres",
-        "logging": false
+        "dialect": "postgres"
     },
     "test": {
         "username": "postgres",
@@ -14,8 +13,7 @@
         "database": "zapp",
         "port": "5432",
         "host": "localhost",
-        "dialect": "postgres",
-        "logging": false
+        "dialect": "postgres"
     },
     "production": {
         "username": "postgres",
@@ -23,7 +21,6 @@
         "database": "zapp",
         "port": "5432",
         "host": "localhost",
-        "dialect": "postgres",
-        "logging": false
+        "dialect": "postgres"
     }
 }

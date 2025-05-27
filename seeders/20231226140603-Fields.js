@@ -29,7 +29,6 @@ module.exports = {
             inputTypes,
             logError,
             menus,
-            modules,
             roles,
             script,
             tokens,

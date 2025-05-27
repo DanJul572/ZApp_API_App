@@ -52,6 +52,12 @@ module.exports = {
                     updatedAt: now,
                 },
                 {
+                    name: 'Files',
+                    label: 'Files',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
                     name: 'Views',
                     label: 'Views',
                     createdAt: now,
@@ -84,6 +90,12 @@ module.exports = {
                 {
                     name: 'Actions',
                     label: 'Actions',
+                    createdAt: now,
+                    updatedAt: now,
+                },
+                {
+                    name: 'Access',
+                    label: 'Access',
                     createdAt: now,
                     updatedAt: now,
                 },

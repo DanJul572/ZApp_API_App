@@ -9,7 +9,7 @@ const now = dayjs().format(datetimeFormat.datetime.value);
 
 module.exports = [
     {
-        moduleId: moduleId.roles,
+        moduleId: moduleId.validations,
         name: 'id',
         label: 'ID',
         inputType: inputType.number,
@@ -29,7 +29,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: moduleId.roles,
+        moduleId: moduleId.validations,
         name: 'moduleId',
         label: 'Module ID',
         inputType: inputType.dropdown,
@@ -49,7 +49,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: moduleId.roles,
+        moduleId: moduleId.validations,
         name: 'actionId',
         label: 'Action ID',
         inputType: inputType.dropdown,
@@ -69,7 +69,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: moduleId.roles,
+        moduleId: moduleId.validations,
         name: 'scriptId',
         label: 'Script ID',
         inputType: inputType.dropdown,
@@ -89,7 +89,7 @@ module.exports = [
         updatedAt: now,
     },
     {
-        moduleId: moduleId.roles,
+        moduleId: moduleId.validations,
         name: 'validationTimeId',
         label: 'validation Time ID',
         inputType: inputType.dropdown,
