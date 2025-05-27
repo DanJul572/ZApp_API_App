@@ -9,7 +9,7 @@ module.exports = {
     async up(queryInterface) {
         const now = dayjs().format(datetimeFormat.datetime.value);
         await queryInterface.bulkInsert(
-            'Actions',
+            'Scripts',
             [
                 {
                     label: 'One Menu Per Role',
