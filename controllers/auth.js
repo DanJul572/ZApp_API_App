@@ -10,36 +10,7 @@ const auth = require('../constats/auth');
 const moduleId = require('../constats/moduleId');
 const menuQuery = require('../queries/menuQuery');
 
-function authenticateToken(req, res, next) {
-    const token = req.header('Authorization');
-    if (!token) return res.sendStatus(401);
-
-    jwt.verify(token, auth.secretKey, (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
-        next();
-    });
-}
-
-async function findValidTokenForUser(userId) {
-    try {
-        const userToken = await authQuery.findTokenByUserId(userId);
-        if (userToken) {
-            const decoded = jwt.verify(userToken.token, auth.secretKey);
-            const isExpired = decoded.exp < Date.now() / 1000;
-            if (!isExpired) {
-                return userToken.token;
-            } else {
-                await authQuery.deleteTokenByUserId(userToken.userId);
-                return false;
-            }
-        } else {
-            return false;
-        }
-    } catch {
-        return false;
-    }
-}
+const findValidTokenForUser = require('../helpers/findValidTokenForUser');
 
 async function login(req, res) {
     const t = await db.sequelize.transaction();
@@ -133,7 +104,6 @@ async function logout(req, res) {
 }
 
 module.exports = {
-    authenticateToken: authenticateToken,
     login: login,
     register: register,
     logout: logout,

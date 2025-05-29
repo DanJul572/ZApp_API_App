@@ -1,5 +1,5 @@
 module.exports = {
-    secretKey: 'ZApp572!',
+    secretKey: process.env.JWT_SCECRET_KEY,
     salt: 10,
     expiredIn: '1h',
 };

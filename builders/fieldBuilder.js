@@ -30,7 +30,9 @@ module.exports = {
                     ELSE NULL
                 END AS "${field.name}"
             `;
-        } else if (field.inputType === inputType.toggle) {
+        }
+        
+        if (field.inputType === inputType.toggle) {
             return `
                 CASE
                     WHEN "${field.name}" = 1
@@ -38,7 +40,9 @@ module.exports = {
                     ELSE 'No'
                 END AS "${field.name}"
             `;
-        } else if (field.inputType === inputType.password) {
+        }
+        
+        if (field.inputType === inputType.password) {
             return `
                 CASE
                     WHEN "${field.name}" IS NOT NULL
@@ -46,7 +50,9 @@ module.exports = {
                     ELSE NULL
                 END AS "${field.name}"
             `;
-        } else if (
+        }
+        
+        if (
             field.inputType === inputType.dropdown ||
             field.inputType === inputType
         ) {
@@ -55,20 +61,24 @@ module.exports = {
                 FROM "${field.tableRef}"
                 WHERE CAST("${field.tableRef}"."${field.tableRefKey}" AS VARCHAR(255)) = CAST("${module}"."${field.name}" AS VARCHAR(255))
             ) AS "${field.name}"`;
-        } else if (field.inputType === inputType.checkbox) {
+        }
+        
+        if (field.inputType === inputType.checkbox) {
             return `
                 SELECT STRING_AGG(CONCAT('(', "${field.tableRef}"."${field.tableRefKey}", ') - ', "${field.tableRef}"."${field.tableRefName}"), ', ') AS "${field.name}"
                 FROM "${field.tableRef}"
                 WHERE "${field.tableRef}"."${field.tableRefKey}" IN ("${module}"."${field.name}");
             `;
-        } else if (
+        }
+        
+        if (
             field.inputType === inputType.datetime ||
             field.inputType === inputType.date ||
             field.inputType === inputType.time
         ) {
             return `TO_CHAR("${field.name}", '${datetimeFormat.datetime.display}') AS "${field.name}"`;
-        } else {
-            return `"${field.name}"`;
         }
+
+        return `"${field.name}"`;
     },
 };
