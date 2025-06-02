@@ -52,7 +52,7 @@ module.exports = {
                     label: 'Dev Menu',
                     tree: tree,
                     roleId: 1,
-                    afterLogin: '/',
+                    afterLogin: '/module',
                     createdAt: now,
                     updatedAt: now,
                 },
