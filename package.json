@@ -36,5 +36,5 @@
         "prettier": "^3.5.3",
         "sequelize-cli": "^6.6.3"
     },
-    "packageManager": "pnpm@10.11.0"
+    "packageManager": "pnpm@10.11.1"
 }
