@@ -3,7 +3,9 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "node ./bin/www",
+        "start:dev": "cross-env NODE_ENV=development node ./bin/www",
+        "migrate:dev": "cross-env NODE_ENV=development sequelize db:migrate",
+        "seed:dev": "cross-env NODE_ENV=development sequelize db:seed:all",
         "prepare": "husky install",
         "lint": "eslint . --max-warnings=0",
         "format": "prettier --write ."
@@ -13,9 +15,11 @@
         "body-parser": "^2.2.0",
         "cookie-parser": "~1.4.7",
         "cors": "^2.8.5",
+        "cross-env": "^7.0.3",
         "dayjs": "^1.11.13",
         "debug": "~4.4.1",
         "dotenv": "^17.0.1",
+        "dotenv-flow": "^4.1.0",
         "ejs": "~3.1.10",
         "express": "~5.1.0",
         "http-errors": "~2.0.0",

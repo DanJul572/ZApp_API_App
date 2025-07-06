@@ -31,7 +31,7 @@ module.exports = {
                 END AS "${field.name}"
             `;
         }
-        
+
         if (field.inputType === inputType.toggle) {
             return `
                 CASE
@@ -41,7 +41,7 @@ module.exports = {
                 END AS "${field.name}"
             `;
         }
-        
+
         if (field.inputType === inputType.password) {
             return `
                 CASE
@@ -51,7 +51,7 @@ module.exports = {
                 END AS "${field.name}"
             `;
         }
-        
+
         if (
             field.inputType === inputType.dropdown ||
             field.inputType === inputType
@@ -62,7 +62,7 @@ module.exports = {
                 WHERE CAST("${field.tableRef}"."${field.tableRefKey}" AS VARCHAR(255)) = CAST("${module}"."${field.name}" AS VARCHAR(255))
             ) AS "${field.name}"`;
         }
-        
+
         if (field.inputType === inputType.checkbox) {
             return `
                 SELECT STRING_AGG(CONCAT('(', "${field.tableRef}"."${field.tableRefKey}", ') - ', "${field.tableRef}"."${field.tableRefName}"), ', ') AS "${field.name}"
@@ -70,7 +70,7 @@ module.exports = {
                 WHERE "${field.tableRef}"."${field.tableRefKey}" IN ("${module}"."${field.name}");
             `;
         }
-        
+
         if (
             field.inputType === inputType.datetime ||
             field.inputType === inputType.date ||

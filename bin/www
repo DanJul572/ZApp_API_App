@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-require('dotenv').config();
+require('dotenv-flow').config();
 var app = require('../app');
 var debug = require('debug')('zapp:server');
 var http = require('http');
