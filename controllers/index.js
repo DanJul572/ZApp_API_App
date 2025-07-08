@@ -1,4 +1,4 @@
-const auth = require('./auth');
+const authController = require('./authController');
 const common = require('./common');
 const field = require('./field');
 const file = require('./file');
@@ -7,7 +7,7 @@ const script = require('./script');
 const view = require('./view');
 
 module.exports = {
-    auth,
+    authController,
     common,
     field,
     modules,

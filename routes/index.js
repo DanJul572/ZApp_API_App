@@ -3,7 +3,7 @@ var router = express.Router();
 
 const authenticateToken = require('../middleware/authenticateToken');
 
-const authController = require('../controllers').auth;
+const authController = require('../controllers').authController;
 const commonController = require('../controllers').common;
 const fieldController = require('../controllers').field;
 const fileController = require('../controllers').file;
