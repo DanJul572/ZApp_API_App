@@ -2,34 +2,22 @@ const dayjs = require('dayjs');
 
 const db = require('../models');
 
-const fieldQuery = require('./fieldQuery');
-const fileQuery = require('./fileQuery');
-const moduleQuery = require('./moduleQuery');
-const validationQuery = require('./validationQuery');
-
 const commonBuilder = require('../builders/commonBuilder');
-
-const actionId = require('../constats/actionId');
 const datetimeFormat = require('../constats/datetimeFormat');
-const validationTimeId = require('../constats/validationTimeId');
 
 async function getRows(
-    moduleId,
+    moduleName,
+    fields,
     page,
     advanceFilter,
     filter,
-    order,
+    sort,
     defaultFilter,
 ) {
     try {
-        const module = await moduleQuery.getModule(moduleId);
-        const fields = await fieldQuery.getFields(moduleId);
-        const countQuery = commonBuilder.getRowsCount(module.name);
-
-        // default sorting
-        if (!order || order.length <= 0) {
-            const primaryField = await fieldQuery.getPrimaryField(moduleId);
-            order = [
+        if (!sort || sort.length <= 0) {
+            const primaryField = await fields.find(field => field.identity);
+            sort = [
                 {
                     id: primaryField.name,
                     desc: false,
@@ -37,13 +25,14 @@ async function getRows(
             ];
         }
 
+        const countQuery = commonBuilder.getRowsCount(moduleName);
         const {rowsQuery, rowsValues} = commonBuilder.getRows(
-            module.name,
+            moduleName,
             fields,
             page,
             advanceFilter,
             filter,
-            order,
+            sort,
             defaultFilter,
         );
 
@@ -77,9 +66,8 @@ async function getRows(
     }
 }
 
-async function getColumns(id) {
+async function getColumns(fields) {
     try {
-        let fields = await fieldQuery.getFields(id);
         let columns = fields.map(field => {
             return {
                 accessorKey: field.name,
@@ -97,36 +85,9 @@ async function getColumns(id) {
     }
 }
 
-async function getRowDetail(
-    moduleId,
-    rowId,
-    user = null,
-    options = {
-        withValidation: true,
-    },
-) {
+async function getRowDetail(tableName, rowId, primaryFieldName) {
     try {
-        const data = {
-            rowId: rowId,
-            moduleId: moduleId,
-        };
-
-        if (options.withValidation) {
-            await validationQuery.runValidation(
-                data,
-                moduleId,
-                actionId.detail,
-                validationTimeId.before,
-                user,
-            );
-        }
-
-        const module = await moduleQuery.getModule(moduleId);
-        const primaryField = await fieldQuery.getPrimaryField(moduleId);
-        const query = commonBuilder.getRowDetail(
-            module.name,
-            primaryField.name,
-        );
+        const query = commonBuilder.getRowDetail(tableName, primaryFieldName);
 
         return await db.sequelize
             .query(query, {
@@ -144,22 +105,13 @@ async function getRowDetail(
     }
 }
 
-async function deleteRow(moduleId, rowId) {
+async function deleteRow(tableName, primaryFieldName, rowId) {
     try {
-        const module = await moduleQuery.getModule(moduleId);
-        const moduleFields = await fieldQuery.getFields(moduleId);
-        const rowDetail = await getRowDetail(moduleId, rowId, null, {
-            withValidation: false,
-        });
-
-        // Get Primary Field
-        const primaryField = moduleFields.find(field => field.identity);
-
-        // Delete Files
-        await fileQuery.delete(moduleFields, rowDetail);
-
-        // Delete Rows
-        const query = commonBuilder.deleteRow(module.name, primaryField.name);
+        const query = commonBuilder.deleteRow(
+            tableName,
+            primaryFieldName,
+            rowId,
+        );
 
         return await db.sequelize
             .query(query, {
@@ -177,9 +129,8 @@ async function deleteRow(moduleId, rowId) {
     }
 }
 
-async function getOptions(id) {
+async function getOptions(field) {
     try {
-        const field = await fieldQuery.getField(id);
         const query = commonBuilder.getOptions(
             field.tableRef,
             field.tableRefKey,
@@ -198,37 +149,12 @@ async function getOptions(id) {
     }
 }
 
-async function insertRow(moduleId, data, user = null, files = []) {
+async function insertRow(table, data) {
     try {
-        const module = await moduleQuery.getModule(moduleId);
-
-        // before validation
-        await validationQuery.runValidation(
-            data,
-            moduleId,
-            actionId.create,
-            validationTimeId.before,
-            user,
-        );
-
-        // save files
-        await fileQuery.save(files, moduleId);
-
-        // add value for default field
         data.createdAt = dayjs().format(datetimeFormat.datetime.value);
         data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
-        // insert process
-        const {query, values} = commonBuilder.insertRow(module.name, data);
-
-        // after validation
-        await validationQuery.runValidation(
-            data,
-            moduleId,
-            actionId.create,
-            validationTimeId.after,
-            user,
-        );
+        const {query, values} = commonBuilder.insertRow(table, data);
 
         return await db.sequelize
             .query(query, {
@@ -246,37 +172,14 @@ async function insertRow(moduleId, data, user = null, files = []) {
     }
 }
 
-async function updateRow(moduleId, rowId, data, files = []) {
+async function updateRow(primaryFieldName, rowId, data) {
     try {
-        // get module
-        const module = await moduleQuery.getModule(moduleId);
-
-        // get module fields
-        const moduleFields = await fieldQuery.getFields(moduleId);
-
-        // get row detail
-        const rowDetail = await getRowDetail(moduleId, rowId, null, {
-            withValidation: false,
-        });
-
-        // get primary field
-        const primaryField = moduleFields.find(field => field.identity);
-
-        // delete files
-        await fileQuery.delete(moduleFields, rowDetail);
-
-        // insert files
-        await fileQuery.save(files, moduleId);
-
-        // add update condition by primary field
         const condition = {
-            [primaryField.name]: rowId,
+            [primaryFieldName]: rowId,
         };
 
-        // update value for default field
         data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
-        // update process
         const {query, values} = commonBuilder.updateRow(
             module.name,
             data,

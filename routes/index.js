@@ -4,7 +4,7 @@ var router = express.Router();
 const authenticateToken = require('../middleware/authenticateToken');
 
 const authController = require('../controllers').authController;
-const commonController = require('../controllers').common;
+const commonController = require('../controllers').commonController;
 const fieldController = require('../controllers').field;
 const fileController = require('../controllers').file;
 const moduleController = require('../controllers').modules;
@@ -22,7 +22,7 @@ router.get('/api/common/detail', authenticateToken, commonController.detail);
 router.get('/api/common/menu', authenticateToken, commonController.menu);
 router.get('/api/common/options', commonController.options);
 router.post('/api/common/create', authenticateToken, commonController.create);
-router.post('/api/common/delete', authenticateToken, commonController.delete);
+router.post('/api/common/delete', authenticateToken, commonController.destory);
 router.post('/api/common/rows', authenticateToken, commonController.rows);
 router.post('/api/common/update', authenticateToken, commonController.update);
 

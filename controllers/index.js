@@ -1,5 +1,5 @@
 const authController = require('./authController');
-const common = require('./common');
+const commonController = require('./commonController');
 const field = require('./field');
 const file = require('./file');
 const modules = require('./module');
@@ -8,10 +8,10 @@ const view = require('./view');
 
 module.exports = {
     authController,
-    common,
+    commonController,
     field,
+    file,
     modules,
     script,
-    file,
     view,
 };

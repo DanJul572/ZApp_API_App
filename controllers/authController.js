@@ -1,14 +1,14 @@
 const db = require('../models');
 const helper = require('../helpers');
 const statusCode = require('../constats/statusCode');
-
 const authService = require('../services/authService');
 
 async function login(req, res) {
     const t = await db.sequelize.transaction();
-    const request = JSON.parse(req.body.data);
-
+    
     try {
+        const request = JSON.parse(req.body.data);
+
         const user = await authService.getUserByEmail(request.email);
         const passwordIsMatch = await authService.checkPassword(
             request.password,
@@ -50,12 +50,14 @@ async function login(req, res) {
 
 async function register(req, res) {
     const t = await db.sequelize.transaction();
-    const request = JSON.parse(req.body.data);
-
+    
     try {
+        const request = JSON.parse(req.body.data);
+
         const userData = request;
         userData.password = await authService.hashPassword(userData.password);
         const createdUser = await authService.insertUser(userData);
+
         t.commit();
         return res.status(statusCode.OK).send(createdUser);
     } catch (error) {
@@ -66,11 +68,13 @@ async function register(req, res) {
 
 async function logout(req, res) {
     const t = await db.sequelize.transaction();
-    const token = req.header('Authorization');
-
+    
     try {
+        const token = req.header('Authorization');
+
         const userData = helper.decodeToken(token);
         const response = authService.deleteUserToken(userData.userId);
+        
         t.commit();
         return res.status(statusCode.OK).send(response);
     } catch (error) {
