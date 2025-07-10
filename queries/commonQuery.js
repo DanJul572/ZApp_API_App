@@ -5,15 +5,7 @@ const db = require('../models');
 const commonBuilder = require('../builders/commonBuilder');
 const datetimeFormat = require('../constats/datetimeFormat');
 
-async function getRows(
-  moduleName,
-  fields,
-  page,
-  advanceFilter,
-  filter,
-  sort,
-  defaultFilter,
-) {
+async function getRows(moduleName, fields, page, advanceFilter, filter, sort, defaultFilter) {
   try {
     if (!sort || sort.length <= 0) {
       const primaryField = await fields.find(field => field.identity);
@@ -108,11 +100,7 @@ async function deleteRow(tableName, primaryFieldName, rowId) {
 
 async function getOptions(field) {
   try {
-    const query = commonBuilder.getOptions(
-      field.tableRef,
-      field.tableRefKey,
-      field.tableRefName,
-    );
+    const query = commonBuilder.getOptions(field.tableRef, field.tableRefKey, field.tableRefName);
     return await db.sequelize
       .query(query)
       .then(result => {
@@ -157,11 +145,7 @@ async function updateRow(primaryFieldName, rowId, data) {
 
     data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
-    const {query, values} = commonBuilder.updateRow(
-      module.name,
-      data,
-      condition,
-    );
+    const {query, values} = commonBuilder.updateRow(module.name, data, condition);
 
     return await db.sequelize
       .query(query, {

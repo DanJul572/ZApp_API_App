@@ -55,18 +55,9 @@ async function detail(req, res) {
     const module = await commonService.getModuleById(request.moduleId);
     const primaryField = await commonService.getPrimaryField(request.moduleId);
 
-    await commonService.runValidationBefore(
-      request,
-      module.id,
-      actionId.detail,
-      user,
-    );
+    await commonService.runValidationBefore(request, module.id, actionId.detail, user);
 
-    const data = await commonService.getDetailData(
-      module.name,
-      request.rowId,
-      primaryField.name,
-    );
+    const data = await commonService.getDetailData(module.name, request.rowId, primaryField.name);
     return res.status(statusCode.OK).send(data);
   } catch (error) {
     const response = helper.getErrorResponse(error.message);
@@ -92,11 +83,7 @@ async function destory(req, res) {
 
     await commonService.deleteFile(fields, detailData);
 
-    const data = await commonService.deleteData(
-      module.name,
-      primaryField.name,
-      request.id,
-    );
+    const data = await commonService.deleteData(module.name, primaryField.name, request.id);
 
     t.commit();
     return res.status(statusCode.OK).send(data);
@@ -134,22 +121,12 @@ async function create(req, res) {
     const user = helper.decodeToken(token);
     const module = await commonService.getModuleById(request.moduleId);
 
-    await commonService.runValidationBefore(
-      request.data,
-      module.id,
-      actionId.create,
-      user,
-    );
+    await commonService.runValidationBefore(request.data, module.id, actionId.create, user);
 
     await commonService.insertFile(files, module.id);
     const data = await commonService.insertData(module.name, request.data);
 
-    await commonService.runValidationAfter(
-      request.data,
-      module.id,
-      actionId.create,
-      user,
-    );
+    await commonService.runValidationAfter(request.data, module.id, actionId.create, user);
 
     t.commit();
     return res.status(statusCode.OK).send(data);
@@ -170,25 +147,16 @@ async function update(req, res) {
 
     const module = await commonService.getModuleById(request.moduleId);
     const fields = await commonService.getModuleFields(module.id);
-    const detailData = await commonService.getDetailData(
-      module.id,
-      request.rowId,
-      null,
-      {
-        withValidation: false,
-      },
-    );
+    const detailData = await commonService.getDetailData(module.id, request.rowId, null, {
+      withValidation: false,
+    });
 
     const primaryField = fields.find(field => field.identity);
 
     await commonService.deleteFile(fields, detailData);
     await commonService.insertFile(files, module.id);
 
-    const data = await commonService.updateData(
-      primaryField.name,
-      request.rowId,
-      request.data,
-    );
+    const data = await commonService.updateData(primaryField.name, request.rowId, request.data);
 
     t.commit();
     return res.status(statusCode.OK).send(data);

@@ -26,9 +26,7 @@ module.exports = {
 
   delete(fields, row) {
     try {
-      const fileFields = fields.filter(
-        field => field.inputType === inputType.file,
-      );
+      const fileFields = fields.filter(field => field.inputType === inputType.file);
 
       if (!fileFields || !fileFields.length || !row) return;
 

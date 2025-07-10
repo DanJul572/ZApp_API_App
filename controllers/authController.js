@@ -10,10 +10,7 @@ async function login(req, res) {
     const request = JSON.parse(req.body.data);
 
     const user = await authService.getUserByEmail(request.email);
-    const passwordIsMatch = await authService.checkPassword(
-      request.password,
-      user.password,
-    );
+    const passwordIsMatch = await authService.checkPassword(request.password, user.password);
     if (user && passwordIsMatch) {
       const menu = await authService.getMenu(user.roleId);
       const existingToken = await authService.getExistingToken(user.id);
@@ -24,11 +21,7 @@ async function login(req, res) {
           afterLogin: menu.afterLogin,
         });
       } else {
-        const newToken = authService.generateToken(
-          user.id,
-          user.email,
-          user.roleId,
-        );
+        const newToken = authService.generateToken(user.id, user.email, user.roleId);
         await authService.insertToken(user.id, newToken);
         t.commit();
         return res.json({
@@ -38,9 +31,7 @@ async function login(req, res) {
       }
     } else {
       t.commit();
-      return res
-        .status(statusCode.BAD_REQUEST)
-        .send('Invalid Email or Password');
+      return res.status(statusCode.BAD_REQUEST).send('Invalid Email or Password');
     }
   } catch (error) {
     await t.rollback();

@@ -12,11 +12,7 @@ async function run(req, res) {
 
     const identity = fields.find(field => field.identity);
 
-    const script = await scriptService.getDetailData(
-      module.name,
-      param.id,
-      identity.name,
-    );
+    const script = await scriptService.getDetailData(module.name, param.id, identity.name);
     const data = await scriptService.executeScript(script.sql);
 
     return res.status(statusCode.OK).send(data);

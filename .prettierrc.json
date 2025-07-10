@@ -3,7 +3,7 @@
   "bracketSameLine": true,
   "bracketSpacing": false,
   "endOfLine": "auto",
-  "printWidth": 80,
+  "printWidth": 100,
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "all"

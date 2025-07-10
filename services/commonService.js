@@ -50,24 +50,8 @@ async function insertData(moduleId, data, user) {
   return await commonQuery.insertRow(moduleId, data, user);
 }
 
-async function getData(
-  moduleName,
-  fields,
-  page,
-  advanceFilter,
-  filter,
-  sort,
-  defaultFilter,
-) {
-  return commonQuery.getRows(
-    moduleName,
-    fields,
-    page,
-    advanceFilter,
-    filter,
-    sort,
-    defaultFilter,
-  );
+async function getData(moduleName, fields, page, advanceFilter, filter, sort, defaultFilter) {
+  return commonQuery.getRows(moduleName, fields, page, advanceFilter, filter, sort, defaultFilter);
 }
 
 async function getDetailData(tableName, rowId, primaryFieldName) {
