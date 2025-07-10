@@ -74,10 +74,6 @@ async function getDetailData(tableName, rowId, primaryFieldName) {
     return await commonQuery.getRowDetail(tableName, rowId, primaryFieldName);
 }
 
-async function getColumns(fields) {
-    return await commonQuery.getColumns(fields);
-}
-
 async function deleteData(tableName, primaryFieldName, rowId) {
     return commonQuery.deleteRow(tableName, primaryFieldName, rowId);
 }
@@ -101,7 +97,6 @@ async function getMenu(roleId) {
 module.exports = {
     deleteData,
     deleteFile,
-    getColumns,
     getData,
     getDetailData,
     getField,

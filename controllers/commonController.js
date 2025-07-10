@@ -36,7 +36,7 @@ async function columns(req, res) {
         const request = req.query;
 
         const fields = await commonService.getModuleFields(request.id);
-        const data = await commonService.getColumns(fields);
+        const data = await helper.generateColumnByField(fields);
 
         return res.status(statusCode.OK).send(data);
     } catch (error) {

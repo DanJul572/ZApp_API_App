@@ -1,6 +1,6 @@
 const {rowsPerPage} = require('../constats/setting');
 const fieldBuilder = require('./fieldBuilder');
-const jsonToWhereClause = require('../helpers/jsonToWhereClause');
+const helpers = require('../helpers');
 
 function getRows(
     table,
@@ -23,7 +23,7 @@ function getRows(
     let rowsQuery = `SELECT ${fieldsFormat} FROM "${table}"`;
 
     // Generate the advance filter clause
-    const advanceFilterFormat = jsonToWhereClause(advanceFilter);
+    const advanceFilterFormat = helpers.jsonToWhereClause(advanceFilter);
 
     // Combine default filters and filters provided
     const combinedFilters = [...(defaultFilter || []), ...(filter || [])];

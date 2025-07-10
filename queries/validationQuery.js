@@ -1,7 +1,5 @@
 const db = require('../models');
-
-const replacePlaceholders = require('../helpers/replacePlaceholders');
-
+const helpers = require('../helpers');
 const validationBuilder = require('../builders/validationBuilder');
 
 function getValidations(moduleId, actionId, validationTimeId) {
@@ -39,7 +37,7 @@ async function runValidation(
         if (validations && validations.length > 0) {
             for (let index = 0; index < validations.length; index++) {
                 const validation = validations[index];
-                validation.sql = replacePlaceholders(
+                validation.sql = helpers.replacePlaceholders(
                     validation.sql,
                     data,
                     user,

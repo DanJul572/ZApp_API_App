@@ -66,25 +66,6 @@ async function getRows(
     }
 }
 
-async function getColumns(fields) {
-    try {
-        let columns = fields.map(field => {
-            return {
-                accessorKey: field.name,
-                header: field.label,
-                size: 100,
-                minSize: 100,
-                maxSize: 200,
-                type: field.inputType,
-                identity: field.identity,
-            };
-        });
-        return columns;
-    } catch (error) {
-        throw new Error(error.message);
-    }
-}
-
 async function getRowDetail(tableName, rowId, primaryFieldName) {
     try {
         const query = commonBuilder.getRowDetail(tableName, primaryFieldName);
@@ -224,7 +205,6 @@ async function getMenu(roleId) {
 
 module.exports = {
     getRows,
-    getColumns,
     getRowDetail,
     deleteRow,
     getOptions,
