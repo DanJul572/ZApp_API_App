@@ -6,14 +6,14 @@ const datetimeFormat = require('../constats/datetimeFormat');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-    async up(queryInterface) {
-        const now = dayjs().format(datetimeFormat.datetime.value);
-        await queryInterface.bulkInsert(
-            'Scripts',
-            [
-                {
-                    label: 'One Menu Per Role',
-                    sql: `
+  async up(queryInterface) {
+    const now = dayjs().format(datetimeFormat.datetime.value);
+    await queryInterface.bulkInsert(
+      'Scripts',
+      [
+        {
+          label: 'One Menu Per Role',
+          sql: `
                         DO $$
                             BEGIN IF EXISTS (
                                 SELECT 1 FROM "Menus"
@@ -23,12 +23,12 @@ module.exports = {
                             END IF;
                         END $$;
                     `,
-                    createdAt: now,
-                    updatedAt: now,
-                },
-                {
-                    label: 'Validate Role Access',
-                    sql: `
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          label: 'Validate Role Access',
+          sql: `
                         DO $$
                         BEGIN
                             IF NOT EXISTS (
@@ -41,15 +41,15 @@ module.exports = {
                         END;
                         $$;
                     `,
-                    createdAt: now,
-                    updatedAt: now,
-                },
-            ],
-            {},
-        );
-    },
+          createdAt: now,
+          updatedAt: now,
+        },
+      ],
+      {},
+    );
+  },
 
-    async down(queryInterface) {
-        await queryInterface.bulkDelete('Scripts', null, {});
-    },
+  async down(queryInterface) {
+    await queryInterface.bulkDelete('Scripts', null, {});
+  },
 };

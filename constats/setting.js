@@ -1,3 +1,3 @@
 module.exports = {
-    rowsPerPage: 10,
+  rowsPerPage: 10,
 };

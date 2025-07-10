@@ -1,11 +1,11 @@
-const fieldService = require('../services/fieldService');
+const viewService = require('../services/viewService');
 const statusCode = require('../constats/statusCode');
 
-async function rows(req, res) {
+async function options(req, res) {
   try {
     const request = req.query;
 
-    const data = await fieldService.getFields(request.moduleId);
+    const data = await viewService.getOptions(request.moduleId);
 
     return res.status(statusCode.OK).send(data);
   } catch (error) {
@@ -14,5 +14,5 @@ async function rows(req, res) {
 }
 
 module.exports = {
-  rows,
+  options,
 };

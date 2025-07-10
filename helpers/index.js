@@ -7,11 +7,11 @@ const jsonToWhereClause = require('./jsonToWhereClause');
 const replacePlaceholders = require('./replacePlaceholders');
 
 module.exports = {
-    decodeToken,
-    findValidTokenForUser,
-    generateColumnByField,
-    getErrorResponse,
-    insertError,
-    jsonToWhereClause,
-    replacePlaceholders,
+  decodeToken,
+  findValidTokenForUser,
+  generateColumnByField,
+  getErrorResponse,
+  insertError,
+  jsonToWhereClause,
+  replacePlaceholders,
 };

@@ -19,28 +19,28 @@ const views = require('./fields/views');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-    async up(queryInterface) {
-        const combine = modules.concat(
-            access,
-            actions,
-            dataTypes,
-            fields,
-            files,
-            inputTypes,
-            logError,
-            menus,
-            roles,
-            script,
-            tokens,
-            users,
-            validation,
-            validationTime,
-            views,
-        );
-        await queryInterface.bulkInsert('Fields', combine, {});
-    },
+  async up(queryInterface) {
+    const combine = modules.concat(
+      access,
+      actions,
+      dataTypes,
+      fields,
+      files,
+      inputTypes,
+      logError,
+      menus,
+      roles,
+      script,
+      tokens,
+      users,
+      validation,
+      validationTime,
+      views,
+    );
+    await queryInterface.bulkInsert('Fields', combine, {});
+  },
 
-    async down(queryInterface) {
-        await queryInterface.bulkDelete('Fields', null, {});
-    },
+  async down(queryInterface) {
+    await queryInterface.bulkDelete('Fields', null, {});
+  },
 };

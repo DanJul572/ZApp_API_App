@@ -7,9 +7,9 @@ const authController = require('../controllers').authController;
 const commonController = require('../controllers').commonController;
 const fieldController = require('../controllers').fieldController;
 const fileController = require('../controllers').fileController;
-const moduleController = require('../controllers').modules;
-const scriptController = require('../controllers').script;
-const viewController = require('../controllers').view;
+const moduleController = require('../controllers').moduleController;
+const scriptController = require('../controllers').scriptController;
+const viewController = require('../controllers').viewController;
 
 /* authentication */
 router.post('/api/auth/login', authController.login);
@@ -41,6 +41,6 @@ router.get('/api/file/download', authenticateToken, fileController.download);
 /* module */
 router.get('/api/module/detail', authenticateToken, moduleController.detail);
 router.post('/api/module/create', authenticateToken, moduleController.create);
-router.post('/api/module/delete', authenticateToken, moduleController.delete);
+router.post('/api/module/delete', authenticateToken, moduleController.destory);
 
 module.exports = router;
