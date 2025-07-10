@@ -8,8 +8,6 @@ const menuQuery = require('../queries/menuQuery');
 const moduleId = require('../constats/moduleId');
 const auth = require('../constats/auth');
 
-const helper = require('../helpers');
-
 async function hashPassword(password) {
   return await bcryptjs.hash(password, auth.salt);
 }
@@ -48,15 +46,27 @@ function generateToken(id, email, roleId) {
   return jwt.sign(tokenInfo, auth.secretKey, tokenOptions);
 }
 
-async function insertToken(id, token) {
-  await commonQuery.insertRow(moduleId.tokens, {
+async function insertToken(tableName, id, token) {
+  await commonQuery.insertRow(tableName, {
     userId: id,
     token: token,
   });
 }
 
 async function getExistingToken(id) {
-  return await helper.findValidTokenForUser(id);
+  const userToken = await authQuery.findTokenByUserId(id);
+  if (userToken) {
+    const decoded = jwt.verify(userToken.token, process.env.JWT_SCECRET_KEY);
+    const isExpired = decoded.exp < Date.now() / 1000;
+    if (!isExpired) {
+      return userToken.token;
+    } else {
+      await authQuery.deleteTokenByUserId(userToken.userId);
+      return false;
+    }
+  } else {
+    return false;
+  }
 }
 
 module.exports = {

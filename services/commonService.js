@@ -70,12 +70,26 @@ async function getField(id) {
   return await fieldQuery.getField(id);
 }
 
-async function updateData(primaryFieldName, rowId, data) {
-  return await commonQuery.updateRow(primaryFieldName, rowId, data);
+async function updateData(moduleName, primaryFieldName, rowId, data) {
+  return await commonQuery.updateRow(moduleName, primaryFieldName, rowId, data);
 }
 
 async function getMenu(roleId) {
   return await commonQuery.getMenu(roleId);
+}
+
+async function insertError(request, code, message) {
+  if (code !== 500) {
+    return;
+  }
+  const url = request.originalUrl;
+  const method = request.method;
+  const data = {
+    url,
+    method,
+    message,
+  };
+  return await commonQuery.insertRow('LogError', data);
 }
 
 module.exports = {
@@ -94,4 +108,5 @@ module.exports = {
   runValidationAfter,
   runValidationBefore,
   updateData,
+  insertError,
 };

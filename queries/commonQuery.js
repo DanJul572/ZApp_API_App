@@ -137,7 +137,7 @@ async function insertRow(table, data) {
   }
 }
 
-async function updateRow(primaryFieldName, rowId, data) {
+async function updateRow(moduleName, primaryFieldName, rowId, data) {
   try {
     const condition = {
       [primaryFieldName]: rowId,
@@ -145,7 +145,7 @@ async function updateRow(primaryFieldName, rowId, data) {
 
     data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
 
-    const {query, values} = commonBuilder.updateRow(module.name, data, condition);
+    const {query, values} = commonBuilder.updateRow(moduleName, data, condition);
 
     return await db.sequelize
       .query(query, {

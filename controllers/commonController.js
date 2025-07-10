@@ -26,7 +26,7 @@ async function rows(req, res) {
     return res.status(statusCode.OK).send(data);
   } catch (error) {
     const response = helper.getErrorResponse(error.message);
-    await helper.insertError(req, response.code, error.message);
+    await commonService.insertError(req, response.code, error.message);
     return res.status(response.code).send(response.message);
   }
 }
@@ -41,7 +41,7 @@ async function columns(req, res) {
     return res.status(statusCode.OK).send(data);
   } catch (error) {
     const response = helper.getErrorResponse(error.message);
-    await helper.insertError(req, response.code, error.message);
+    await commonService.insertError(req, response.code, error.message);
     return res.status(response.code).send(response.message);
   }
 }
@@ -61,7 +61,7 @@ async function detail(req, res) {
     return res.status(statusCode.OK).send(data);
   } catch (error) {
     const response = helper.getErrorResponse(error.message);
-    await helper.insertError(req, response.code, error.message);
+    await commonService.insertError(req, response.code, error.message);
     return res.status(response.code).send(response.message);
   }
 }
@@ -90,7 +90,7 @@ async function destory(req, res) {
   } catch (error) {
     await t.rollback();
     const response = helper.getErrorResponse(error.message);
-    await helper.insertError(req, response.code, error.message);
+    await commonService.insertError(req, response.code, error.message);
     return res.status(response.code).send(response.message);
   }
 }
@@ -105,7 +105,7 @@ async function options(req, res) {
     return res.status(statusCode.OK).send(data);
   } catch (error) {
     const response = helper.getErrorResponse(error.message);
-    await helper.insertError(req, response.code, error.message);
+    await commonService.insertError(req, response.code, error.message);
     return res.status(response.code).send(response.message);
   }
 }
@@ -133,7 +133,7 @@ async function create(req, res) {
   } catch (error) {
     await t.rollback();
     const response = helper.getErrorResponse(error.message);
-    await helper.insertError(req, response.code, error.message);
+    await commonService.insertError(req, response.code, error.message);
     return res.status(response.code).send(response.message);
   }
 }
@@ -147,23 +147,31 @@ async function update(req, res) {
 
     const module = await commonService.getModuleById(request.moduleId);
     const fields = await commonService.getModuleFields(module.id);
-    const detailData = await commonService.getDetailData(module.id, request.rowId, null, {
-      withValidation: false,
-    });
 
     const primaryField = fields.find(field => field.identity);
+
+    const detailData = await commonService.getDetailData(
+      module.name,
+      request.rowId,
+      primaryField.name,
+    );
 
     await commonService.deleteFile(fields, detailData);
     await commonService.insertFile(files, module.id);
 
-    const data = await commonService.updateData(primaryField.name, request.rowId, request.data);
+    const data = await commonService.updateData(
+      module.name,
+      primaryField.name,
+      request.rowId,
+      request.data,
+    );
 
     t.commit();
     return res.status(statusCode.OK).send(data);
   } catch (error) {
     await t.rollback();
     const response = helper.getErrorResponse(error.message);
-    await helper.insertError(req, response.code, error.message);
+    await commonService.insertError(req, response.code, error.message);
     return res.status(response.code).send(response.message);
   }
 }
@@ -178,7 +186,7 @@ async function menu(req, res) {
     return res.status(statusCode.OK).send(data);
   } catch (error) {
     const response = helper.getErrorResponse(error.message);
-    await helper.insertError(req, response.code, error.message);
+    await commonService.insertError(req, response.code, error.message);
     return res.status(response.code).send(response.message);
   }
 }
