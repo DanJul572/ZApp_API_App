@@ -5,8 +5,8 @@ const authenticateToken = require('../middleware/authenticateToken');
 
 const authController = require('../controllers').authController;
 const commonController = require('../controllers').commonController;
-const fieldController = require('../controllers').field;
-const fileController = require('../controllers').file;
+const fieldController = require('../controllers').fieldController;
+const fileController = require('../controllers').fileController;
 const moduleController = require('../controllers').modules;
 const scriptController = require('../controllers').script;
 const viewController = require('../controllers').view;
@@ -35,7 +35,7 @@ router.get('/api/view/options', authenticateToken, viewController.options);
 /* script */
 router.get('/api/script/run', authenticateToken, scriptController.run);
 
-/* script */
+/* file */
 router.get('/api/file/download', authenticateToken, fileController.download);
 
 /* module */

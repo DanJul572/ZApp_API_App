@@ -5,7 +5,7 @@ const authService = require('../services/authService');
 
 async function login(req, res) {
     const t = await db.sequelize.transaction();
-    
+
     try {
         const request = JSON.parse(req.body.data);
 
@@ -50,7 +50,7 @@ async function login(req, res) {
 
 async function register(req, res) {
     const t = await db.sequelize.transaction();
-    
+
     try {
         const request = JSON.parse(req.body.data);
 
@@ -68,13 +68,13 @@ async function register(req, res) {
 
 async function logout(req, res) {
     const t = await db.sequelize.transaction();
-    
+
     try {
         const token = req.header('Authorization');
 
         const userData = helper.decodeToken(token);
         const response = authService.deleteUserToken(userData.userId);
-        
+
         t.commit();
         return res.status(statusCode.OK).send(response);
     } catch (error) {
