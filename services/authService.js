@@ -5,7 +5,6 @@ const authQuery = require('../queries/authQuery');
 const commonQuery = require('../queries/commonQuery');
 const menuQuery = require('../queries/menuQuery');
 
-const moduleId = require('../constats/moduleId');
 const auth = require('../constats/auth');
 
 async function hashPassword(password) {
@@ -13,7 +12,7 @@ async function hashPassword(password) {
 }
 
 async function insertUser(userData) {
-  return await commonQuery.insertRow(moduleId.users, userData);
+  return await commonQuery.insertRow('Users', userData);
 }
 
 async function deleteUserToken(userId) {
@@ -46,8 +45,8 @@ function generateToken(id, email, roleId) {
   return jwt.sign(tokenInfo, auth.secretKey, tokenOptions);
 }
 
-async function insertToken(tableName, id, token) {
-  await commonQuery.insertRow(tableName, {
+async function insertToken(id, token) {
+  await commonQuery.insertRow('Tokens', {
     userId: id,
     token: token,
   });

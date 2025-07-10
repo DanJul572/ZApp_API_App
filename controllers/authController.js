@@ -22,7 +22,7 @@ async function login(req, res) {
         });
       } else {
         const newToken = authService.generateToken(user.id, user.email, user.roleId);
-        await authService.insertToken('Tokens', user.id, newToken);
+        await authService.insertToken(user.id, newToken);
         t.commit();
         return res.json({
           afterLogin: menu.afterLogin,
