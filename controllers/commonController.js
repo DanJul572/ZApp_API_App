@@ -118,10 +118,10 @@ async function create(req, res) {
     const files = req.files;
     const token = req.header('Authorization');
 
+    await commonService.runValidationBefore(request.data, module.id, actionId.create, user);
+
     const user = helper.decodeToken(token);
     const module = await commonService.getModuleById(request.moduleId);
-
-    await commonService.runValidationBefore(request.data, module.id, actionId.create, user);
 
     await commonService.insertFile(files, module.id);
     const data = await commonService.insertData(module.name, request.data);
