@@ -2,7 +2,7 @@
 
 const dayjs = require('dayjs');
 
-const datetimeFormat = require('../constats/datetimeFormat');
+const enums = require('@enums');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
      * }], {});
      */
 
-    const now = dayjs().format(datetimeFormat.datetime.value);
+    const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
     await queryInterface.bulkInsert(
       'DataTypes',

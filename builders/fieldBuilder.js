@@ -1,5 +1,4 @@
-const datetimeFormat = require('../constats/datetimeFormat');
-const inputType = require('../constats/inputType');
+const enums = require('@enums');
 
 module.exports = {
   findByModule() {
@@ -19,7 +18,7 @@ module.exports = {
   },
 
   selectFormat(field, module) {
-    if (field.inputType === inputType.code || field.inputType === inputType.richText) {
+    if (field.inputType === enums.inputType.code || field.inputType === enums.inputType.richText) {
       return `
         CASE
           WHEN "${field.name}" IS NOT NULL
@@ -29,7 +28,7 @@ module.exports = {
       `;
     }
 
-    if (field.inputType === inputType.toggle) {
+    if (field.inputType === enums.inputType.toggle) {
       return `
         CASE
           WHEN "${field.name}" = 1
@@ -39,7 +38,7 @@ module.exports = {
       `;
     }
 
-    if (field.inputType === inputType.password) {
+    if (field.inputType === enums.inputType.password) {
       return `
         CASE
           WHEN "${field.name}" IS NOT NULL
@@ -49,7 +48,7 @@ module.exports = {
       `;
     }
 
-    if (field.inputType === inputType.dropdown || field.inputType === inputType) {
+    if (field.inputType === enums.inputType.dropdown || field.inputType === enums.inputType) {
       return `(
         SELECT CONCAT('(', "${field.tableRef}"."${field.tableRefKey}", ') - ', "${field.tableRef}"."${field.tableRefName}")
         FROM "${field.tableRef}"
@@ -57,7 +56,7 @@ module.exports = {
       ) AS "${field.name}"`;
     }
 
-    if (field.inputType === inputType.checkbox) {
+    if (field.inputType === enums.inputType.checkbox) {
       return `
         SELECT STRING_AGG(CONCAT('(', "${field.tableRef}"."${field.tableRefKey}", ') - ', "${field.tableRef}"."${field.tableRefName}"), ', ') AS "${field.name}"
         FROM "${field.tableRef}"
@@ -66,11 +65,11 @@ module.exports = {
     }
 
     if (
-      field.inputType === inputType.datetime ||
-      field.inputType === inputType.date ||
-      field.inputType === inputType.time
+      field.inputType === enums.inputType.datetime ||
+      field.inputType === enums.inputType.date ||
+      field.inputType === enums.inputType.time
     ) {
-      return `TO_CHAR("${field.name}", '${datetimeFormat.datetime.display}') AS "${field.name}"`;
+      return `TO_CHAR("${field.name}", '${enums.datetimeFormat.datetime.display}') AS "${field.name}"`;
     }
 
     return `"${field.name}"`;

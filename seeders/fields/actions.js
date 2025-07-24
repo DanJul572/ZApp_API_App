@@ -1,19 +1,16 @@
 const dayjs = require('dayjs');
 
-const dataType = require('../../constats/dataType');
-const inputType = require('../../constats/inputType');
-const datetimeFormat = require('../../constats/datetimeFormat');
-const moduleId = require('../../constats/moduleId');
+const enums = require('@enums');
 
-const now = dayjs().format(datetimeFormat.datetime.value);
+const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
 module.exports = [
   {
-    moduleId: moduleId.actions,
+    moduleId: enums.moduleId.actions,
     name: 'id',
     label: 'ID',
-    inputType: inputType.number,
-    dataType: dataType.integer,
+    inputType: enums.inputType.number,
+    dataType: enums.dataType.integer,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -29,11 +26,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.actions,
+    moduleId: enums.moduleId.actions,
     name: 'label',
     label: 'Label',
-    inputType: inputType.shortText,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,

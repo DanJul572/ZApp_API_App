@@ -1,19 +1,16 @@
 const dayjs = require('dayjs');
 
-const dataType = require('../../constats/dataType');
-const inputType = require('../../constats/inputType');
-const datetimeFormat = require('../../constats/datetimeFormat');
-const moduleId = require('../../constats/moduleId');
+const enums = require('@enums');
 
-const now = dayjs().format(datetimeFormat.datetime.value);
+const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
 module.exports = [
   {
-    moduleId: moduleId.validations,
+    moduleId: enums.moduleId.validations,
     name: 'id',
     label: 'ID',
-    inputType: inputType.number,
-    dataType: dataType.integer,
+    inputType: enums.inputType.number,
+    dataType: enums.dataType.integer,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -29,11 +26,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.validations,
+    moduleId: enums.moduleId.validations,
     name: 'moduleId',
     label: 'Module ID',
-    inputType: inputType.dropdown,
-    dataType: dataType.tableReference,
+    inputType: enums.inputType.dropdown,
+    dataType: enums.dataType.tableReference,
     tableRef: 'Modules',
     tableRefKey: 'id',
     tableRefName: 'label',
@@ -49,11 +46,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.validations,
+    moduleId: enums.moduleId.validations,
     name: 'actionId',
     label: 'Action ID',
-    inputType: inputType.dropdown,
-    dataType: dataType.tableReference,
+    inputType: enums.inputType.dropdown,
+    dataType: enums.dataType.tableReference,
     tableRef: 'Actions',
     tableRefKey: 'id',
     tableRefName: 'label',
@@ -69,11 +66,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.validations,
+    moduleId: enums.moduleId.validations,
     name: 'scriptId',
     label: 'Script ID',
-    inputType: inputType.dropdown,
-    dataType: dataType.tableReference,
+    inputType: enums.inputType.dropdown,
+    dataType: enums.dataType.tableReference,
     tableRef: 'Scripts',
     tableRefKey: 'id',
     tableRefName: 'label',
@@ -89,11 +86,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.validations,
+    moduleId: enums.moduleId.validations,
     name: 'validationTimeId',
     label: 'validation Time ID',
-    inputType: inputType.dropdown,
-    dataType: dataType.tableReference,
+    inputType: enums.inputType.dropdown,
+    dataType: enums.dataType.tableReference,
     tableRef: 'ValidationTimes',
     tableRefKey: 'id',
     tableRefName: 'label',

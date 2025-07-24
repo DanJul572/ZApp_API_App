@@ -1,5 +1,5 @@
-const fieldService = require('../services/fieldService');
-const statusCode = require('../constats/statusCode');
+const fieldService = require('@services/fieldService');
+const enums = require('@enums');
 
 async function rows(req, res) {
   try {
@@ -7,9 +7,9 @@ async function rows(req, res) {
 
     const data = await fieldService.getFields(request.moduleId);
 
-    return res.status(statusCode.OK).send(data);
+    return res.status(enums.statusCode.OK).send(data);
   } catch (error) {
-    return res.status(statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
   }
 }
 

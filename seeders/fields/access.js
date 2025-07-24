@@ -1,19 +1,16 @@
 const dayjs = require('dayjs');
 
-const dataType = require('../../constats/dataType');
-const inputType = require('../../constats/inputType');
-const datetimeFormat = require('../../constats/datetimeFormat');
-const moduleId = require('../../constats/moduleId');
+const enums = require('@enums');
 
-const now = dayjs().format(datetimeFormat.datetime.value);
+const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
 module.exports = [
   {
-    moduleId: moduleId.access,
+    moduleId: enums.moduleId.access,
     name: 'id',
     label: 'ID',
-    inputType: inputType.number,
-    dataType: dataType.integer,
+    inputType: enums.inputType.number,
+    dataType: enums.dataType.integer,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -29,11 +26,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.access,
+    moduleId: enums.moduleId.access,
     name: 'roleId',
     label: 'Role ID',
-    inputType: inputType.dropdown,
-    dataType: dataType.tableReference,
+    inputType: enums.inputType.dropdown,
+    dataType: enums.dataType.tableReference,
     tableRef: 'Roles',
     tableRefKey: 'id',
     tableRefName: 'label',
@@ -49,11 +46,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.access,
+    moduleId: enums.moduleId.access,
     name: 'viewId',
     label: 'View ID',
-    inputType: inputType.dropdown,
-    dataType: dataType.tableReference,
+    inputType: enums.inputType.dropdown,
+    dataType: enums.dataType.tableReference,
     tableRef: 'Views',
     tableRefKey: 'id',
     tableRefName: 'label',

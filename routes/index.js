@@ -1,46 +1,47 @@
 var express = require('express');
 var router = express.Router();
 
-const authenticateToken = require('../middleware/authenticateToken');
+const middleware = require('@middleware');
+const controllers = require('@controllers');
 
-const authController = require('../controllers').authController;
-const commonController = require('../controllers').commonController;
-const fieldController = require('../controllers').fieldController;
-const fileController = require('../controllers').fileController;
-const moduleController = require('../controllers').moduleController;
-const scriptController = require('../controllers').scriptController;
-const viewController = require('../controllers').viewController;
+const authController = controllers.authController;
+const commonController = controllers.commonController;
+const fieldController = controllers.fieldController;
+const fileController = controllers.fileController;
+const moduleController = controllers.moduleController;
+const scriptController = controllers.scriptController;
+const viewController = controllers.viewController;
 
 /* authentication */
 router.post('/api/auth/login', authController.login);
 router.post('/api/auth/register', authController.register);
-router.post('/api/auth/logout', authenticateToken, authController.logout);
+router.post('/api/auth/logout', middleware.authenticateToken, authController.logout);
 
 /*  common */
-router.get('/api/common/columns', authenticateToken, commonController.columns);
-router.get('/api/common/detail', authenticateToken, commonController.detail);
-router.get('/api/common/menu', authenticateToken, commonController.menu);
+router.get('/api/common/columns', middleware.authenticateToken, commonController.columns);
+router.get('/api/common/detail', middleware.authenticateToken, commonController.detail);
+router.get('/api/common/menu', middleware.authenticateToken, commonController.menu);
 router.get('/api/common/options', commonController.options);
-router.post('/api/common/create', authenticateToken, commonController.create);
-router.post('/api/common/delete', authenticateToken, commonController.destory);
-router.post('/api/common/rows', authenticateToken, commonController.rows);
-router.post('/api/common/update', authenticateToken, commonController.update);
+router.post('/api/common/create', middleware.authenticateToken, commonController.create);
+router.post('/api/common/delete', middleware.authenticateToken, commonController.destroy);
+router.post('/api/common/rows', middleware.authenticateToken, commonController.rows);
+router.post('/api/common/update', middleware.authenticateToken, commonController.update);
 
 /* field */
-router.get('/api/field/rows', authenticateToken, fieldController.rows);
+router.get('/api/field/rows', middleware.authenticateToken, fieldController.rows);
 
 /* view */
-router.get('/api/view/options', authenticateToken, viewController.options);
+router.get('/api/view/options', middleware.authenticateToken, viewController.options);
 
 /* script */
-router.get('/api/script/run', authenticateToken, scriptController.run);
+router.get('/api/script/run', middleware.authenticateToken, scriptController.run);
 
 /* file */
-router.get('/api/file/download', authenticateToken, fileController.download);
+router.get('/api/file/download', middleware.authenticateToken, fileController.download);
 
 /* module */
-router.get('/api/module/detail', authenticateToken, moduleController.detail);
-router.post('/api/module/create', authenticateToken, moduleController.create);
-router.post('/api/module/delete', authenticateToken, moduleController.destory);
+router.get('/api/module/detail', middleware.authenticateToken, moduleController.detail);
+router.post('/api/module/create', middleware.authenticateToken, moduleController.create);
+router.post('/api/module/delete', middleware.authenticateToken, moduleController.destory);
 
 module.exports = router;

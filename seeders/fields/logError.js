@@ -1,19 +1,16 @@
 const dayjs = require('dayjs');
 
-const dataType = require('../../constats/dataType');
-const inputType = require('../../constats/inputType');
-const datetimeFormat = require('../../constats/datetimeFormat');
-const moduleId = require('../../constats/moduleId');
+const enums = require('@enums');
 
-const now = dayjs().format(datetimeFormat.datetime.value);
+const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
 module.exports = [
   {
-    moduleId: moduleId.logError,
+    moduleId: enums.moduleId.logError,
     name: 'id',
     label: 'ID',
-    inputType: inputType.number,
-    dataType: dataType.integer,
+    inputType: enums.inputType.number,
+    dataType: enums.dataType.integer,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -29,11 +26,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.logError,
+    moduleId: enums.moduleId.logError,
     name: 'url',
     label: 'URL',
-    inputType: inputType.shortText,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -49,11 +46,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.logError,
+    moduleId: enums.moduleId.logError,
     name: 'method',
     label: 'Method',
-    inputType: inputType.shortText,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -69,11 +66,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.logError,
+    moduleId: enums.moduleId.logError,
     name: 'message',
     label: 'Message',
-    inputType: inputType.longText,
-    dataType: dataType.text,
+    inputType: enums.inputType.longText,
+    dataType: enums.dataType.text,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,

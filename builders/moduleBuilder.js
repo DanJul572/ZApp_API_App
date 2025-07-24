@@ -1,4 +1,4 @@
-const dataType = require('../constats/dataType');
+const enums = require('@enums');
 
 module.exports = {
   findOne() {
@@ -9,17 +9,17 @@ module.exports = {
     /* set column */
     let columns = fields.map(field => {
       let column = '';
-      if (field.dataType === dataType.integer) {
+      if (field.dataType === enums.dataType.integer) {
         column = `"${field.name}" integer `;
-      } else if (field.dataType === dataType.varchar) {
+      } else if (field.dataType === enums.dataType.varchar) {
         column = `"${field.name}" character varying(255) COLLATE pg_catalog."default" `;
-      } else if (field.dataType === dataType.boolean) {
+      } else if (field.dataType === enums.dataType.boolean) {
         column = `"${field.name}" boolean `;
-      } else if (field.dataType === dataType.text || field.dataType === dataType.byte) {
+      } else if (field.dataType === enums.dataType.text || field.dataType === enums.dataType.byte) {
         column = `"${field.name}" text `;
-      } else if (field.dataType === dataType.datetime) {
+      } else if (field.dataType === enums.dataType.datetime) {
         column = `"${field.name}" timestamp with time zone NOT NULL DEFAULT now() `;
-      } else if (field.dataType === dataType.json) {
+      } else if (field.dataType === enums.dataType.json) {
         column = `"${field.name}" jsonb `;
       }
 

@@ -1,6 +1,6 @@
 const db = require('../models');
-const dataType = require('../constats/dataType');
-const inputType = require('../constats/inputType');
+const dataType = require('../enums/dataType');
+const inputType = require('../enums/inputType');
 const fieldBuilder = require('../builders/fieldBuilder');
 
 module.exports = {

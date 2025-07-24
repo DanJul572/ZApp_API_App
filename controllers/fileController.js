@@ -1,5 +1,5 @@
-const fileService = require('../services/fileService');
-const statusCode = require('../constats/statusCode');
+const fileService = require('@services/fileService');
+const enums = require('@enums');
 
 async function download(req, res) {
   try {
@@ -7,9 +7,9 @@ async function download(req, res) {
 
     const data = await fileService.download(param.name);
 
-    return res.status(statusCode.OK).send(data);
+    return res.status(enums.statusCode.OK).send(data);
   } catch (error) {
-    return res.status(statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
   }
 }
 

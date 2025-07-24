@@ -1,4 +1,4 @@
-const validationTimeId = require('../constats/validationTimeId');
+const validationTimeId = require('../enums/validationTimeId');
 
 const commonQuery = require('../queries/commonQuery');
 const fieldQuery = require('../queries/fieldQuery');

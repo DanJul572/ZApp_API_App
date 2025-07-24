@@ -5,8 +5,8 @@ const authQuery = require('../queries/authQuery');
 const commonQuery = require('../queries/commonQuery');
 const menuQuery = require('../queries/menuQuery');
 
-const moduleId = require('../constats/moduleId');
-const auth = require('../constats/auth');
+const moduleId = require('../enums/moduleId');
+const auth = require('../enums/auth');
 
 async function hashPassword(password) {
   return await bcryptjs.hash(password, auth.salt);

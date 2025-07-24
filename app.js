@@ -1,4 +1,5 @@
 require('dotenv-flow').config();
+require('module-alias/register');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');

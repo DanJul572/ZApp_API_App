@@ -1,20 +1,16 @@
 const dayjs = require('dayjs');
 
-const dataType = require('../../constats/dataType');
-const inputType = require('../../constats/inputType');
-const datetimeFormat = require('../../constats/datetimeFormat');
+const enums = require('@enums');
 
-const moduleId = require('../../constats/moduleId');
-
-const now = dayjs().format(datetimeFormat.datetime.value);
+const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
 const list = [
   {
-    moduleId: moduleId.views,
+    moduleId: enums.moduleId.views,
     name: 'id',
     label: 'ID',
-    inputType: inputType.number,
-    dataType: dataType.integer,
+    inputType: enums.inputType.number,
+    dataType: enums.dataType.integer,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -30,11 +26,11 @@ const list = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.views,
+    moduleId: enums.moduleId.views,
     name: 'label',
     label: 'Label',
-    inputType: inputType.shortText,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -50,11 +46,11 @@ const list = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.views,
+    moduleId: enums.moduleId.views,
     name: 'moduleId',
     label: 'Module ID',
-    inputType: inputType.dropdown,
-    dataType: dataType.tableReference,
+    inputType: enums.inputType.dropdown,
+    dataType: enums.dataType.tableReference,
     tableRef: 'Modules',
     tableRefKey: 'id',
     tableRefName: 'name',
@@ -70,11 +66,11 @@ const list = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.views,
+    moduleId: enums.moduleId.views,
     name: 'content',
     label: 'Content',
-    inputType: inputType.longText,
-    dataType: dataType.text,
+    inputType: enums.inputType.longText,
+    dataType: enums.dataType.text,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -90,11 +86,11 @@ const list = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.views,
+    moduleId: enums.moduleId.views,
     name: 'page',
     label: 'Page',
-    inputType: inputType.longText,
-    dataType: dataType.text,
+    inputType: enums.inputType.longText,
+    dataType: enums.dataType.text,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,

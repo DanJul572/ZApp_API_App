@@ -1,9 +1,9 @@
-const setting = require('../constats/setting');
+const enums = require('@enums');
+const helpers = require('@helpers');
 const fieldBuilder = require('./fieldBuilder');
-const helpers = require('../helpers/');
 
 function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter) {
-  const offset = (page - 1) * setting.rowsPerPage;
+  const offset = (page - 1) * enums.setting.rowsPerPage;
   const rowsValues = []; // Array untuk menyimpan nilai parameter
 
   // Format fields
@@ -46,7 +46,7 @@ function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter
 
   // Add pagination
   rowsValues.push(offset);
-  rowsQuery += ` LIMIT ${setting.rowsPerPage} OFFSET $${rowsValues.length}`;
+  rowsQuery += ` LIMIT ${enums.setting.rowsPerPage} OFFSET $${rowsValues.length}`;
 
   return {rowsQuery, rowsValues};
 }

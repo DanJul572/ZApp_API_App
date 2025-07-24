@@ -1,19 +1,16 @@
 const dayjs = require('dayjs');
 
-const dataType = require('../../constats/dataType');
-const inputType = require('../../constats/inputType');
-const datetimeFormat = require('../../constats/datetimeFormat');
-const moduleId = require('../../constats/moduleId');
+const enums = require('@enums');
 
-const now = dayjs().format(datetimeFormat.datetime.value);
+const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
 module.exports = [
   {
-    moduleId: moduleId.files,
+    moduleId: enums.moduleId.files,
     name: 'id',
     label: 'ID',
-    inputType: inputType.number,
-    dataType: dataType.integer,
+    inputType: enums.inputType.number,
+    dataType: enums.dataType.integer,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -29,11 +26,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.files,
+    moduleId: enums.moduleId.files,
     name: 'name',
     label: 'Name',
-    inputType: inputType.shortText,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -49,11 +46,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.files,
+    moduleId: enums.moduleId.files,
     name: 'data',
     label: 'Data',
-    inputType: inputType.file,
-    dataType: dataType.byte,
+    inputType: enums.inputType.file,
+    dataType: enums.dataType.byte,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -69,11 +66,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.files,
+    moduleId: enums.moduleId.files,
     name: 'type',
     label: 'Type',
-    inputType: inputType.shortText,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -89,11 +86,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.files,
+    moduleId: enums.moduleId.files,
     name: 'encoding',
     label: 'Encoding',
-    inputType: inputType.shortText,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -109,11 +106,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.files,
+    moduleId: enums.moduleId.files,
     name: 'size',
     label: 'Size',
-    inputType: inputType.number,
-    dataType: dataType.integer,
+    inputType: enums.inputType.number,
+    dataType: enums.dataType.integer,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -129,11 +126,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.files,
+    moduleId: enums.moduleId.files,
     name: 'moduleId',
     label: 'Module ID',
-    inputType: inputType.dropdown,
-    dataType: dataType.tableReference,
+    inputType: enums.inputType.dropdown,
+    dataType: enums.dataType.tableReference,
     tableRef: 'Modules',
     tableRefKey: 'id',
     tableRefName: 'label',

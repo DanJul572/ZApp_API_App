@@ -1,19 +1,16 @@
 const dayjs = require('dayjs');
 
-const dataType = require('../../constats/dataType');
-const inputType = require('../../constats/inputType');
-const datetimeFormat = require('../../constats/datetimeFormat');
-const moduleId = require('../../constats/moduleId');
+const enums = require('@enums');
 
-const now = dayjs().format(datetimeFormat.datetime.value);
+const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
 module.exports = [
   {
-    moduleId: moduleId.users,
+    moduleId: enums.moduleId.users,
     name: 'id',
     label: 'ID',
-    inputType: inputType.number,
-    dataType: dataType.integer,
+    inputType: enums.inputType.number,
+    dataType: enums.dataType.integer,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -29,11 +26,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.users,
+    moduleId: enums.moduleId.users,
     name: 'name',
     label: 'Name',
-    inputType: inputType.shortText,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -49,11 +46,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.users,
+    moduleId: enums.moduleId.users,
     name: 'email',
     label: 'Email',
-    inputType: inputType.shortText,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -69,11 +66,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.users,
+    moduleId: enums.moduleId.users,
     name: 'password',
     label: 'Password',
-    inputType: inputType.password,
-    dataType: dataType.varchar,
+    inputType: enums.inputType.password,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -89,11 +86,11 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: moduleId.users,
+    moduleId: enums.moduleId.users,
     name: 'roleId',
     label: 'Role ID',
-    inputType: inputType.dropdown,
-    dataType: dataType.integer,
+    inputType: enums.inputType.dropdown,
+    dataType: enums.dataType.integer,
     tableRef: 'Roles',
     tableRefKey: 'id',
     tableRefName: 'label',

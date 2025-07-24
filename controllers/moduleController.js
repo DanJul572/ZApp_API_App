@@ -1,7 +1,7 @@
-const db = require('../models');
+const db = require('@db');
 
-const moduleService = require('../services/moduleService');
-const statusCode = require('../constats/statusCode');
+const moduleService = require('@services/moduleService');
+const enums = require('@enums');
 
 const Module = db.Module;
 const Field = db.Field;
@@ -15,9 +15,9 @@ async function detail(req, res) {
 
     module.fields = fields;
 
-    return res.status(statusCode.OK).send(module);
+    return res.status(enums.statusCode.OK).send(module);
   } catch (error) {
-    return res.status(statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
   }
 }
 
@@ -37,10 +37,10 @@ async function create(req, res) {
     await moduleService.generateTable(request.name, request.fields);
 
     await t.commit();
-    return res.status(statusCode.OK).send('Module has been created');
+    return res.status(enums.statusCode.OK).send('Module has been created');
   } catch (error) {
     await t.rollback();
-    return res.status(statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
   }
 }
 
@@ -67,10 +67,10 @@ async function destory(req, res) {
     await moduleService.dropTable(module.name, identity.name);
 
     await t.commit();
-    return res.status(statusCode.OK).send('Module has been deleted');
+    return res.status(enums.statusCode.OK).send('Module has been deleted');
   } catch (error) {
     await t.rollback();
-    return res.status(statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
   }
 }
 

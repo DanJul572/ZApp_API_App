@@ -1,5 +1,5 @@
-const viewService = require('../services/viewService');
-const statusCode = require('../constats/statusCode');
+const viewService = require('@services/viewService');
+const enums = require('@enums');
 
 async function options(req, res) {
   try {
@@ -7,9 +7,9 @@ async function options(req, res) {
 
     const data = await viewService.getOptions(request.moduleId);
 
-    return res.status(statusCode.OK).send(data);
+    return res.status(enums.statusCode.OK).send(data);
   } catch (error) {
-    return res.status(statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
   }
 }
 

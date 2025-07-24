@@ -2,7 +2,7 @@ const db = require('../models');
 
 const fileBuilder = require('../builders/fileBuilder');
 
-const inputType = require('../constats/inputType');
+const inputType = require('../enums/inputType');
 
 module.exports = {
   save(files, moduleId) {
