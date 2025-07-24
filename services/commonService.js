@@ -46,8 +46,8 @@ async function deleteFile(fields, detailData) {
   await fileQuery.delete(fields, detailData);
 }
 
-async function insertData(moduleId, data, user) {
-  return await commonQuery.insertRow(moduleId, data, user);
+async function insertData(table, data, user) {
+  return await commonQuery.insertRow(table, data, user);
 }
 
 async function getData(moduleName, fields, page, advanceFilter, filter, sort, defaultFilter) {
@@ -70,8 +70,8 @@ async function getField(id) {
   return await fieldQuery.getField(id);
 }
 
-async function updateData(moduleName, primaryFieldName, rowId, data) {
-  return await commonQuery.updateRow(moduleName, primaryFieldName, rowId, data);
+async function updateData(tableName, primaryFieldName, rowId, data) {
+  return await commonQuery.updateRow(tableName, primaryFieldName, rowId, data);
 }
 
 async function getMenu(roleId) {
