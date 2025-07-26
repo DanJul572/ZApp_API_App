@@ -76,12 +76,6 @@ module.exports = {
           updatedAt: now,
         },
         {
-          name: 'Tokens',
-          label: 'Tokens',
-          createdAt: now,
-          updatedAt: now,
-        },
-        {
           name: 'Script',
           label: 'Script',
           createdAt: now,

@@ -15,7 +15,6 @@ const viewController = controllers.viewController;
 /* authentication */
 router.post('/api/auth/login', authController.login);
 router.post('/api/auth/register', authController.register);
-router.post('/api/auth/logout', middleware.authenticateToken, authController.logout);
 
 /*  common */
 router.get('/api/common/columns', middleware.authenticateToken, commonController.columns);

@@ -1,5 +1,4 @@
 const db = require('@db');
-const helper = require('@helpers');
 const enums = require('@enums');
 const authService = require('@services/authService');
 
@@ -44,25 +43,7 @@ async function register(req, res) {
   }
 }
 
-async function logout(req, res) {
-  const t = await db.sequelize.transaction();
-
-  try {
-    const token = req.header('Authorization');
-
-    const userData = helper.decodeToken(token);
-    const response = authService.deleteUserToken(userData.userId);
-
-    t.commit();
-    return res.status(enums.statusCode.OK).send(response);
-  } catch (error) {
-    await t.rollback();
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
-  }
-}
-
 module.exports = {
   login: login,
   register: register,
-  logout: logout,
 };

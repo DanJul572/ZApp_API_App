@@ -5,7 +5,7 @@ const authQuery = require('../queries/authQuery');
 const commonQuery = require('../queries/commonQuery');
 const menuQuery = require('../queries/menuQuery');
 
-const auth = require('../constats/auth');
+const auth = require('../enums/auth');
 
 async function hashPassword(password) {
   return await bcryptjs.hash(password, auth.salt);
@@ -13,10 +13,6 @@ async function hashPassword(password) {
 
 async function insertUser(userData) {
   return await commonQuery.insertRow('Users', userData);
-}
-
-async function deleteUserToken(userId) {
-  return await authQuery.deleteTokenByUserId(userId);
 }
 
 async function getUserByEmail(email) {
@@ -45,37 +41,11 @@ function generateToken(id, email, roleId) {
   return jwt.sign(tokenInfo, auth.secretKey, tokenOptions);
 }
 
-async function insertToken(id, token) {
-  await commonQuery.insertRow('Tokens', {
-    userId: id,
-    token: token,
-  });
-}
-
-async function getExistingToken(id) {
-  const userToken = await authQuery.findTokenByUserId(id);
-  if (userToken) {
-    const decoded = jwt.verify(userToken.token, process.env.JWT_SCECRET_KEY);
-    const isExpired = decoded.exp < Date.now() / 1000;
-    if (!isExpired) {
-      return userToken.token;
-    } else {
-      await authQuery.deleteTokenByUserId(userToken.userId);
-      return false;
-    }
-  } else {
-    return false;
-  }
-}
-
 module.exports = {
   checkPassword,
-  deleteUserToken,
   generateToken,
-  getExistingToken,
   getMenu,
   getUserByEmail,
   hashPassword,
-  insertToken,
   insertUser,
 };
