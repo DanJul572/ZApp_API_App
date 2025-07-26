@@ -1,6 +1,5 @@
-const db = require('@db');
-const enums = require('@enums');
 const authService = require('@services/authService');
+const enums = require('@enums');
 
 async function login(req, res) {
   try {
@@ -25,25 +24,4 @@ async function login(req, res) {
   }
 }
 
-async function register(req, res) {
-  const t = await db.sequelize.transaction();
-
-  try {
-    const request = JSON.parse(req.body.data);
-
-    const userData = request;
-    userData.password = await authService.hashPassword(userData.password);
-    const createdUser = await authService.insertUser(userData);
-
-    t.commit();
-    return res.status(enums.statusCode.OK).send(createdUser);
-  } catch (error) {
-    await t.rollback();
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
-  }
-}
-
-module.exports = {
-  login: login,
-  register: register,
-};
+module.exports = login;
