@@ -1,9 +1,8 @@
 const dayjs = require('dayjs');
 
-const db = require('../models');
-
-const commonBuilder = require('../builders/commonBuilder');
-const datetimeFormat = require('../enums/datetimeFormat');
+const db = require('@db');
+const enums = require('@enums');
+const commonBuilder = require('@builders/commonBuilder');
 
 async function getRows(moduleName, fields, page, advanceFilter, filter, sort, defaultFilter) {
   try {
@@ -116,8 +115,8 @@ async function getOptions(field) {
 
 async function insertRow(table, data) {
   try {
-    data.createdAt = dayjs().format(datetimeFormat.datetime.value);
-    data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
+    data.createdAt = dayjs().format(enums.datetimeFormat.datetime.value);
+    data.updatedAt = dayjs().format(enums.datetimeFormat.datetime.value);
 
     const {query, values} = commonBuilder.insertRow(table, data);
 
@@ -143,7 +142,7 @@ async function updateRow(moduleName, primaryFieldName, rowId, data) {
       [primaryFieldName]: rowId,
     };
 
-    data.updatedAt = dayjs().format(datetimeFormat.datetime.value);
+    data.updatedAt = dayjs().format(enums.datetimeFormat.datetime.value);
 
     const {query, values} = commonBuilder.updateRow(moduleName, data, condition);
 

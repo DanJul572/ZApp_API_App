@@ -1,6 +1,6 @@
-const db = require('../models');
+const db = require('@db');
 
-const authBuilder = require('../builders/authBuilder');
+const authBuilder = require('@builders/authBuilder');
 
 module.exports = {
   findByEmail(email) {

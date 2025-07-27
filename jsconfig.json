@@ -2,6 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@builders": ["builders/index.js"],
+      "@builders/*": ["builders/*"],
       "@controllers": ["controllers/index.js"],
       "@controllers/*": ["controllers/*"],
       "@db": ["models/index.js"],

@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('@db');
 
 module.exports = {
   run(sql) {

@@ -40,6 +40,7 @@
   },
   "_moduleAliases": {
     "@controllers": "controllers",
+    "@builders": "builders",
     "@db": "models",
     "@enums": "enums",
     "@helpers": "helpers",

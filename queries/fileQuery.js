@@ -1,8 +1,6 @@
-const db = require('../models');
-
-const fileBuilder = require('../builders/fileBuilder');
-
-const inputType = require('../enums/inputType');
+const db = require('@db');
+const enums = require('@enums');
+const fileBuilder = require('@builders/fileBuilder');
 
 module.exports = {
   save(files, moduleId) {
@@ -26,7 +24,7 @@ module.exports = {
 
   delete(fields, row) {
     try {
-      const fileFields = fields.filter(field => field.inputType === inputType.file);
+      const fileFields = fields.filter(field => field.inputType === enums.inputType.file);
 
       if (!fileFields || !fileFields.length || !row) return;
 

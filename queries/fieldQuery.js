@@ -1,7 +1,6 @@
-const db = require('../models');
-const dataType = require('../enums/dataType');
-const inputType = require('../enums/inputType');
-const fieldBuilder = require('../builders/fieldBuilder');
+const db = require('@db');
+const enums = require('@enums');
+const fieldBuilder = require('@builders/fieldBuilder');
 
 module.exports = {
   async getFields(moduleId) {
@@ -13,15 +12,17 @@ module.exports = {
           type: db.sequelize.QueryTypes.SELECT,
         })
         .then(result => {
-          if (result.length <= 0) return [];
+          if (result.length <= 0) {
+            return [];
+          }
           const fields = result;
           const timestampFields = [
             {
               moduleId: moduleId,
               name: 'createdAt',
               label: 'Created At',
-              inputType: inputType.datetime,
-              dataType: dataType.datetime,
+              inputType: enums.inputType.datetime,
+              dataType: enums.dataType.datetime,
               tableRef: null,
               tableRefKey: null,
               tableRefName: null,
@@ -39,8 +40,8 @@ module.exports = {
               moduleId: moduleId,
               name: 'updatedAt',
               label: 'Updated At',
-              inputType: inputType.datetime,
-              dataType: dataType.datetime,
+              inputType: enums.inputType.datetime,
+              dataType: enums.dataType.datetime,
               tableRef: null,
               tableRefKey: null,
               tableRefName: null,

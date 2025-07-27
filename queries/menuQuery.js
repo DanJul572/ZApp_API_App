@@ -1,6 +1,5 @@
-const db = require('../models');
-
-const menuBuilder = require('../builders/menuBuilder');
+const db = require('@db');
+const menuBuilder = require('@builders/menuBuilder');
 
 module.exports = {
   findByRoleId(roleId) {
