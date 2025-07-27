@@ -1,0 +1,41 @@
+{
+    "name": "TestBoss",
+    "label": "Test Boss",
+    "description": null,
+    "fields": [
+        {
+            "name": "PK",
+            "label": "PK",
+            "inputType": 4,
+            "sequence": "1",
+            "dataType": 3,
+            "tableRef": null,
+            "tableRefKey": null,
+            "tableRefName": null,
+            "tableRefAlias": null,
+            "tableRefFilter": null,
+            "notNull": true,
+            "multiSelect": false,
+            "identity": true,
+            "autoIncrement": true,
+            "unique": true
+        },
+        {
+            "name": "Teks",
+            "label": "Teks",
+            "inputType": 1,
+            "sequence": "2",
+            "dataType": 1,
+            "tableRef": null,
+            "tableRefKey": null,
+            "tableRefName": null,
+            "tableRefAlias": null,
+            "tableRefFilter": null,
+            "notNull": false,
+            "multiSelect": false,
+            "identity": false,
+            "autoIncrement": false,
+            "unique": false
+        }
+    ]
+}

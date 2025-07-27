@@ -17,12 +17,12 @@ async function create(req, res) {
     await commonService.runValidationBefore(request.data, module.id, enums.actionId.create, user);
 
     await commonService.insertFile(files, module.id);
-    const data = await commonService.insertData(module.name, request.data);
+    await commonService.insertData(module.name, request.data);
 
     await commonService.runValidationAfter(request.data, module.id, enums.actionId.create, user);
 
     t.commit();
-    return res.status(enums.statusCode.OK).send(data);
+    return res.status(enums.statusCode.OK).send('Data has been created.');
   } catch (error) {
     await t.rollback();
     const response = helpers.getErrorResponse(error.message);

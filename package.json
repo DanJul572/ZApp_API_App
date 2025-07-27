@@ -45,7 +45,8 @@
     "@enums": "enums",
     "@helpers": "helpers",
     "@middleware": "middleware",
-    "@services": "services"
+    "@services": "services",
+    "@queries": "queries"
   },
   "packageManager": "pnpm@10.13.1"
 }

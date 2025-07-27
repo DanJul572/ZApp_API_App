@@ -85,7 +85,31 @@ function insertRow(table, data) {
   fieldQuery = fieldQuery.slice(0, -2);
   valuePlaceholders = valuePlaceholders.slice(0, -2);
 
-  const query = `INSERT INTO "${table}" (${fieldQuery}) VALUES (${valuePlaceholders})`;
+  const query = `INSERT INTO "${table}" (${fieldQuery}) VALUES (${valuePlaceholders}) RETURNING *`;
+
+  return {query, values};
+}
+
+function insertManyRows(table, data) {
+  if (!Array.isArray(data) || data.length === 0) {
+    throw new Error('Data must be a non-empty array of objects');
+  }
+
+  const fields = Object.keys(data[0]);
+  const fieldQuery = fields.map(f => `"${f}"`).join(', ');
+
+  const values = [];
+  const valuePlaceholders = data
+    .map((row, rowIndex) => {
+      const placeholders = fields.map((_, colIndex) => {
+        return `$${rowIndex * fields.length + colIndex + 1}`;
+      });
+      values.push(...fields.map(f => row[f]));
+      return `(${placeholders.join(', ')})`;
+    })
+    .join(', ');
+
+  const query = `INSERT INTO "${table}" (${fieldQuery}) VALUES ${valuePlaceholders}`;
 
   return {query, values};
 }
@@ -125,12 +149,13 @@ function getMenu() {
 }
 
 module.exports = {
-  getRows,
-  getRowDetail,
-  getRowsCount,
   deleteRow,
+  getMenu,
   getOptions,
+  getRowDetail,
+  getRows,
+  getRowsCount,
+  insertManyRows,
   insertRow,
   updateRow,
-  getMenu,
 };

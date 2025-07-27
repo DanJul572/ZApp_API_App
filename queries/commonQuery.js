@@ -120,17 +120,40 @@ async function insertRow(table, data) {
 
     const {query, values} = commonBuilder.insertRow(table, data);
 
-    return await db.sequelize
-      .query(query, {
-        bind: values,
-        type: db.sequelize.QueryTypes.INSERT,
-      })
-      .then(() => {
-        return 'Data has been created.';
-      })
-      .catch(error => {
-        throw new Error(error.message);
-      });
+    const [results] = await db.sequelize.query(query, {
+      bind: values,
+      type: db.sequelize.QueryTypes.RAW,
+    });
+
+    return results[0];
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+async function insertManyRows(table, dataArray) {
+  try {
+    if (!Array.isArray(dataArray) || dataArray.length === 0) {
+      throw new Error('Data must be a non-empty array of objects');
+    }
+
+    const timestamp = dayjs().format(enums.datetimeFormat.datetime.value);
+
+    // Tambahkan createdAt dan updatedAt ke setiap item
+    const dataWithTimestamps = dataArray.map(data => ({
+      ...data,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+    }));
+
+    const {query, values} = commonBuilder.insertManyRows(table, dataWithTimestamps);
+
+    await db.sequelize.query(query, {
+      bind: values,
+      type: db.sequelize.QueryTypes.INSERT,
+    });
+
+    return 'Data has been created.';
   } catch (error) {
     throw new Error(error.message);
   }
@@ -188,6 +211,7 @@ module.exports = {
   deleteRow,
   getOptions,
   insertRow,
+  insertManyRows,
   updateRow,
   getMenu,
 };

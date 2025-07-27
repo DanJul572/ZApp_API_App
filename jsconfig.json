@@ -14,7 +14,9 @@
       "@middleware": ["middleware/index.js"],
       "@middleware/*": ["middleware/*"],
       "@services": ["services/index.js"],
-      "@services/*": ["services/*"]
+      "@services/*": ["services/*"],
+      "@queries": ["queries/index.js"],
+      "@queries/*": ["queries/*"]
     }
   },
   "include": ["."]
