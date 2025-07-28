@@ -15,16 +15,16 @@ async function generateTable(name, fields, transaction) {
   return await moduleQuery.createTable(name, fields, transaction);
 }
 
-async function dropTable(tableName, identityFieldName) {
-  return await moduleQuery.dropTable(tableName, identityFieldName);
+async function dropTable(tableName, identityFieldName, transaction) {
+  return await moduleQuery.dropTable(tableName, identityFieldName, transaction);
 }
 
-async function deleteFiles(moduleId) {
-  return await fileQuery.deleteByModuleId(moduleId);
+async function deleteFiles(moduleId, transaction) {
+  return await fileQuery.deleteByModuleId(moduleId, transaction);
 }
 
-async function deleteFields(moduleId) {
-  return await fieldQuery.deleteFields(moduleId);
+async function deleteFields(moduleId, transaction) {
+  return await fieldQuery.deleteFields(moduleId, transaction);
 }
 
 async function insertModule(data, transaction) {

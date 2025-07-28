@@ -17,12 +17,16 @@ module.exports = {
     }
   },
 
-  async dropTable(table, sequence) {
+  async dropTable(table, sequence, transaction) {
     try {
       const query = moduleBuilder.deleteTable(table, sequence);
-      return db.sequelize.query(query).catch(error => {
-        throw new Error(error.message);
-      });
+      return db.sequelize
+        .query(query, {
+          transaction,
+        })
+        .catch(error => {
+          throw new Error(error.message);
+        });
     } catch (error) {
       throw new Error(error.message);
     }

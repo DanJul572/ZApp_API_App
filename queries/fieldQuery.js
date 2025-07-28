@@ -66,12 +66,13 @@ module.exports = {
     }
   },
 
-  async deleteFields(id) {
+  async deleteFields(id, transaction) {
     try {
       const query = fieldBuilder.deleteByModule();
       return db.sequelize
         .query(query, {
           bind: [id],
+          transaction,
           type: db.sequelize.QueryTypes.SELECT,
         })
         .catch(error => {

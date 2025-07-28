@@ -44,13 +44,14 @@ module.exports = {
     }
   },
 
-  deleteByModuleId(moduleId) {
+  deleteByModuleId(moduleId, transaction) {
     try {
       const query = fileBuilder.deleteByModuleId(moduleId);
 
       return db.sequelize
         .query(query, {
           bind: [moduleId],
+          transaction,
           type: db.sequelize.QueryTypes.DELETE,
         })
         .catch(error => {
