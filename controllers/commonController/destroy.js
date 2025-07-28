@@ -20,7 +20,7 @@ async function destory(req, res) {
       primaryField.name,
     );
 
-    await commonService.deleteFile(fields, detailData);
+    await commonService.deleteFile(fields, detailData, t);
 
     const data = await commonService.deleteData(module.name, primaryField.name, request.id, t);
 

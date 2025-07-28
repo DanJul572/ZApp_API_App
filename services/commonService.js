@@ -18,32 +18,34 @@ async function getPrimaryField(moduleId) {
   return await fieldQuery.getPrimaryField(moduleId);
 }
 
-async function runValidationBefore(data, moduleId, actionId, user) {
+async function runValidationBefore(data, moduleId, actionId, user, transaction) {
   return await validationQuery.runValidation(
     data,
     moduleId,
     actionId,
     validationTimeId.before,
     user,
+    transaction,
   );
 }
 
-async function runValidationAfter(data, moduleId, actionId, user) {
+async function runValidationAfter(data, moduleId, actionId, user, transaction) {
   return await validationQuery.runValidation(
     data,
     moduleId,
     actionId,
     validationTimeId.after,
     user,
+    transaction,
   );
 }
 
-async function insertFile(files, moduleId) {
-  return await fileQuery.save(files, moduleId);
+async function insertFile(files, moduleId, transaction) {
+  return await fileQuery.save(files, moduleId, transaction);
 }
 
-async function deleteFile(fields, detailData) {
-  await fileQuery.delete(fields, detailData);
+async function deleteFile(fields, detailData, transaction) {
+  await fileQuery.delete(fields, detailData, transaction);
 }
 
 async function insertData(table, data, user, transaction) {
@@ -70,8 +72,8 @@ async function getField(id) {
   return await fieldQuery.getField(id);
 }
 
-async function updateData(tableName, primaryFieldName, rowId, data) {
-  return await commonQuery.updateRow(tableName, primaryFieldName, rowId, data);
+async function updateData(tableName, primaryFieldName, rowId, data, transaction) {
+  return await commonQuery.updateRow(tableName, primaryFieldName, rowId, data, transaction);
 }
 
 async function getMenu(roleId) {

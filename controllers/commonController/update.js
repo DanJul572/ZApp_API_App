@@ -21,14 +21,15 @@ async function update(req, res) {
       primaryField.name,
     );
 
-    await commonService.deleteFile(fields, detailData);
-    await commonService.insertFile(files, module.id);
+    await commonService.deleteFile(fields, detailData, t);
+    await commonService.insertFile(files, module.id, t);
 
     const data = await commonService.updateData(
       module.name,
       primaryField.name,
       request.rowId,
       request.data,
+      t,
     );
 
     t.commit();

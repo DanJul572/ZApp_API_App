@@ -14,12 +14,18 @@ async function create(req, res) {
     const user = helpers.decodeToken(token);
     const module = await commonService.getModuleById(request.moduleId);
 
-    await commonService.runValidationBefore(request.data, module.id, enums.actionId.create, user);
+    await commonService.runValidationBefore(
+      request.data,
+      module.id,
+      enums.actionId.create,
+      user,
+      t,
+    );
 
-    await commonService.insertFile(files, module.id);
+    await commonService.insertFile(files, module.id, t);
     await commonService.insertData(module.name, request.data, t);
 
-    await commonService.runValidationAfter(request.data, module.id, enums.actionId.create, user);
+    await commonService.runValidationAfter(request.data, module.id, enums.actionId.create, user, t);
 
     t.commit();
     return res.status(enums.statusCode.OK).send('Data has been created.');

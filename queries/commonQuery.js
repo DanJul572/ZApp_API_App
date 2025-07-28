@@ -167,7 +167,7 @@ async function insertManyRows(table, dataArray, transaction) {
   }
 }
 
-async function updateRow(moduleName, primaryFieldName, rowId, data) {
+async function updateRow(moduleName, primaryFieldName, rowId, data, transaction) {
   try {
     const condition = {
       [primaryFieldName]: rowId,
@@ -180,6 +180,7 @@ async function updateRow(moduleName, primaryFieldName, rowId, data) {
     return await db.sequelize
       .query(query, {
         bind: values,
+        transaction,
         type: db.sequelize.QueryTypes.UPDATE,
       })
       .then(() => {

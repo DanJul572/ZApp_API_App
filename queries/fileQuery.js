@@ -3,7 +3,7 @@ const enums = require('@enums');
 const fileBuilder = require('@builders/fileBuilder');
 
 module.exports = {
-  save(files, moduleId) {
+  save(files, moduleId, transaction) {
     try {
       if (!files || !files.length) return;
 
@@ -12,6 +12,7 @@ module.exports = {
       return db.sequelize
         .query(query, {
           bind: values,
+          transaction,
           type: db.sequelize.QueryTypes.SELECT,
         })
         .catch(error => {
@@ -22,7 +23,7 @@ module.exports = {
     }
   },
 
-  delete(fields, row) {
+  delete(fields, row, transaction) {
     try {
       const fileFields = fields.filter(field => field.inputType === enums.inputType.file);
 
@@ -34,6 +35,7 @@ module.exports = {
       return db.sequelize
         .query(query, {
           bind: deletedFiles,
+          transaction,
           type: db.sequelize.QueryTypes.DELETE,
         })
         .catch(error => {

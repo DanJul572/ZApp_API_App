@@ -21,7 +21,7 @@ function getValidations(moduleId, actionId, validationTimeId) {
   }
 }
 
-async function runValidation(data, moduleId, actionId, validationTimeId, user = null) {
+async function runValidation(data, moduleId, actionId, validationTimeId, user = null, transaction) {
   try {
     const validations = await getValidations(moduleId, actionId, validationTimeId);
     if (validations && validations.length > 0) {
@@ -29,9 +29,13 @@ async function runValidation(data, moduleId, actionId, validationTimeId, user = 
         const validation = validations[index];
         validation.sql = helpers.replacePlaceholders(validation.sql, data, user);
 
-        await db.sequelize.query(validation.sql).catch(error => {
-          throw new Error(error.message);
-        });
+        await db.sequelize
+          .query(validation.sql, {
+            transaction,
+          })
+          .catch(error => {
+            throw new Error(error.message);
+          });
       }
     } else {
       return;
