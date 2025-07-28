@@ -13,7 +13,7 @@ async function destory(req, res) {
 
     const identity = fields.find(field => field.identity);
 
-    await moduleService.deleteModule(module.id);
+    await moduleService.deleteModule(module.id, t);
     await moduleService.deleteFields(module.id);
     await moduleService.deleteFiles(module.id);
     await moduleService.dropTable(module.name, identity.name);

@@ -22,7 +22,7 @@ async function destory(req, res) {
 
     await commonService.deleteFile(fields, detailData);
 
-    const data = await commonService.deleteData(module.name, primaryField.name, request.id);
+    const data = await commonService.deleteData(module.name, primaryField.name, request.id, t);
 
     t.commit();
     return res.status(enums.statusCode.OK).send(data);

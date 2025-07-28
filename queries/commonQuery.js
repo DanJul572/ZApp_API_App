@@ -77,13 +77,14 @@ async function getRowDetail(tableName, rowId, primaryFieldName) {
   }
 }
 
-async function deleteRow(tableName, primaryFieldName, rowId) {
+async function deleteRow(tableName, primaryFieldName, rowId, transaction) {
   try {
     const query = commonBuilder.deleteRow(tableName, primaryFieldName, rowId);
 
     return await db.sequelize
       .query(query, {
         bind: [rowId],
+        transaction,
         type: db.sequelize.QueryTypes.DELETE,
       })
       .then(() => {

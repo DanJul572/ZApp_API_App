@@ -36,8 +36,8 @@ async function insertFields(data) {
   return await commonQuery.insertManyRows('Fields', data);
 }
 
-async function deleteModule(id) {
-  return await commonQuery.deleteRow('Modules', 'id', id);
+async function deleteModule(id, transaction) {
+  return await commonQuery.deleteRow('Modules', 'id', id, transaction);
 }
 
 module.exports = {

@@ -58,8 +58,8 @@ async function getDetailData(tableName, rowId, primaryFieldName) {
   return await commonQuery.getRowDetail(tableName, rowId, primaryFieldName);
 }
 
-async function deleteData(tableName, primaryFieldName, rowId) {
-  return commonQuery.deleteRow(tableName, primaryFieldName, rowId);
+async function deleteData(tableName, primaryFieldName, rowId, transaction) {
+  return commonQuery.deleteRow(tableName, primaryFieldName, rowId, transaction);
 }
 
 async function getFieldOptions(field) {
