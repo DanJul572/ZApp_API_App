@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
-const authQuery = require('../queries/authQuery');
-const commonQuery = require('../queries/commonQuery');
-const menuQuery = require('../queries/menuQuery');
+const authQuery = require('@queries/authQuery');
+const commonQuery = require('@queries/commonQuery');
+const menuQuery = require('@queries/menuQuery');
 
-const auth = require('../enums/auth');
+const enums = require('@enums');
 
 async function hashPassword(password) {
-  return await bcryptjs.hash(password, auth.salt);
+  return await bcryptjs.hash(password, enums.auth.salt);
 }
 
 async function insertUser(userData, transaction) {
@@ -35,10 +35,10 @@ function generateToken(id, email, roleId) {
   };
 
   const tokenOptions = {
-    expiresIn: auth.expiredIn,
+    expiresIn: enums.auth.expiredIn,
   };
 
-  return jwt.sign(tokenInfo, auth.secretKey, tokenOptions);
+  return jwt.sign(tokenInfo, enums.auth.secretKey, tokenOptions);
 }
 
 module.exports = {

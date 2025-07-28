@@ -1,10 +1,10 @@
-const validationTimeId = require('../enums/validationTimeId');
+const enums = require('@enums');
 
-const commonQuery = require('../queries/commonQuery');
-const fieldQuery = require('../queries/fieldQuery');
-const fileQuery = require('../queries/fileQuery');
-const moduleQuery = require('../queries/moduleQuery');
-const validationQuery = require('../queries/validationQuery');
+const commonQuery = require('@queries/commonQuery');
+const fieldQuery = require('@queries/fieldQuery');
+const fileQuery = require('@queries/fileQuery');
+const moduleQuery = require('@queries/moduleQuery');
+const validationQuery = require('@queries/validationQuery');
 
 async function getModuleById(moduleId) {
   return await moduleQuery.getModule(moduleId);
@@ -23,7 +23,7 @@ async function runValidationBefore(data, moduleId, actionId, user, transaction) 
     data,
     moduleId,
     actionId,
-    validationTimeId.before,
+    enums.validationTimeId.before,
     user,
     transaction,
   );
@@ -34,7 +34,7 @@ async function runValidationAfter(data, moduleId, actionId, user, transaction) {
     data,
     moduleId,
     actionId,
-    validationTimeId.after,
+    enums.validationTimeId.after,
     user,
     transaction,
   );

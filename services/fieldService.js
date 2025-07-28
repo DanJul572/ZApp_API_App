@@ -1,4 +1,4 @@
-const fieldQuery = require('../queries/fieldQuery');
+const fieldQuery = require('@queries/fieldQuery');
 
 async function getFields(moduleId) {
   return await fieldQuery.getFields(moduleId);
