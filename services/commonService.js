@@ -46,8 +46,8 @@ async function deleteFile(fields, detailData) {
   await fileQuery.delete(fields, detailData);
 }
 
-async function insertData(table, data, user) {
-  return await commonQuery.insertRow(table, data, user);
+async function insertData(table, data, user, transaction) {
+  return await commonQuery.insertRow(table, data, user, transaction);
 }
 
 async function getData(moduleName, fields, page, advanceFilter, filter, sort, defaultFilter) {

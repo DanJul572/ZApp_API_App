@@ -11,8 +11,8 @@ async function hashPassword(password) {
   return await bcryptjs.hash(password, auth.salt);
 }
 
-async function insertUser(userData) {
-  return await commonQuery.insertRow('Users', userData);
+async function insertUser(userData, transaction) {
+  return await commonQuery.insertRow('Users', userData, transaction);
 }
 
 async function getUserByEmail(email) {

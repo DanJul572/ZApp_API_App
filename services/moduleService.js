@@ -27,9 +27,9 @@ async function deleteFields(moduleId) {
   return await fieldQuery.deleteFields(moduleId);
 }
 
-async function insertModule(data) {
+async function insertModule(data, transaction) {
   delete data.fields;
-  return await commonQuery.insertRow('Modules', data);
+  return await commonQuery.insertRow('Modules', data, transaction);
 }
 
 async function insertFields(data) {

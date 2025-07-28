@@ -114,17 +114,23 @@ async function getOptions(field) {
   }
 }
 
-async function insertRow(table, data) {
+async function insertRow(table, data, transaction) {
   try {
     data.createdAt = dayjs().format(enums.datetimeFormat.datetime.value);
     data.updatedAt = dayjs().format(enums.datetimeFormat.datetime.value);
 
     const {query, values} = commonBuilder.insertRow(table, data);
 
-    const [results] = await db.sequelize.query(query, {
+    const queryOptions = {
       bind: values,
       type: db.sequelize.QueryTypes.RAW,
-    });
+    };
+
+    if (transaction) {
+      queryOptions.transaction = transaction;
+    }
+
+    const [results] = await db.sequelize.query(query, queryOptions);
 
     return results[0];
   } catch (error) {

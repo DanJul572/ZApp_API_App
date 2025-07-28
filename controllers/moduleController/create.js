@@ -8,7 +8,7 @@ async function create(req, res) {
 
   try {
     const request = JSON.parse(req.body.data);
-    const createdModule = await moduleService.insertModule({...request});
+    const createdModule = await moduleService.insertModule({...request}, t);
 
     const fields = request.fields.map(field => {
       field.moduleId = createdModule.id;

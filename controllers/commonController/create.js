@@ -17,7 +17,7 @@ async function create(req, res) {
     await commonService.runValidationBefore(request.data, module.id, enums.actionId.create, user);
 
     await commonService.insertFile(files, module.id);
-    await commonService.insertData(module.name, request.data);
+    await commonService.insertData(module.name, request.data, t);
 
     await commonService.runValidationAfter(request.data, module.id, enums.actionId.create, user);
 

@@ -10,7 +10,7 @@ async function register(req, res) {
 
     const userData = request;
     userData.password = await authService.hashPassword(userData.password);
-    const createdUser = await authService.insertUser(userData);
+    const createdUser = await authService.insertUser(userData, t);
 
     t.commit();
     return res.status(enums.statusCode.OK).send(createdUser);
