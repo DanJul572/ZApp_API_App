@@ -11,8 +11,8 @@ async function getModuleFields(moduleId) {
   return await fieldQuery.getFields(moduleId);
 }
 
-async function generateTable(name, fields) {
-  return await moduleQuery.createTable(name, fields);
+async function generateTable(name, fields, transaction) {
+  return await moduleQuery.createTable(name, fields, transaction);
 }
 
 async function dropTable(tableName, identityFieldName) {
@@ -32,8 +32,8 @@ async function insertModule(data, transaction) {
   return await commonQuery.insertRow('Modules', data, transaction);
 }
 
-async function insertFields(data) {
-  return await commonQuery.insertManyRows('Fields', data);
+async function insertFields(data, transaction) {
+  return await commonQuery.insertManyRows('Fields', data, transaction);
 }
 
 async function deleteModule(id, transaction) {

@@ -2,12 +2,16 @@ const db = require('@db');
 const moduleBuilder = require('@builders/moduleBuilder');
 
 module.exports = {
-  async createTable(name, fields) {
+  async createTable(name, fields, transaction) {
     try {
       const query = moduleBuilder.createTable(name, fields);
-      return db.sequelize.query(query).catch(error => {
-        throw new Error(error.message);
-      });
+      return db.sequelize
+        .query(query, {
+          transaction,
+        })
+        .catch(error => {
+          throw new Error(error.message);
+        });
     } catch (error) {
       throw new Error(error.message);
     }

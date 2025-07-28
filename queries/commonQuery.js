@@ -138,7 +138,7 @@ async function insertRow(table, data, transaction) {
   }
 }
 
-async function insertManyRows(table, dataArray) {
+async function insertManyRows(table, dataArray, transaction) {
   try {
     if (!Array.isArray(dataArray) || dataArray.length === 0) {
       throw new Error('Data must be a non-empty array of objects');
@@ -157,6 +157,7 @@ async function insertManyRows(table, dataArray) {
 
     await db.sequelize.query(query, {
       bind: values,
+      transaction,
       type: db.sequelize.QueryTypes.INSERT,
     });
 

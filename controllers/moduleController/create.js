@@ -14,9 +14,9 @@ async function create(req, res) {
       field.moduleId = createdModule.id;
       return field;
     });
-    await moduleService.insertFields(fields);
+    await moduleService.insertFields(fields, t);
 
-    await moduleService.generateTable(request.name, request.fields);
+    await moduleService.generateTable(request.name, request.fields, t);
 
     await t.commit();
     return res.status(enums.statusCode.OK).send('Module has been created');
