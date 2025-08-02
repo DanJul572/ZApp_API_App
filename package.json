@@ -21,7 +21,9 @@
     "dotenv-flow": "^4.1.0",
     "ejs": "~3.1.10",
     "express": "~5.1.0",
+    "express-validation": "^4.1.1",
     "http-errors": "~2.0.0",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
     "morgan": "~1.10.1",
@@ -46,7 +48,8 @@
     "@helpers": "helpers",
     "@middleware": "middleware",
     "@services": "services",
-    "@queries": "queries"
+    "@queries": "queries",
+    "@validations": "validations"
   },
-  "packageManager": "pnpm@10.13.1"
+  "packageManager": "pnpm@10.14.0"
 }

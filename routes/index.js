@@ -4,7 +4,6 @@ var router = express.Router();
 const middleware = require('@middleware');
 const controllers = require('@controllers');
 
-const authController = controllers.authController;
 const commonController = controllers.commonController;
 const fieldController = controllers.fieldController;
 const fileController = controllers.fileController;
@@ -12,9 +11,9 @@ const moduleController = controllers.moduleController;
 const scriptController = controllers.scriptController;
 const viewController = controllers.viewController;
 
-/* authentication */
-router.post('/api/auth/login', authController.login);
-router.post('/api/auth/register', authController.register);
+const authRoute = require('./authRoute');
+
+router.use(authRoute);
 
 /*  common */
 router.get('/api/common/columns', middleware.authenticateToken, commonController.columns);

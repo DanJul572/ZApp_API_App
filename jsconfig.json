@@ -16,7 +16,9 @@
       "@services": ["services/index.js"],
       "@services/*": ["services/*"],
       "@queries": ["queries/index.js"],
-      "@queries/*": ["queries/*"]
+      "@queries/*": ["queries/*"],
+      "@validations": ["validations/index.js"],
+      "@validations/*": ["validations/*"]
     }
   },
   "include": ["."]

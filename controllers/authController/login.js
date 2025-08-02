@@ -3,7 +3,7 @@ const enums = require('@enums');
 
 async function login(req, res) {
   try {
-    const request = JSON.parse(req.body.data);
+    const request = req.body;
 
     const user = await authService.getUserByEmail(request.email);
     const passwordIsMatch = await authService.checkPassword(request.password, user.password);
