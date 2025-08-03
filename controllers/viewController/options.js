@@ -13,6 +13,4 @@ async function options(req, res) {
   }
 }
 
-module.exports = {
-  options,
-};
+module.exports = options;

@@ -13,6 +13,4 @@ async function download(req, res) {
   }
 }
 
-module.exports = {
-  download,
-};
+module.exports = download;
