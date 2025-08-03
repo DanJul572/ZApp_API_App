@@ -29,11 +29,11 @@ async function create(req, res) {
 
     t.commit();
     return res.status(enums.statusCode.OK).send('Data has been created.');
-  } catch (error) {
+  } catch (err) {
     await t.rollback();
-    const response = helpers.getErrorResponse(error.message);
-    await commonService.insertInternalError(req, response.code, response.message);
-    return res.status(response.code).send(response.message);
+    const error = helpers.getErrorResponse(err.message);
+    await commonService.insertInternalError(req, error.code, error.message);
+    return res.status(error.code).send(error.message);
   }
 }
 

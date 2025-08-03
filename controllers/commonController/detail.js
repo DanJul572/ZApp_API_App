@@ -15,12 +15,12 @@ async function detail(req, res) {
 
     await commonService.runValidationBefore(request, module.id, enums.actionId.detail, user);
 
-    const data = await commonService.getDetailData(module.name, request.rowId, primaryField.name);
-    return res.status(enums.statusCode.OK).send(data);
-  } catch (error) {
-    const response = helpers.getErrorResponse(error.message);
-    await commonService.insertInternalError(req, response.code, response.message);
-    return res.status(response.code).send(response.message);
+    const detailData = await commonService.getDetailData(module.name, request.rowId, primaryField.name);
+    return res.status(enums.statusCode.OK).send(detailData);
+  } catch (err) {
+    const error = helpers.getErrorResponse(err.message);
+    await commonService.insertInternalError(req, error.code, error.message);
+    return res.status(error.code).send(error.message);
   }
 }
 
