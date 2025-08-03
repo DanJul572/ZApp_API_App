@@ -7,5 +7,5 @@ module.exports = {
   authenticateToken,
   errorHandler,
   parseJsonData,
-  validateRequest
+  validateRequest,
 };

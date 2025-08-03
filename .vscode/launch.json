@@ -11,11 +11,16 @@
       "type": "node-terminal"
     },
     {
-      "type": "node",
+      "command": "pnpm start:staging",
+      "name": "Run Staging",
       "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}\\bin\\www"
-    }
+      "type": "node-terminal"
+    },
+    {
+      "command": "pnpm start:prod",
+      "name": "Run Production",
+      "request": "launch",
+      "type": "node-terminal"
+    },
   ]
 }

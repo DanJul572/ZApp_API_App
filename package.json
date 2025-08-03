@@ -3,12 +3,21 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start:dev": "cross-env NODE_ENV=development node ./bin/www",
-    "migrate:dev": "cross-env NODE_ENV=development sequelize db:migrate",
-    "seed:dev": "cross-env NODE_ENV=development sequelize db:seed:all",
-    "prepare": "husky install",
+    "format": "prettier --write .",
     "lint": "eslint . --max-warnings=0",
-    "format": "prettier --write ."
+    "prepare": "husky install",
+    "migrate:dev:undo:all": "cross-env NODE_ENV=development sequelize db:migrate:undo:all",
+    "migrate:dev": "cross-env NODE_ENV=development sequelize db:migrate",
+    "migrate:prod:undo:all": "cross-env NODE_ENV=production sequelize db:migrate:undo:all",
+    "migrate:prod": "cross-env NODE_ENV=production sequelize db:migrate",
+    "migrate:staging:undo:all": "cross-env NODE_ENV=staging sequelize db:migrate:undo:all",
+    "migrate:staging": "cross-env NODE_ENV=staging sequelize db:migrate",
+    "seed:dev": "cross-env NODE_ENV=development sequelize db:seed:all",
+    "seed:prod": "cross-env NODE_ENV=production sequelize db:seed:all",
+    "seed:staging": "cross-env NODE_ENV=staging sequelize db:seed:all",
+    "start:dev": "cross-env NODE_ENV=development node ./bin/www",
+    "start:prod": "cross-env NODE_ENV=production node ./bin/www",
+    "start:staging": "cross-env NODE_ENV=staging node ./bin/www"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

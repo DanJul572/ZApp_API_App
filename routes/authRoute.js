@@ -1,6 +1,5 @@
 const {Router} = require('express');
 
-
 const authController = require('@controllers/authController');
 const authValidation = require('@validations/authValidation');
 const middleware = require('@middleware');
