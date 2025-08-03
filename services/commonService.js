@@ -80,7 +80,7 @@ async function getMenu(roleId) {
   return await commonQuery.getMenu(roleId);
 }
 
-async function insertError(request, code, message) {
+async function insertInternalError(request, code, message) {
   if (code !== 500) {
     return;
   }
@@ -110,5 +110,5 @@ module.exports = {
   runValidationAfter,
   runValidationBefore,
   updateData,
-  insertError,
+  insertInternalError,
 };

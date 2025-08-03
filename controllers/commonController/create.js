@@ -32,7 +32,7 @@ async function create(req, res) {
   } catch (error) {
     await t.rollback();
     const response = helpers.getErrorResponse(error.message);
-    await commonService.insertError(req, response.code, error.message);
+    await commonService.insertInternalError(req, response.code, response.message);
     return res.status(response.code).send(response.message);
   }
 }

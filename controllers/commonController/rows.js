@@ -20,7 +20,7 @@ async function rows(req, res) {
     return res.status(enums.statusCode.OK).send(data);
   } catch (error) {
     const response = helpers.getErrorResponse(error.message);
-    await commonService.insertError(req, response.code, error.message);
+    await commonService.insertInternalError(req, response.code, response.message);
     return res.status(response.code).send(response.message);
   }
 }
