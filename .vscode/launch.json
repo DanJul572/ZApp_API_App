@@ -21,6 +21,6 @@
       "name": "Run Production",
       "request": "launch",
       "type": "node-terminal"
-    },
+    }
   ]
 }
