@@ -7,7 +7,7 @@ async function destory(req, res) {
   const t = await db.sequelize.transaction();
 
   try {
-    const request = JSON.parse(req.body.data);
+    const request = req.body;
 
     const module = await commonService.getModuleById(request.moduleId);
     const fields = await commonService.getModuleFields(request.moduleId);

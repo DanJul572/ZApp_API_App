@@ -7,7 +7,7 @@ async function update(req, res) {
   const t = await db.sequelize.transaction();
 
   try {
-    const request = JSON.parse(req.body.data);
+    const request = req.body;
     const files = req.files;
 
     const module = await commonService.getModuleById(request.moduleId);

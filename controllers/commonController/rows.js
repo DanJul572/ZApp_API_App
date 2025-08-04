@@ -4,7 +4,7 @@ const enums = require('@enums');
 
 async function rows(req, res) {
   try {
-    const request = JSON.parse(req.body.data);
+    const request = req.body;
 
     const module = await commonService.getModuleById(request.id);
     const fields = await commonService.getModuleFields(module.id);
