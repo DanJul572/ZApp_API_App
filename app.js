@@ -12,6 +12,7 @@ var path = require('path');
 const errorHandler = require('@middleware/errorHandler');
 
 var routes = require('./routes');
+const {specs, swaggerUi} = require('./swagger');
 
 var app = express();
 var upload = multer();
@@ -23,6 +24,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(upload.array('files'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/', routes);
 

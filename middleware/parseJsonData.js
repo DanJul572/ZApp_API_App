@@ -1,7 +1,7 @@
 const enums = require('@enums');
 
 function parseJsonData(req, res, next) {
-  if (req.body && typeof req.body.data === 'string') {
+  if (req.body && req.body.data) {
     try {
       const parsed = JSON.parse(req.body.data);
       req.body = parsed;

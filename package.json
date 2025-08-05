@@ -47,7 +47,9 @@
     "globals": "^16.3.0",
     "husky": "^9.1.7",
     "prettier": "^3.6.2",
-    "sequelize-cli": "^6.6.3"
+    "sequelize-cli": "^6.6.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "_moduleAliases": {
     "@controllers": "controllers",

@@ -6,7 +6,7 @@ async function register(req, res) {
   const t = await db.sequelize.transaction();
 
   try {
-    const request = JSON.parse(req.body.data);
+    const request = req.body;
 
     const userData = request;
     userData.password = await authService.hashPassword(userData.password);
