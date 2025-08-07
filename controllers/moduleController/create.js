@@ -7,7 +7,7 @@ async function create(req, res) {
   const t = await db.sequelize.transaction();
 
   try {
-    const request = JSON.parse(req.body.data);
+    const request = req.body;
     const createdModule = await moduleService.insertModule({...request}, t);
 
     const fields = request.fields.map(field => {
