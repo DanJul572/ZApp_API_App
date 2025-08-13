@@ -1,8 +1,7 @@
 const enums = require('@enums');
-const helpers = require('@helpers');
 const fieldBuilder = require('./fieldBuilder');
 
-function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter) {
+function getRows(table, fields, page, filter, sort, defaultFilter) {
   const offset = (page - 1) * enums.setting.rowsPerPage;
   const rowsValues = []; // Array untuk menyimpan nilai parameter
 
@@ -11,9 +10,6 @@ function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter
 
   // Initiation Query
   let rowsQuery = `SELECT ${fieldsFormat} FROM "${table}"`;
-
-  // Generate the advance filter clause
-  const advanceFilterFormat = helpers.jsonToWhereClause(advanceFilter);
 
   // Combine default filters and filters provided
   const combinedFilters = [...(defaultFilter || []), ...(filter || [])];
@@ -26,11 +22,6 @@ function getRows(table, fields, page, advanceFilter, filter, sort, defaultFilter
       })
       .join(' AND ');
     whereClauses.push(combinedWhere);
-  }
-
-  // Add the advance filter format to where clauses if it exists
-  if (advanceFilterFormat) {
-    whereClauses.push(advanceFilterFormat);
   }
 
   if (whereClauses.length) {

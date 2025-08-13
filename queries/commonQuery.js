@@ -4,7 +4,7 @@ const db = require('@db');
 const enums = require('@enums');
 const commonBuilder = require('@builders/commonBuilder');
 
-async function getRows(moduleName, fields, page, advanceFilter, filter, sort, defaultFilter) {
+async function getRows(moduleName, fields, page, filter, sort, defaultFilter) {
   try {
     if (!sort || sort.length <= 0) {
       const primaryField = await fields.find(field => field.identity);
@@ -21,7 +21,6 @@ async function getRows(moduleName, fields, page, advanceFilter, filter, sort, de
       moduleName,
       fields,
       page,
-      advanceFilter,
       filter,
       sort,
       defaultFilter,

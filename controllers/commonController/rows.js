@@ -12,7 +12,6 @@ async function rows(req, res) {
       module.name,
       fields,
       request.page,
-      request.advanceFilter,
       request.filter,
       request.sort,
       request.defaultFilter,

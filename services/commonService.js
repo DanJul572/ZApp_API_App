@@ -52,8 +52,8 @@ async function insertData(table, data, user, transaction) {
   return await commonQuery.insertRow(table, data, user, transaction);
 }
 
-async function getData(moduleName, fields, page, advanceFilter, filter, sort, defaultFilter) {
-  return commonQuery.getRows(moduleName, fields, page, advanceFilter, filter, sort, defaultFilter);
+async function getData(moduleName, fields, page, filter, sort, defaultFilter) {
+  return commonQuery.getRows(moduleName, fields, page, filter, sort, defaultFilter);
 }
 
 async function getDetailData(tableName, rowId, primaryFieldName) {
