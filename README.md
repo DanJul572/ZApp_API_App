@@ -1,5 +1,7 @@
 # ⚡ ZApp API – Backend
 
+📌 Versi: **0.0.0**
+
 **ZApp API** adalah backend service yang mendukung aplikasi **ZApp**, dibangun menggunakan **Express.js** dan **Sequelize ORM**.  
 API ini menyediakan endpoint untuk autentikasi, manajemen data, serta integrasi dengan database yang fleksibel.
 
@@ -8,7 +10,11 @@ API ini menyediakan endpoint untuk autentikasi, manajemen data, serta integrasi 
 ## 🚀 Teknologi Utama
 - ⚡ **Express.js** – framework web server minimalis & cepat.
 - 🗄️ **Sequelize ORM** – untuk migrasi, seeding, dan manajemen database.
+- 🔐 **JWT & Bcrypt.js** – untuk autentikasi dan enkripsi password.
+- 📦 **Multer** – dukungan upload file.
+- 🌍 **dotenv-flow** – manajemen konfigurasi environment.
 - 🛠️ **Husky & Prettier** – menjaga kualitas kode dan konsistensi format.
+- 📖 **Swagger** – dokumentasi API interaktif.
 
 ---
 
@@ -70,6 +76,13 @@ pnpm start:prod
 
 ## 📖 Roadmap
 
-- [ ] Tambah dokumentasi Swagger untuk API.
-- [ ] Implementasi autentikasi JWT.
-- [ ] Tambah pengujian otomatis dengan Jest.  
+- [ ] Implementasi email verification.
+- [ ] Implementasi cache untuk meningkatkan performa.
+- [ ] Implementasi Flexible Database Connection.
+- [ ] Tambah pengujian otomatis dengan.
+
+---
+
+## 📜 Lisensi
+
+Proyek ini bersifat **private** dan tidak untuk distribusi publik.
