@@ -17,7 +17,8 @@
     "seed:staging": "cross-env NODE_ENV=staging sequelize db:seed:all",
     "start:dev": "cross-env NODE_ENV=development node ./bin/www",
     "start:prod": "cross-env NODE_ENV=production node ./bin/www",
-    "start:staging": "cross-env NODE_ENV=staging node ./bin/www"
+    "start:staging": "cross-env NODE_ENV=staging node ./bin/www",
+    "build": "esbuild src/**/*.js --outdir=dist --platform=node --format=cjs --bundle=false --outbase=src --sourcemap"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -52,15 +53,15 @@
     "swagger-ui-express": "^5.0.1"
   },
   "_moduleAliases": {
-    "@controllers": "controllers",
-    "@builders": "builders",
-    "@db": "models",
-    "@enums": "enums",
-    "@helpers": "helpers",
-    "@middleware": "middleware",
-    "@services": "services",
-    "@queries": "queries",
-    "@validations": "validations"
+    "@controllers": "src/controllers",
+    "@builders": "src/builders",
+    "@db": "src/models",
+    "@enums": "src/enums",
+    "@helpers": "src/helpers",
+    "@middleware": "src/middleware",
+    "@services": "src/services",
+    "@queries": "src/queries",
+    "@validations": "src/validations"
   },
   "packageManager": "pnpm@10.14.0"
 }

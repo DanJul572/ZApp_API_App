@@ -11,7 +11,7 @@ var path = require('path');
 
 const errorHandler = require('@middleware/errorHandler');
 
-var routes = require('./routes');
+var routes = require('./src/routes');
 const {specs, swaggerUi} = require('./swagger');
 
 var app = express();
