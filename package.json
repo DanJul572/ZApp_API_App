@@ -33,7 +33,7 @@
     "express": "~5.1.0",
     "express-validation": "^4.1.1",
     "http-errors": "~2.0.0",
-    "joi": "^18.0.0",
+    "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
     "morgan": "~1.10.1",
@@ -63,5 +63,5 @@
     "@queries": "src/queries",
     "@validations": "src/validations"
   },
-  "packageManager": "pnpm@10.14.0"
+  "packageManager": "pnpm@10.15.0"
 }
