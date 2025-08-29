@@ -18,7 +18,7 @@
     "start:dev": "cross-env NODE_ENV=development node ./bin/www",
     "start:prod": "cross-env NODE_ENV=production node ./bin/www",
     "start:staging": "cross-env NODE_ENV=staging node ./bin/www",
-    "build": "esbuild src/**/*.js --outdir=dist --platform=node --format=cjs --bundle=false --outbase=src --sourcemap"
+    "build": "node esbuild.config.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -44,7 +44,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",
+    "esbuild": "^0.25.9",
+    "esbuild-plugin-alias": "^0.2.1",
     "eslint": "^9.34.0",
+    "glob": "^11.0.3",
     "globals": "^16.3.0",
     "husky": "^9.1.7",
     "prettier": "^3.6.2",
