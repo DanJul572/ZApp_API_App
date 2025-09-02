@@ -66,5 +66,5 @@
     "@queries": "src/queries",
     "@validations": "src/validations"
   },
-  "packageManager": "pnpm@10.15.0"
+  "packageManager": "pnpm@10.15.1"
 }
