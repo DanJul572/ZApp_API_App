@@ -1,5 +1,5 @@
-const fileService = require('@services/fileService');
-const enums = require('@enums');
+const fileService = require('../../services/fileService');
+const enums = require('../../enums');
 
 async function download(req, res) {
   try {

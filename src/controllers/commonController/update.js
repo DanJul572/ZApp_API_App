@@ -1,7 +1,7 @@
-const db = require('@db');
-const helpers = require('@helpers');
-const enums = require('@enums');
-const commonService = require('@services/commonService');
+const db = require('../../models');
+const helpers = require('../../helpers');
+const enums = require('../../enums');
+const commonService = require('../../services/commonService');
 
 async function update(req, res) {
   const t = await db.sequelize.transaction();

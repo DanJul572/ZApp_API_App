@@ -1,6 +1,6 @@
-const enums = require('@enums');
+const enums = require('../../enums');
 
-const scriptService = require('@services/scriptService');
+const scriptService = require('../../services/scriptService');
 
 async function run(req, res) {
   try {

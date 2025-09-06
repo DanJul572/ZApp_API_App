@@ -5,20 +5,8 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "pnpm start:dev",
-      "name": "Run Developement",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "command": "pnpm start:staging",
-      "name": "Run Staging",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "command": "pnpm start:prod",
-      "name": "Run Production",
+      "command": "pnpm start",
+      "name": "Start",
       "request": "launch",
       "type": "node-terminal"
     }

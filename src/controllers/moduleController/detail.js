@@ -1,5 +1,5 @@
-const enums = require('@enums');
-const moduleService = require('@services/moduleService');
+const enums = require('../../enums');
+const moduleService = require('../../services/moduleService');
 
 async function detail(req, res) {
   try {

@@ -6,7 +6,7 @@
       "@builders/*": ["src/builders/*"],
       "@controllers": ["src/controllers/index.js"],
       "@controllers/*": ["src/controllers/*"],
-      "@db": ["src/models/index.js"],
+      "../../models": ["src/models/index.js"],
       "@enums": ["src/enums/index.js"],
       "@enums/*": ["src/enums/*"],
       "@helpers": ["src/helpers/index.js"],

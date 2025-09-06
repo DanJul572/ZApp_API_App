@@ -1,7 +1,7 @@
 const {Router} = require('express');
 
-const middleware = require('@middleware');
-const {fieldController} = require('@controllers');
+const middleware = require('../middleware');
+const {fieldController} = require('../controllers');
 
 const router = Router();
 

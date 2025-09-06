@@ -1,5 +1,5 @@
-const fieldService = require('@services/fieldService');
-const enums = require('@enums');
+const fieldService = require('../../services/fieldService');
+const enums = require('../../enums');
 
 async function rows(req, res) {
   try {

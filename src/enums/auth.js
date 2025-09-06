@@ -1,4 +1,4 @@
-require('dotenv-flow').config();
+require('dotenv').config();
 
 module.exports = {
   secretKey: process.env.JWT_SCECRET_KEY,

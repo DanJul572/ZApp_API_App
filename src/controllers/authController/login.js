@@ -1,5 +1,5 @@
-const authService = require('@services/authService');
-const enums = require('@enums');
+const authService = require('../../services/authService');
+const enums = require('../../enums');
 
 async function login(req, res) {
   try {

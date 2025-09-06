@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const enums = require('@enums');
+const enums = require('../enums');
 
 function authenticateToken(req, res, next) {
   const token = req.header('Authorization');

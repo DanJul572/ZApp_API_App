@@ -1,4 +1,4 @@
-const enums = require('@enums');
+const enums = require('../enums');
 
 function parseJsonData(req, res, next) {
   if (req.body && req.body.data) {

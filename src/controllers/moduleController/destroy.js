@@ -1,6 +1,6 @@
-const db = require('@db');
-const enums = require('@enums');
-const moduleService = require('@services/moduleService');
+const db = require('../../models');
+const enums = require('../../enums');
+const moduleService = require('../../services/moduleService');
 
 async function destory(req, res) {
   const t = await db.sequelize.transaction();

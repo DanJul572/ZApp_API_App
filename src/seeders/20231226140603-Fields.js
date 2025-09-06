@@ -11,7 +11,6 @@ const menus = require('./fields/menus');
 const modules = require('./fields/modules');
 const roles = require('./fields/roles');
 const script = require('./fields/script');
-const tokens = require('./fields/tokens');
 const users = require('./fields/users');
 const validation = require('./fields/validation');
 const validationTime = require('./fields/validationTime');
@@ -31,7 +30,6 @@ module.exports = {
       menus,
       roles,
       script,
-      tokens,
       users,
       validation,
       validationTime,

@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
-const authQuery = require('@queries/authQuery');
-const commonQuery = require('@queries/commonQuery');
-const menuQuery = require('@queries/menuQuery');
+const authQuery = require('../queries/authQuery');
+const commonQuery = require('../queries/commonQuery');
+const menuQuery = require('../queries/menuQuery');
 
-const enums = require('@enums');
+const enums = require('../enums');
 
 async function hashPassword(password) {
   return await bcryptjs.hash(password, enums.auth.salt);

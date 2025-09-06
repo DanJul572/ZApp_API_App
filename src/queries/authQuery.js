@@ -1,6 +1,6 @@
-const db = require('@db');
+const db = require('../models');
 
-const authBuilder = require('@builders/authBuilder');
+const authBuilder = require('../builders/authBuilder');
 
 async function findByEmail(email) {
   try {

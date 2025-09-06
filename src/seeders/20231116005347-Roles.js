@@ -2,7 +2,7 @@
 
 const dayjs = require('dayjs');
 
-const enums = require('@enums');
+const enums = require('../enums');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

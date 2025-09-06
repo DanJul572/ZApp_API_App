@@ -1,7 +1,7 @@
-const db = require('@db');
-const enums = require('@enums');
+const db = require('../../models');
+const enums = require('../../enums');
 
-const moduleService = require('@services/moduleService');
+const moduleService = require('../../services/moduleService');
 
 async function create(req, res) {
   const t = await db.sequelize.transaction();

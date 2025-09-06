@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const commonService = require('@services/commonService');
-const helpers = require('@helpers');
-const enums = require('@enums');
+const commonService = require('../../services/commonService');
+const helpers = require('../../helpers');
+const enums = require('../../enums');
 
 async function detail(req, res) {
   try {

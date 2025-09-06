@@ -1,5 +1,5 @@
-const viewService = require('@services/viewService');
-const enums = require('@enums');
+const viewService = require('../../services/viewService');
+const enums = require('../../enums');
 
 async function options(req, res) {
   try {

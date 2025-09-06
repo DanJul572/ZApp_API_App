@@ -1,5 +1,5 @@
-const db = require('@db');
-const moduleBuilder = require('@builders/moduleBuilder');
+const db = require('../models');
+const moduleBuilder = require('../builders/moduleBuilder');
 
 module.exports = {
   async createTable(name, fields, transaction) {

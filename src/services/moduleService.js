@@ -1,7 +1,7 @@
-const commonQuery = require('@queries/commonQuery');
-const fieldQuery = require('@queries/fieldQuery');
-const fileQuery = require('@queries/fileQuery');
-const moduleQuery = require('@queries/moduleQuery');
+const commonQuery = require('../queries/commonQuery');
+const fieldQuery = require('../queries/fieldQuery');
+const fileQuery = require('../queries/fileQuery');
+const moduleQuery = require('../queries/moduleQuery');
 
 async function getModuleById(moduleId) {
   return await moduleQuery.getModule(moduleId);

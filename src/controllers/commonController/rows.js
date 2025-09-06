@@ -1,6 +1,6 @@
-const commonService = require('@services/commonService');
-const helpers = require('@helpers');
-const enums = require('@enums');
+const commonService = require('../../services/commonService');
+const helpers = require('../../helpers');
+const enums = require('../../enums');
 
 async function rows(req, res) {
   try {

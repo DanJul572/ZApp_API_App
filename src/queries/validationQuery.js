@@ -1,6 +1,6 @@
-const db = require('@db');
-const helpers = require('@helpers');
-const validationBuilder = require('@builders/validationBuilder');
+const db = require('../models');
+const helpers = require('../helpers');
+const validationBuilder = require('../builders/validationBuilder');
 
 function getValidations(moduleId, actionId, validationTimeId) {
   try {

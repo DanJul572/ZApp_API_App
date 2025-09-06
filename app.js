@@ -1,5 +1,4 @@
-require('dotenv-flow').config();
-require('module-alias/register');
+require('dotenv').config();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
@@ -9,7 +8,7 @@ var logger = require('morgan');
 var multer = require('multer');
 var path = require('path');
 
-const errorHandler = require('@middleware/errorHandler');
+const errorHandler = require('./src/middleware/errorHandler');
 
 var routes = require('./src/routes');
 const {specs, swaggerUi} = require('./swagger');
