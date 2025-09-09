@@ -1,6 +1,6 @@
 const db = require('../models');
 const enums = require('../enums');
-const fieldBuilder = require('../builders/fieldBuilder');
+const {fieldBuilder} = require('../builders');
 
 module.exports = {
   async getFields(moduleId) {

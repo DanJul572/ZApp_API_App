@@ -1,5 +1,5 @@
 const db = require('../models');
-const viewBuilder = require('../builders/viewBuilder');
+const {viewBuilder} = require('../builders');
 
 async function getOptions(moduleId) {
   try {

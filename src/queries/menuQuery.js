@@ -1,5 +1,5 @@
 const db = require('../models');
-const menuBuilder = require('../builders/menuBuilder');
+const {menuBuilder} = require('../builders');
 
 module.exports = {
   findByRoleId(roleId) {

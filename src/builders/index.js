@@ -1,11 +1,13 @@
-const authBuilder = require('./authBuilder');
-const commonBuilder = require('./commonBuilder');
-const fieldBuilder = require('./fieldBuilder');
-const fileBuilder = require('./fileBuilder');
-const menuBuilder = require('./menuBuilder');
-const moduleBuilder = require('./moduleBuilder');
-const validationBuilder = require('./validationBuilder');
-const viewBuilder = require('./viewBuilder');
+const dialect = process.env.DB_DIALECT || 'postgres';
+
+const authBuilder = require(`./${dialect}/authBuilder`);
+const commonBuilder = require(`./${dialect}/commonBuilder`);
+const fieldBuilder = require(`./${dialect}/fieldBuilder`);
+const fileBuilder = require(`./${dialect}/fileBuilder`);
+const menuBuilder = require(`./${dialect}/menuBuilder`);
+const moduleBuilder = require(`./${dialect}/moduleBuilder`);
+const validationBuilder = require(`./${dialect}/validationBuilder`);
+const viewBuilder = require(`./${dialect}/viewBuilder`);
 
 module.exports = {
   authBuilder,

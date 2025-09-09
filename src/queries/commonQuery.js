@@ -2,7 +2,8 @@ const dayjs = require('dayjs');
 
 const db = require('../models');
 const enums = require('../enums');
-const commonBuilder = require('../builders/commonBuilder');
+
+const {commonBuilder} = require('../builders');
 
 async function getRows(moduleName, fields, page, filter, sort, defaultFilter) {
   try {

@@ -1,6 +1,6 @@
 const db = require('../models');
 const enums = require('../enums');
-const fileBuilder = require('../builders/fileBuilder');
+const {fileBuilder} = require('../builders');
 
 module.exports = {
   save(files, moduleId, transaction) {
