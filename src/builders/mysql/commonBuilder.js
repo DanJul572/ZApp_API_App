@@ -62,7 +62,7 @@ function deleteRow(table, field) {
 
 function getOptions(table, value, label) {
   return {
-    query: `SELECT \`${value}\` AS value, \`${label}\` AS label FROM \`${table}\``,
+    query: `SELECT \`${value}\` AS \`value\`, \`${label}\` AS \`label\` FROM \`${table}\``,
   };
 }
 
