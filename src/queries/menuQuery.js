@@ -7,7 +7,7 @@ module.exports = {
       const query = menuBuilder.findByRoleId();
       return db.sequelize
         .query(query, {
-          bind: [roleId],
+          replacements: [roleId],
           type: db.sequelize.QueryTypes.SELECT,
         })
         .then(result => {

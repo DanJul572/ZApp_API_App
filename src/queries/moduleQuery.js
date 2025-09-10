@@ -37,7 +37,7 @@ module.exports = {
       const query = moduleBuilder.findOne();
       return db.sequelize
         .query(query, {
-          bind: [id],
+          replacements: [id],
           type: db.sequelize.QueryTypes.SELECT,
         })
         .then(result => {

@@ -1,6 +1,6 @@
 const dayjs = require('dayjs');
 
-const enums = require('../enums');
+const enums = require('../../enums');
 
 const now = dayjs().format(enums.datetimeFormat.datetime.value);
 

@@ -8,7 +8,7 @@ module.exports = {
       const query = fieldBuilder.findByModule();
       return db.sequelize
         .query(query, {
-          bind: [moduleId],
+          replacements: [moduleId],
           type: db.sequelize.QueryTypes.SELECT,
         })
         .then(result => {
@@ -71,7 +71,7 @@ module.exports = {
       const query = fieldBuilder.deleteByModule();
       return db.sequelize
         .query(query, {
-          bind: [id],
+          replacements: [id],
           transaction,
           type: db.sequelize.QueryTypes.SELECT,
         })
@@ -88,7 +88,7 @@ module.exports = {
       const query = fieldBuilder.findPrimaryField();
       return db.sequelize
         .query(query, {
-          bind: [moduleId],
+          replacements: [moduleId],
           type: db.sequelize.QueryTypes.SELECT,
         })
         .then(result => {
@@ -107,7 +107,7 @@ module.exports = {
       const query = fieldBuilder.findById();
       return db.sequelize
         .query(query, {
-          bind: [id],
+          replacements: [id],
           type: db.sequelize.QueryTypes.SELECT,
         })
         .then(result => {

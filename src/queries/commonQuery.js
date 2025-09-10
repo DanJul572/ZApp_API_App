@@ -38,7 +38,7 @@ async function getRows(moduleName, fields, page, filter, sort, defaultFilter) {
 
     const rows = await db.sequelize
       .query(rowsQuery, {
-        bind: rowsValues,
+        replacements: rowsValues,
         type: db.sequelize.QueryTypes.SELECT,
       })
       .then(result => {
@@ -63,7 +63,7 @@ async function getRowDetail(tableName, rowId, primaryFieldName) {
 
     return await db.sequelize
       .query(query, {
-        bind: [rowId],
+        replacements: [rowId],
         type: db.sequelize.QueryTypes.SELECT,
       })
       .then(result => {
@@ -83,7 +83,7 @@ async function deleteRow(tableName, primaryFieldName, rowId, transaction) {
 
     return await db.sequelize
       .query(query, {
-        bind: [rowId],
+        replacements: [rowId],
         transaction,
         type: db.sequelize.QueryTypes.DELETE,
       })
@@ -122,7 +122,7 @@ async function insertRow(table, data, transaction) {
     const {query, values} = commonBuilder.insertRow(table, data);
 
     const queryOptions = {
-      bind: values,
+      replacements: values,
       type: db.sequelize.QueryTypes.RAW,
     };
 
@@ -156,7 +156,7 @@ async function insertManyRows(table, dataArray, transaction) {
     const {query, values} = commonBuilder.insertManyRows(table, dataWithTimestamps);
 
     await db.sequelize.query(query, {
-      bind: values,
+      replacements: values,
       transaction,
       type: db.sequelize.QueryTypes.INSERT,
     });
@@ -179,7 +179,7 @@ async function updateRow(moduleName, primaryFieldName, rowId, data, transaction)
 
     return await db.sequelize
       .query(query, {
-        bind: values,
+        replacements: values,
         transaction,
         type: db.sequelize.QueryTypes.UPDATE,
       })
@@ -200,7 +200,7 @@ async function getMenu(roleId) {
 
     return await db.sequelize
       .query(query, {
-        bind: [roleId],
+        replacements: [roleId],
         type: db.sequelize.QueryTypes.SELECT,
       })
       .then(result => {

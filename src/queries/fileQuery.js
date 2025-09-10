@@ -11,7 +11,7 @@ module.exports = {
 
       return db.sequelize
         .query(query, {
-          bind: values,
+          replacements: values,
           transaction,
           type: db.sequelize.QueryTypes.SELECT,
         })
@@ -34,7 +34,7 @@ module.exports = {
 
       return db.sequelize
         .query(query, {
-          bind: deletedFiles,
+          replacements: deletedFiles,
           transaction,
           type: db.sequelize.QueryTypes.DELETE,
         })
@@ -52,7 +52,7 @@ module.exports = {
 
       return db.sequelize
         .query(query, {
-          bind: [moduleId],
+          replacements: [moduleId],
           transaction,
           type: db.sequelize.QueryTypes.DELETE,
         })
@@ -70,7 +70,7 @@ module.exports = {
 
       return db.sequelize
         .query(query, {
-          bind: [name],
+          replacements: [name],
           type: db.sequelize.QueryTypes.SELECT,
         })
         .then(result => {

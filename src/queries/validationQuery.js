@@ -7,7 +7,7 @@ function getValidations(moduleId, actionId, validationTimeId) {
     const query = validationBuilder.getValidations();
     return db.sequelize
       .query(query, {
-        bind: [moduleId, actionId, validationTimeId],
+        replacements: [moduleId, actionId, validationTimeId],
         type: db.sequelize.QueryTypes.SELECT,
       })
       .then(result => {

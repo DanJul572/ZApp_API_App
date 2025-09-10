@@ -1,4 +1,4 @@
-const enums = require('../enums');
+const enums = require('../../enums');
 const fieldBuilder = require('./fieldBuilder');
 
 function getRows(table, fields, page, filter, sort, defaultFilter) {

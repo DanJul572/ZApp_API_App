@@ -7,7 +7,7 @@ async function findByEmail(email) {
     const query = authBuilder.findByEmail();
     return db.sequelize
       .query(query, {
-        bind: [email],
+        replacements: [email],
         type: db.sequelize.QueryTypes.SELECT,
       })
       .then(result => {

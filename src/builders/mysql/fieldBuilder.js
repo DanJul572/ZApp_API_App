@@ -1,4 +1,4 @@
-const enums = require('../enums');
+const enums = require('../../enums');
 
 module.exports = {
   findByModule() {

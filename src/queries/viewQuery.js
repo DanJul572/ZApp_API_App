@@ -6,7 +6,7 @@ async function getOptions(moduleId) {
     const query = viewBuilder.getOptions();
     return await db.sequelize
       .query(query, {
-        bind: [moduleId],
+        replacements: [moduleId],
         type: db.sequelize.QueryTypes.SELECT,
       })
       .then(result => {
