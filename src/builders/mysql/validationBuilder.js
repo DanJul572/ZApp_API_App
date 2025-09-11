@@ -1,12 +1,12 @@
 module.exports = {
   getValidations() {
-    return `SELECT \`Scripts\`.\`sql\` FROM \`Validations\`
-      JOIN \`Scripts\`
-      ON \`Validations\`.\`scriptId\` = \`Scripts\`.\`id\`
-      WHERE \`Validations\`.\`moduleId\` = ?
-      AND \`Validations\`.\`actionId\` = ?
-      AND \`Validations\`.\`validationTimeId\` = ?
-      ORDER BY \`Validations\`.\`id\` ASC;
+    return `SELECT \`scripts\`.\`sql\` FROM \`validations\`
+      JOIN \`scripts\`
+      ON \`validations\`.\`scriptId\` = \`scripts\`.\`id\`
+      WHERE \`validations\`.\`moduleId\` = ?
+      AND \`validations\`.\`actionId\` = ?
+      AND \`validations\`.\`validationTimeId\` = ?
+      ORDER BY \`validations\`.\`id\` ASC;
     `;
   },
 };

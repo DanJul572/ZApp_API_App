@@ -20,7 +20,7 @@ module.exports = {
     const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
     await queryInterface.bulkInsert(
-      'DataTypes',
+      'datatypes',
       [
         {
           label: 'Varchar',
@@ -83,6 +83,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-    await queryInterface.bulkDelete('DataTypes', null, {});
+    await queryInterface.bulkDelete('datatypes', null, {});
   },
 };

@@ -9,7 +9,7 @@ module.exports = {
   async up(queryInterface) {
     const now = dayjs().format(enums.datetimeFormat.datetime.value);
     await queryInterface.bulkInsert(
-      'Roles',
+      'roles',
       [
         {
           label: 'Developer',
@@ -22,6 +22,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('Roles', null, {});
+    await queryInterface.bulkDelete('roles', null, {});
   },
 };

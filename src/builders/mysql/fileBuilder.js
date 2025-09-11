@@ -1,7 +1,7 @@
 module.exports = {
   save(files, moduleId) {
     let query =
-      'INSERT INTO `Files` (`name`, `data`, `type`, `encoding`, `size`, `moduleId`) VALUES ';
+      'INSERT INTO `files` (`name`, `data`, `type`, `encoding`, `size`, `moduleId`) VALUES ';
     const values = [];
 
     files.forEach((file, index) => {
@@ -16,7 +16,7 @@ module.exports = {
   },
 
   delete(files) {
-    let query = 'DELETE FROM `Files` WHERE `name` IN (';
+    let query = 'DELETE FROM `files` WHERE `name` IN (';
     for (let index = 0; index < files.length; index++) {
       query += '?';
       if (index + 1 < files.length) {
@@ -29,14 +29,14 @@ module.exports = {
 
   deleteByModuleId() {
     return {
-      query: 'DELETE FROM `Files` WHERE `moduleId` = ?',
+      query: 'DELETE FROM `files` WHERE `moduleId` = ?',
     };
   },
 
   download() {
     return {
       query:
-        'SELECT `id`, `name`, `data`, `type`, `encoding`, `size` FROM `Files` WHERE `name` = ?',
+        'SELECT `id`, `name`, `data`, `type`, `encoding`, `size` FROM `files` WHERE `name` = ?',
     };
   },
 };

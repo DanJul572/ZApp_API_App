@@ -9,7 +9,7 @@ module.exports = {
   async up(queryInterface) {
     const now = dayjs().format(enums.datetimeFormat.datetime.value);
     await queryInterface.bulkInsert(
-      'Actions',
+      'actions',
       [
         {
           label: 'View',
@@ -42,6 +42,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('Actions', null, {});
+    await queryInterface.bulkDelete('actions', null, {});
   },
 };

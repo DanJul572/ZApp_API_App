@@ -12,7 +12,7 @@ module.exports = {
     const hashedPassword = await bcryptjs.hash('devpass', enums.auth.salt);
 
     await queryInterface.bulkInsert(
-      'Users',
+      'users',
       [
         {
           name: 'Dev',
@@ -28,6 +28,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('Users', null, {});
+    await queryInterface.bulkDelete('users', null, {});
   },
 };

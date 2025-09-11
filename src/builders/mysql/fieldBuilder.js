@@ -2,19 +2,19 @@ const enums = require('../../enums');
 
 module.exports = {
   findByModule() {
-    return 'SELECT * FROM `Fields` WHERE `moduleId` = ? ORDER BY `sequence` ASC';
+    return 'SELECT * FROM `fields` WHERE `moduleId` = ? ORDER BY `sequence` ASC';
   },
 
   findPrimaryField() {
-    return 'SELECT * FROM `Fields` WHERE `moduleId` = ? AND `identity` = true';
+    return 'SELECT * FROM `fields` WHERE `moduleId` = ? AND `identity` = true';
   },
 
   findById() {
-    return 'SELECT * FROM `Fields` WHERE `id` = ?';
+    return 'SELECT * FROM `fields` WHERE `id` = ?';
   },
 
   deleteByModule() {
-    return 'DELETE FROM `Fields` WHERE `moduleId` = ?';
+    return 'DELETE FROM `fields` WHERE `moduleId` = ?';
   },
 
   selectFormat(field, module) {

@@ -12,7 +12,7 @@ async function hashPassword(password) {
 }
 
 async function insertUser(userData, transaction) {
-  return await commonQuery.insertRow('Users', userData, transaction);
+  return await commonQuery.insertRow('users', userData, transaction);
 }
 
 async function getUserByEmail(email) {

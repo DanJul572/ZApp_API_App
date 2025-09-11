@@ -19,94 +19,94 @@ module.exports = {
     const now = dayjs().format(enums.datetimeFormat.datetime.value);
 
     await queryInterface.bulkInsert(
-      'Modules',
+      'modules',
       [
         {
-          name: 'Modules',
+          name: 'modules',
           label: 'Modules',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Roles',
+          name: 'roles',
           label: 'Roles',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'InputTypes',
+          name: 'inputtypes',
           label: 'Input Types',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'DataTypes',
+          name: 'datatypes',
           label: 'Data Types',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Fields',
+          name: 'fields',
           label: 'Fields',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Files',
+          name: 'files',
           label: 'Files',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Views',
+          name: 'views',
           label: 'Views',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Menus',
+          name: 'menus',
           label: 'Menus',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Users',
+          name: 'users',
           label: 'Users',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Script',
-          label: 'Script',
+          name: 'scripts',
+          label: 'Scripts',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Actions',
+          name: 'actions',
           label: 'Actions',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Access',
+          name: 'access',
           label: 'Access',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'ValidationTime',
-          label: 'ValidationTime',
+          name: 'validationtimes',
+          label: 'Validation Times',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'Validation',
-          label: 'Validation',
+          name: 'validations',
+          label: 'Validations',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'LogError',
+          name: 'logerror',
           label: 'Log Error',
           createdAt: now,
           updatedAt: now,
@@ -123,6 +123,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Modules', null, {});
+    await queryInterface.bulkDelete('modules', null, {});
   },
 };

@@ -35,10 +35,10 @@ module.exports = {
       validationTime,
       views,
     );
-    await queryInterface.bulkInsert('Fields', combine, {});
+    await queryInterface.bulkInsert('fields', combine, {});
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('Fields', null, {});
+    await queryInterface.bulkDelete('fields', null, {});
   },
 };

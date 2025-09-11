@@ -71,7 +71,7 @@ module.exports = [
     label: 'Role ID',
     inputType: enums.inputType.dropdown,
     dataType: enums.dataType.integer,
-    tableRef: 'Roles',
+    tableRef: 'roles',
     tableRefKey: 'id',
     tableRefName: 'label',
     tableRefAlias: null,

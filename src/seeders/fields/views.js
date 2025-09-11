@@ -51,7 +51,7 @@ const list = [
     label: 'Module ID',
     inputType: enums.inputType.dropdown,
     dataType: enums.dataType.tableReference,
-    tableRef: 'Modules',
+    tableRef: 'modules',
     tableRefKey: 'id',
     tableRefName: 'name',
     tableRefAlias: null,

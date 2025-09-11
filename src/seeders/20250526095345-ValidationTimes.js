@@ -9,7 +9,7 @@ module.exports = {
   async up(queryInterface) {
     const now = dayjs().format(enums.datetimeFormat.datetime.value);
     await queryInterface.bulkInsert(
-      'ValidationTimes',
+      'validationtimes',
       [
         {
           label: 'Before',
@@ -27,6 +27,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('ValidationTimes', null, {});
+    await queryInterface.bulkDelete('validationtimes', null, {});
   },
 };

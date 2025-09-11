@@ -128,7 +128,7 @@ function updateRow(table, newData, condition) {
 
 function getMenu() {
   return {
-    query: 'SELECT * FROM `Menus` WHERE `roleId` = ?',
+    query: 'SELECT * FROM `menus` WHERE `roleId` = ?',
   };
 }
 

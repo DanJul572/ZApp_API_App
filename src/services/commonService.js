@@ -91,7 +91,7 @@ async function insertInternalError(request, code, message) {
     method,
     message,
   };
-  return await commonQuery.insertRow('LogError', data);
+  return await commonQuery.insertRow('logerror', data);
 }
 
 module.exports = {

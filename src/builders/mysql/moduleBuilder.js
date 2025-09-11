@@ -2,7 +2,7 @@ const enums = require('../../enums');
 
 module.exports = {
   findOne() {
-    return 'SELECT * FROM `Modules` WHERE `id` = ?';
+    return 'SELECT * FROM `modules` WHERE `id` = ?';
   },
 
   createTable(name, fields) {

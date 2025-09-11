@@ -131,7 +131,7 @@ module.exports = [
     label: 'Module ID',
     inputType: enums.inputType.dropdown,
     dataType: enums.dataType.tableReference,
-    tableRef: 'Modules',
+    tableRef: 'modules',
     tableRefKey: 'id',
     tableRefName: 'label',
     tableRefAlias: null,

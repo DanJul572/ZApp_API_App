@@ -46,7 +46,7 @@ module.exports = {
     ]);
 
     await queryInterface.bulkInsert(
-      'Menus',
+      'menus',
       [
         {
           label: 'Dev Menu',
@@ -69,6 +69,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-    await queryInterface.bulkDelete('Menus', null, {});
+    await queryInterface.bulkDelete('menus', null, {});
   },
 };

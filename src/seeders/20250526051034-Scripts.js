@@ -9,14 +9,14 @@ module.exports = {
   async up(queryInterface) {
     const now = dayjs().format(enums.datetimeFormat.datetime.value);
     await queryInterface.bulkInsert(
-      'Scripts',
+      'scripts',
       [
         {
           label: 'One Menu Per Role',
           sql: `
                         DO $$
                             BEGIN IF EXISTS (
-                                SELECT 1 FROM "Menus"
+                                SELECT 1 FROM "menus"
                                 WHERE "roleId" = @currentRoleId@
                             )
                             THEN RAISE EXCEPTION '400:Menu for this Role is alreasy exist';
@@ -27,13 +27,13 @@ module.exports = {
           updatedAt: now,
         },
         {
-          label: 'Validate Role Access',
+          label: 'Validate Role access',
           sql: `
                         DO $$
                         BEGIN
                             IF NOT EXISTS (
                                 SELECT 1
-                                FROM "Access"
+                                FROM "access"
                                 WHERE "roleId" = @currentRoleId@ AND "viewId" = @rowId@
                             ) THEN
                                 RAISE EXCEPTION '400:Role ID % does not have access to View (EDIT) ID %', @currentRoleId@, @rowId@;
@@ -50,6 +50,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('Scripts', null, {});
+    await queryInterface.bulkDelete('scripts', null, {});
   },
 };
