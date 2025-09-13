@@ -8,7 +8,7 @@
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",
     "seed": "sequelize db:seed:all",
-    "start": "node ./bin/www",
+    "dev": "node ./bin/www",
     "build": "node esbuild.config.js"
   },
   "dependencies": {
