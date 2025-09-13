@@ -18,7 +18,7 @@ function getRows(table, fields, page, filter, sort, defaultFilter) {
     const combinedWhere = combinedFilters
       .map(condition => {
         rowsValues.push(condition.value);
-        return `"${condition.id}" = $${rowsValues.length}`;
+        return `"${condition.id}" = ?`;
       })
       .join(' AND ');
     whereClauses.push(combinedWhere);
@@ -37,13 +37,13 @@ function getRows(table, fields, page, filter, sort, defaultFilter) {
 
   // Add pagination
   rowsValues.push(offset);
-  rowsQuery += ` LIMIT ${enums.setting.rowsPerPage} OFFSET $${rowsValues.length}`;
+  rowsQuery += ` LIMIT ${enums.setting.rowsPerPage} OFFSET ?`;
 
   return {rowsQuery, rowsValues};
 }
 
 function getRowDetail(table, field) {
-  return `SELECT * FROM "${table}" WHERE "${field}" = $1`;
+  return `SELECT * FROM "${table}" WHERE "${field}" = ?`;
 }
 
 function getRowsCount(table) {
@@ -51,7 +51,7 @@ function getRowsCount(table) {
 }
 
 function deleteRow(table, field) {
-  return `DELETE FROM "${table}" WHERE "${field}" = $1`;
+  return `DELETE FROM "${table}" WHERE "${field}" = ?`;
 }
 
 function getOptions(table, value, label) {
@@ -63,13 +63,11 @@ function insertRow(table, data) {
   let valuePlaceholders = '';
   const values = [];
 
-  let index = 1; // Index for parameterized values
   for (const key in data) {
     if (Object.hasOwnProperty.call(data, key)) {
       fieldQuery += `"${key}", `;
-      valuePlaceholders += `$${index}, `;
+      valuePlaceholders += '?, ';
       values.push(data[key]);
-      index++;
     }
   }
 
@@ -91,10 +89,8 @@ function insertManyRows(table, data) {
 
   const values = [];
   const valuePlaceholders = data
-    .map((row, rowIndex) => {
-      const placeholders = fields.map((_, colIndex) => {
-        return `$${rowIndex * fields.length + colIndex + 1}`;
-      });
+    .map(row => {
+      const placeholders = fields.map(() => '?');
       values.push(...fields.map(f => row[f]));
       return `(${placeholders.join(', ')})`;
     })
@@ -108,13 +104,11 @@ function insertManyRows(table, data) {
 function updateRow(table, newData, condition) {
   let query = `UPDATE "${table}" SET `;
   const values = [];
-  let index = 1; // Index for parameterized values
 
   for (const key in newData) {
     if (Object.hasOwnProperty.call(newData, key)) {
-      query += `"${key}" = $${index}, `;
+      query += `"${key}" = ?, `;
       values.push(newData[key]);
-      index++;
     }
   }
 
@@ -124,9 +118,8 @@ function updateRow(table, newData, condition) {
     query += ' WHERE ';
     for (const key in condition) {
       if (Object.hasOwnProperty.call(condition, key)) {
-        query += `"${key}" = $${index} AND `;
+        query += `"${key}" = ? AND `;
         values.push(condition[key]);
-        index++;
       }
     }
     query = query.slice(0, -5); // Remove trailing ' AND '
@@ -136,7 +129,7 @@ function updateRow(table, newData, condition) {
 }
 
 function getMenu() {
-  return `SELECT * FROM "menus" WHERE "roleId" = $1`;
+  return `SELECT * FROM "menus" WHERE "roleId" = ?`;
 }
 
 module.exports = {
