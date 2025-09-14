@@ -10,7 +10,7 @@ async function login(req, res) {
 
     if (user && passwordIsMatch) {
       const menu = await authService.getMenu(user.roleId);
-      const newToken = authService.generateToken(user.id, user.email, user.roleId, menu.afterLogin);
+      const newToken = authService.generateToken(user, menu);
 
       return res.json({
         afterLogin: menu.afterLogin,

@@ -27,12 +27,13 @@ async function getMenu(roleId) {
   return await menuQuery.findByRoleId(roleId);
 }
 
-function generateToken(id, email, roleId, afterLogin) {
+function generateToken(user, menu) {
   const tokenInfo = {
-    userId: id,
-    email: email,
-    roleId: roleId,
-    afterLogin: afterLogin,
+    userId: user.id,
+    email: user.email,
+    roleId: user.roleId,
+    userName: user.name,
+    afterLogin: menu.afterLogin,
   };
 
   const tokenOptions = {
