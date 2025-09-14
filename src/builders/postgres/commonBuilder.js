@@ -1,8 +1,8 @@
-const enums = require('../../enums');
+const tableConfig = require('../../config/table');
 const fieldBuilder = require('./fieldBuilder');
 
 function getRows(table, fields, page, filter, sort, defaultFilter) {
-  const offset = (page - 1) * enums.setting.rowsPerPage;
+  const offset = (page - 1) * tableConfig.rowsPerPage;
   const rowsValues = []; // Array untuk menyimpan nilai parameter
 
   // Format fields
@@ -37,7 +37,7 @@ function getRows(table, fields, page, filter, sort, defaultFilter) {
 
   // Add pagination
   rowsValues.push(offset);
-  rowsQuery += ` LIMIT ${enums.setting.rowsPerPage} OFFSET ?`;
+  rowsQuery += ` LIMIT ${tableConfig.rowsPerPage} OFFSET ?`;
 
   return {rowsQuery, rowsValues};
 }

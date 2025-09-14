@@ -1,9 +1,10 @@
 const dayjs = require('dayjs');
 
 const db = require('../models');
-const enums = require('../enums');
 
 const {commonBuilder} = require('../builders');
+
+const dateTimeFormatConfig = require('../config/datetimeFormat');
 
 async function getRows(moduleName, fields, page, filter, sort, defaultFilter) {
   try {
@@ -116,8 +117,8 @@ async function getOptions(field) {
 
 async function insertRow(table, data, transaction) {
   try {
-    data.createdAt = dayjs().format(enums.datetimeFormat.datetime.value);
-    data.updatedAt = dayjs().format(enums.datetimeFormat.datetime.value);
+    data.createdAt = dayjs().format(dateTimeFormatConfig.datetime.value);
+    data.updatedAt = dayjs().format(dateTimeFormatConfig.datetime.value);
 
     const {query, values} = commonBuilder.insertRow(table, data);
 
@@ -144,7 +145,7 @@ async function insertManyRows(table, dataArray, transaction) {
       throw new Error('Data must be a non-empty array of objects');
     }
 
-    const timestamp = dayjs().format(enums.datetimeFormat.datetime.value);
+    const timestamp = dayjs().format(dateTimeFormatConfig.datetime.value);
 
     // Tambahkan createdAt dan updatedAt ke setiap item
     const dataWithTimestamps = dataArray.map(data => ({
@@ -173,7 +174,7 @@ async function updateRow(moduleName, primaryFieldName, rowId, data, transaction)
       [primaryFieldName]: rowId,
     };
 
-    data.updatedAt = dayjs().format(enums.datetimeFormat.datetime.value);
+    data.updatedAt = dayjs().format(dateTimeFormatConfig.datetime.value);
 
     const {query, values} = commonBuilder.updateRow(moduleName, data, condition);
 

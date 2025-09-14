@@ -5,10 +5,10 @@ const authQuery = require('../queries/authQuery');
 const commonQuery = require('../queries/commonQuery');
 const menuQuery = require('../queries/menuQuery');
 
-const enums = require('../enums');
+const jwtConfig = require('../config/jwt');
 
 async function hashPassword(password) {
-  return await bcryptjs.hash(password, enums.auth.salt);
+  return await bcryptjs.hash(password, jwtConfig.salt);
 }
 
 async function insertUser(userData, transaction) {
@@ -37,10 +37,10 @@ function generateToken(user, menu) {
   };
 
   const tokenOptions = {
-    expiresIn: enums.auth.expiredIn,
+    expiresIn: jwtConfig.expiredIn,
   };
 
-  return jwt.sign(tokenInfo, enums.auth.secretKey, tokenOptions);
+  return jwt.sign(tokenInfo, jwtConfig.secretKey, tokenOptions);
 }
 
 module.exports = {

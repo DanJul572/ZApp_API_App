@@ -1,4 +1,5 @@
 const enums = require('../../enums');
+const dateTimeFormatConfig = require('../../config/datetimeFormat');
 
 module.exports = {
   findByModule() {
@@ -69,7 +70,7 @@ module.exports = {
       field.inputType === enums.inputType.date ||
       field.inputType === enums.inputType.time
     ) {
-      return `TO_CHAR("${field.name}", '${enums.datetimeFormat.datetime.display}') AS "${field.name}"`;
+      return `TO_CHAR("${field.name}", '${dateTimeFormatConfig.datetime.display}') AS "${field.name}"`;
     }
 
     return `"${field.name}"`;

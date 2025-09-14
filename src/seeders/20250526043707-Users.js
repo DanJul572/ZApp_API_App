@@ -3,13 +3,15 @@
 const dayjs = require('dayjs');
 const bcryptjs = require('bcryptjs');
 
-const enums = require('../enums');
+const dateTimeFormatConfig = require('../config/datetimeFormat');
+
+const jwtConfig = require('../config/jwt');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
-    const now = dayjs().format(enums.datetimeFormat.datetime.value);
-    const hashedPassword = await bcryptjs.hash('devpass', enums.auth.salt);
+    const now = dayjs().format(dateTimeFormatConfig.datetime.value);
+    const hashedPassword = await bcryptjs.hash('devpass', jwtConfig.salt);
 
     await queryInterface.bulkInsert(
       'users',

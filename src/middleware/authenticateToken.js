@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const enums = require('../enums');
+const jwtConfig = require('../config/jwt');
 
 function authenticateToken(req, res, next) {
   const token = req.header('Authorization');
@@ -8,7 +9,7 @@ function authenticateToken(req, res, next) {
     return res.sendStatus(enums.statusCode.UNAUTHORIZED);
   }
 
-  jwt.verify(token, enums.auth.secretKey, (err, user) => {
+  jwt.verify(token, jwtConfig.secretKey, (err, user) => {
     if (err) {
       return res.sendStatus(enums.statusCode.FORBIDDEN);
     }

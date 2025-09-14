@@ -1,8 +1,9 @@
 const dayjs = require('dayjs');
 
 const enums = require('../../enums');
+const dateTimeFormatConfig = require('../../config/datetimeFormat');
 
-const now = dayjs().format(enums.datetimeFormat.datetime.value);
+const now = dayjs().format(dateTimeFormatConfig.datetime.value);
 
 const list = [
   {
