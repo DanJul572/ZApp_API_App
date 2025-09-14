@@ -45,7 +45,7 @@ async function insertFile(files, moduleId, transaction) {
 }
 
 async function deleteFile(fields, detailData, transaction) {
-  await fileQuery.delete(fields, detailData, transaction);
+  return await fileQuery.delete(fields, detailData, transaction);
 }
 
 async function insertData(table, data, user, transaction) {
@@ -53,7 +53,7 @@ async function insertData(table, data, user, transaction) {
 }
 
 async function getData(moduleName, fields, page, filter, sort, defaultFilter) {
-  return commonQuery.getRows(moduleName, fields, page, filter, sort, defaultFilter);
+  return await commonQuery.getRows(moduleName, fields, page, filter, sort, defaultFilter);
 }
 
 async function getDetailData(tableName, rowId, primaryFieldName) {
@@ -61,7 +61,7 @@ async function getDetailData(tableName, rowId, primaryFieldName) {
 }
 
 async function deleteData(tableName, primaryFieldName, rowId, transaction) {
-  return commonQuery.deleteRow(tableName, primaryFieldName, rowId, transaction);
+  return await commonQuery.deleteRow(tableName, primaryFieldName, rowId, transaction);
 }
 
 async function getFieldOptions(field) {
