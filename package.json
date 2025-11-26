@@ -3,17 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build": "node esbuild.config.js",
+    "dev": "node ./bin/www",
     "format": "prettier --write .",
     "lint": "eslint . --max-warnings=0",
-    "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",
+    "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
-    "dev": "node ./bin/www",
-    "build": "node esbuild.config.js"
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "body-parser": "^2.2.0",
+    "body-parser": "^2.2.1",
     "cookie-parser": "~1.4.7",
     "cors": "^2.8.5",
     "cross-env": "^10.1.0",
@@ -23,9 +24,9 @@
     "ejs": "~3.1.10",
     "express": "~5.1.0",
     "express-validation": "^4.1.1",
-    "http-errors": "~2.0.0",
+    "http-errors": "~2.0.1",
     "husky": "^9.1.7",
-    "joi": "^18.0.1",
+    "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.10.1",
     "multer": "^2.0.2",
@@ -41,9 +42,10 @@
     "@eslint/js": "^9.39.1",
     "esbuild": "^0.27.0",
     "eslint": "^9.39.1",
-    "glob": "^11.0.3",
+    "glob": "^13.0.0",
     "globals": "^16.5.0",
+    "jest": "^30.2.0",
     "prettier": "^3.6.2"
   },
-  "packageManager": "pnpm@10.21.0"
+  "packageManager": "pnpm@10.23.0"
 }

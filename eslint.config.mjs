@@ -7,6 +7,14 @@ export default [
   {languageOptions: {globals: globals.node}},
   pluginJs.configs.recommended,
   {
+    files: ['**/*.test.js', '**/*.spec.js'],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
+    },
+  },
+  {
     rules: {
       'array-bracket-spacing': 'warn',
       'comma-spacing': 'warn',
