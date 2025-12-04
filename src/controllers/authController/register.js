@@ -12,7 +12,7 @@ async function register(req, res) {
     userData.password = await authService.hashPassword(userData.password);
     const createdUser = await authService.insertUser(userData, t);
 
-    t.commit();
+    await t.commit();
     return res.status(enums.statusCode.OK).send(createdUser);
   } catch (error) {
     await t.rollback();

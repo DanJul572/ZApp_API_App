@@ -27,7 +27,7 @@ async function create(req, res) {
 
     await commonService.runValidationAfter(request.data, module.id, enums.actionId.create, user, t);
 
-    t.commit();
+    await t.commit();
     return res.status(enums.statusCode.OK).send('Data has been created.');
   } catch (err) {
     await t.rollback();

@@ -24,7 +24,7 @@ async function destory(req, res) {
 
     const data = await commonService.deleteData(module.name, primaryField.name, request.id, t);
 
-    t.commit();
+    await t.commit();
     return res.status(enums.statusCode.OK).send(data);
   } catch (err) {
     await t.rollback();

@@ -32,7 +32,7 @@ async function update(req, res) {
       t,
     );
 
-    t.commit();
+    await t.commit();
     return res.status(enums.statusCode.OK).send(data);
   } catch (err) {
     await t.rollback();
