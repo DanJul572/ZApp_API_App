@@ -70,7 +70,7 @@ module.exports = {
       field.inputType === enums.inputType.date ||
       field.inputType === enums.inputType.time
     ) {
-      return `TO_CHAR("${field.name}", '${dateTimeFormatConfig.datetime.display}') AS "${field.name}"`;
+      return `TO_CHAR("${field.name}", '${dateTimeFormatConfig.datetime.postgresDisplay}') AS "${field.name}"`;
     }
 
     return `"${field.name}"`;

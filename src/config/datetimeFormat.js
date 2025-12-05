@@ -6,7 +6,8 @@ module.exports = {
     value: 'YYYY-MM-DDT00:00:00',
   },
   datetime: {
-    display: 'DD Mon YYYY HH24:MI:SS',
+    mysqlDisplay: '%d %b %Y %H:%i:%s',
+    postgresDisplay: 'DD Mon YYYY HH24:MI:SS',
     value: 'YYYY-MM-DDTHH:mm:ss',
   },
 };
