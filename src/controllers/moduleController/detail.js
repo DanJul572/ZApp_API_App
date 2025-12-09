@@ -10,9 +10,15 @@ async function detail(req, res) {
 
     module.fields = fields;
 
-    return res.status(enums.statusCode.OK).send(module);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      data: module,
+    });
   } catch (error) {
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

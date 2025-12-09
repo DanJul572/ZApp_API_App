@@ -9,11 +9,17 @@ async function options(req, res) {
     const field = await commonService.getField(request.id);
     const fieldOptions = await commonService.getFieldOptions(field);
 
-    return res.status(enums.statusCode.OK).send(fieldOptions);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      data: fieldOptions,
+    });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
     await commonService.insertInternalError(req, error.code, error.message);
-    return res.status(error.code).send(error.message);
+    return res.status(error.code).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

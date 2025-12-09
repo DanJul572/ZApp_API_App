@@ -14,9 +14,16 @@ async function run(req, res) {
     const script = await scriptService.getDetailData(module.name, param.id, identity.name);
     const data = await scriptService.executeScript(script.sql);
 
-    return res.status(enums.statusCode.OK).send(data);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      message: 'script executed successfully',
+      data: data,
+    });
   } catch (error) {
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

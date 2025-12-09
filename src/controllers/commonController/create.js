@@ -28,12 +28,18 @@ async function create(req, res) {
     await commonService.runValidationAfter(request.data, module.id, enums.actionId.create, user, t);
 
     await t.commit();
-    return res.status(enums.statusCode.OK).send('Data has been created.');
+    return res.status(enums.statusCode.CREATED).send({
+      success: true,
+      message: 'data is created',
+    });
   } catch (err) {
     await t.rollback();
     const error = helpers.getErrorResponse(err.message);
     await commonService.insertInternalError(req, error.code, error.message);
-    return res.status(error.code).send(error.message);
+    return res.status(error.code).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

@@ -7,9 +7,15 @@ async function download(req, res) {
 
     const data = await fileService.download(param.name);
 
-    return res.status(enums.statusCode.OK).send(data);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      data: data,
+    });
   } catch (error) {
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

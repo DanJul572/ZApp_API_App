@@ -9,11 +9,17 @@ async function menu(req, res) {
     const user = helpers.decodeToken(token);
     const menu = await commonService.getMenu(user.roleId);
 
-    return res.status(enums.statusCode.OK).send(menu);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      data: menu,
+    });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
     await commonService.insertInternalError(req, error.code, error.message);
-    return res.status(error.code).send(error.message);
+    return res.status(error.code).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

@@ -80,10 +80,6 @@ function insertRow(table, data) {
 }
 
 function insertManyRows(table, data) {
-  if (!Array.isArray(data) || data.length === 0) {
-    throw new Error('Data must be a non-empty array of objects');
-  }
-
   const fields = Object.keys(data[0]);
   const fieldQuery = fields.map(f => `"${f}"`).join(', ');
 

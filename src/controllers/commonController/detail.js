@@ -21,11 +21,17 @@ async function detail(req, res) {
       request.rowId,
       primaryField.name,
     );
-    return res.status(enums.statusCode.OK).send(detailData);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      data: detailData,
+    });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
     await commonService.insertInternalError(req, error.code, error.message);
-    return res.status(error.code).send(error.message);
+    return res.status(error.code).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

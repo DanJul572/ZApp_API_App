@@ -21,16 +21,21 @@ async function destory(req, res) {
     );
 
     await commonService.deleteFile(fields, detailData, t);
-
-    const data = await commonService.deleteData(module.name, primaryField.name, request.id, t);
+    await commonService.deleteData(module.name, primaryField.name, request.id, t);
 
     await t.commit();
-    return res.status(enums.statusCode.OK).send(data);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      message: 'data is deleted',
+    });
   } catch (err) {
     await t.rollback();
     const error = helpers.getErrorResponse(err.message);
     await commonService.insertInternalError(req, error.code, error.message);
-    return res.status(error.code).send(error.message);
+    return res.status(error.code).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

@@ -19,10 +19,16 @@ async function create(req, res) {
     await moduleService.generateTable(request.name, request.fields, t);
 
     await t.commit();
-    return res.status(enums.statusCode.OK).send('Module has been created');
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      message: 'module is created',
+    });
   } catch (error) {
     await t.rollback();
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

@@ -33,12 +33,19 @@ async function update(req, res) {
     );
 
     await t.commit();
-    return res.status(enums.statusCode.OK).send(data);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      messsage: 'data is updated',
+      data: data,
+    });
   } catch (err) {
     await t.rollback();
     const error = helpers.getErrorResponse(err.message);
     await commonService.insertInternalError(req, error.code, error.message);
-    return res.status(error.code).send(error.message);
+    return res.status(error.code).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

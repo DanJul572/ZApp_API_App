@@ -141,10 +141,6 @@ async function insertRow(table, data, transaction) {
 
 async function insertManyRows(table, dataArray, transaction) {
   try {
-    if (!Array.isArray(dataArray) || dataArray.length === 0) {
-      throw new Error('Data must be a non-empty array of objects');
-    }
-
     const timestamp = dayjs().format(dateTimeFormatConfig.datetime.value);
 
     // Tambahkan createdAt dan updatedAt ke setiap item

@@ -5,11 +5,17 @@ async function options(req, res) {
   try {
     const request = req.query;
 
-    const data = await viewService.getOptions(request.moduleId);
+    const options = await viewService.getOptions(request.moduleId);
 
-    return res.status(enums.statusCode.OK).send(data);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      data: options,
+    });
   } catch (error) {
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send(error.message);
+    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

@@ -9,11 +9,17 @@ async function columns(req, res) {
     const fields = await commonService.getModuleFields(request.id);
     const columns = await helpers.generateColumnByField(fields);
 
-    return res.status(enums.statusCode.OK).send(columns);
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      data: columns,
+    });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
     await commonService.insertInternalError(req, error.code, error.message);
-    return res.status(error.code).send(error.message);
+    return res.status(error.code).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 

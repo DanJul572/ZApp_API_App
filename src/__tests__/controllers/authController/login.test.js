@@ -40,8 +40,12 @@ describe('login controller', () => {
     expect(authService.getMenu).toHaveBeenCalledWith(1);
     expect(authService.generateToken).toHaveBeenCalledWith(user, menu);
     expect(res.json).toHaveBeenCalledWith({
-      afterLogin: '/dashboard',
-      accessToken: 'jwt.token',
+      success: true,
+      message: 'successful login',
+      data: {
+        afterLogin: '/dashboard',
+        accessToken: 'jwt.token',
+      },
     });
   });
 
@@ -51,7 +55,10 @@ describe('login controller', () => {
     await login(req, res);
 
     expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.send).toHaveBeenCalledWith('user not found');
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: 'user not found',
+    });
   });
 
   it('should return BAD_REQUEST if password does not match', async () => {
@@ -62,7 +69,10 @@ describe('login controller', () => {
     await login(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith('invalid password');
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: 'invalid password',
+    });
   });
 
   it('should return INTERNAL_SERVER_ERROR on exception', async () => {
@@ -71,6 +81,9 @@ describe('login controller', () => {
     await login(req, res);
 
     expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.send).toHaveBeenCalledWith('DB error');
+    expect(res.send).toHaveBeenCalledWith({
+      success: false,
+      message: 'DB error',
+    });
   });
 });

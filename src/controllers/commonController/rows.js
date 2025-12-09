@@ -16,11 +16,18 @@ async function rows(req, res) {
       request.sort,
       request.defaultFilter,
     );
-    return res.status(enums.statusCode.OK).send(data);
+
+    return res.status(enums.statusCode.OK).send({
+      success: true,
+      data: data,
+    });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
     await commonService.insertInternalError(req, error.code, error.message);
-    return res.status(error.code).send(error.message);
+    return res.status(error.code).send({
+      success: false,
+      message: error.message,
+    });
   }
 }
 
