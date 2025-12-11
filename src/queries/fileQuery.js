@@ -30,7 +30,7 @@ module.exports = {
       if (!fileFields || !fileFields.length || !row) return;
 
       const deletedFiles = fileFields.map(field => row[field.name]);
-      const query = fileBuilder.delete(deletedFiles);
+      const query = fileBuilder.deleteFile(deletedFiles);
 
       return db.sequelize
         .query(query, {

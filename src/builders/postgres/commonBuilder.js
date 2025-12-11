@@ -3,17 +3,13 @@ const fieldBuilder = require('./fieldBuilder');
 
 function getRows(table, fields, page, filter, sort, defaultFilter) {
   const offset = (page - 1) * tableConfig.rowsPerPage;
-  const rowsValues = []; // Array untuk menyimpan nilai parameter
-
-  // Format fields
+  const rowsValues = [];
   const fieldsFormat = fields.map(field => fieldBuilder.selectFormat(field, table)).join(',');
-
-  // Initiation Query
-  let rowsQuery = `SELECT ${fieldsFormat} FROM "${table}"`;
-
-  // Combine default filters and filters provided
   const combinedFilters = [...(defaultFilter || []), ...(filter || [])];
+
+  let rowsQuery = `SELECT ${fieldsFormat} FROM "${table}"`;
   let whereClauses = [];
+
   if (combinedFilters.length) {
     const combinedWhere = combinedFilters
       .map(condition => {
@@ -28,14 +24,12 @@ function getRows(table, fields, page, filter, sort, defaultFilter) {
     rowsQuery += ` WHERE ${whereClauses.join(' AND ')}`;
   }
 
-  // Add sorting if provided
   if (sort && sort.length) {
     const ascdesc = sort[0].desc ? 'DESC' : 'ASC';
     const orderBy = `"${sort[0].id}" ${ascdesc}`;
     rowsQuery += ` ORDER BY ${orderBy}`;
   }
 
-  // Add pagination
   rowsValues.push(offset);
   rowsQuery += ` LIMIT ${tableConfig.rowsPerPage} OFFSET ?`;
 
@@ -107,8 +101,7 @@ function updateRow(table, newData, condition) {
       values.push(newData[key]);
     }
   }
-
-  query = query.slice(0, -2); // Remove trailing comma and space
+  query = query.slice(0, -2);
 
   if (condition) {
     query += ' WHERE ';
@@ -118,7 +111,7 @@ function updateRow(table, newData, condition) {
         values.push(condition[key]);
       }
     }
-    query = query.slice(0, -5); // Remove trailing ' AND '
+    query = query.slice(0, -5);
   }
 
   return {query, values};
