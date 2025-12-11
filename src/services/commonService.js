@@ -81,7 +81,7 @@ async function getMenu(roleId) {
 }
 
 async function insertInternalError(request, code, message) {
-  if (code !== 500) {
+  if (code !== enums.statusCode.INTERNAL_SERVER_ERROR) {
     return;
   }
   const url = request.originalUrl;
