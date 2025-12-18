@@ -16,7 +16,7 @@ async function run(req, res) {
 
     return res.status(enums.statusCode.OK).send({
       success: true,
-      message: 'script executed successfully',
+      message: 'script_executed_successfully',
       data: data,
     });
   } catch (error) {

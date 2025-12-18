@@ -35,7 +35,7 @@ async function update(req, res) {
     await t.commit();
     return res.status(enums.statusCode.OK).send({
       success: true,
-      messsage: 'data is updated',
+      messsage: 'data_is_updated',
       data: data,
     });
   } catch (err) {

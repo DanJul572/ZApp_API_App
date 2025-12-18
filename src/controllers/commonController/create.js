@@ -30,7 +30,7 @@ async function create(req, res) {
     await t.commit();
     return res.status(enums.statusCode.CREATED).send({
       success: true,
-      message: 'data is created',
+      message: 'data_is_created',
     });
   } catch (err) {
     await t.rollback();

@@ -15,7 +15,7 @@ async function register(req, res) {
     await t.commit();
     return res.status(enums.statusCode.CREATED).send({
       success: false,
-      message: 'registration successful',
+      message: 'registration_successful',
       data: createdUser,
     });
   } catch (error) {

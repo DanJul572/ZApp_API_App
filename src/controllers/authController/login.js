@@ -9,7 +9,7 @@ async function login(req, res) {
     if (!user) {
       return res.status(enums.statusCode.NOT_FOUND).send({
         success: false,
-        message: 'user not found',
+        message: 'user_not_found',
       });
     }
 
@@ -17,7 +17,7 @@ async function login(req, res) {
     if (!passwordIsMatch) {
       return res.status(enums.statusCode.BAD_REQUEST).send({
         success: false,
-        message: 'invalid password',
+        message: 'invalid_password',
       });
     }
 
@@ -25,7 +25,7 @@ async function login(req, res) {
     const newToken = authService.generateToken(user, menu);
     return res.json({
       success: true,
-      message: 'successful login',
+      message: 'successful_login',
       data: {
         afterLogin: menu.afterLogin,
         accessToken: newToken,

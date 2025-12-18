@@ -21,7 +21,7 @@ async function create(req, res) {
     await t.commit();
     return res.status(enums.statusCode.OK).send({
       success: true,
-      message: 'module is created',
+      message: 'module_is_created',
     });
   } catch (error) {
     await t.rollback();
