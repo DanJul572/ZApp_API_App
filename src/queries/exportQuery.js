@@ -3,10 +3,10 @@ const copyTo = require('pg-copy-streams').to;
 const db = require('../models');
 const {exportBuilder} = require('../builders');
 
-async function getCsvStream(table) {
+async function getCsvStream(query) {
   const connection = await db.sequelize.connectionManager.getConnection();
 
-  const sql = exportBuilder.getCsvStream(table);
+  const sql = exportBuilder.getCsvStream(query);
 
   const stream = connection.query(copyTo(sql));
 

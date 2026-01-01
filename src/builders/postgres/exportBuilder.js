@@ -1,5 +1,5 @@
-function getCsvStream(table) {
-  return `COPY "${table}" TO STDOUT WITH CSV HEADER`;
+function getCsvStream(query) {
+  return `COPY (${query}) TO STDOUT WITH CSV HEADER`;
 }
 
 module.exports = {

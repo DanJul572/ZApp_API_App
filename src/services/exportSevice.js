@@ -1,17 +1,17 @@
 const archiver = require('archiver');
 
-const moduleQuery = require('../queries/moduleQuery');
+const commonQuery = require('../queries/commonQuery');
 const exportQuery = require('../queries/exportQuery');
 
-async function getModuleById(moduleId) {
-  return await moduleQuery.getModule(moduleId);
+async function getQueryData(id) {
+  return await commonQuery.getRowDetail('scripts', id, 'id');
 }
 
-async function getCsvStream(tableName) {
-  return exportQuery.getCsvStream(tableName);
+async function getCsvStream(query) {
+  return exportQuery.getCsvStream(query);
 }
 
-async function streamCsvAsZip(moduleName, csvStream, res) {
+async function streamCsvAsZip(label, csvStream, res) {
   const archive = archiver('zip', {
     zlib: {level: 9},
   });
@@ -20,7 +20,7 @@ async function streamCsvAsZip(moduleName, csvStream, res) {
     throw err;
   });
 
-  archive.append(csvStream, {name: `${moduleName}.csv`});
+  archive.append(csvStream, {name: `${label}.csv`});
 
   archive.pipe(res);
 
@@ -28,7 +28,7 @@ async function streamCsvAsZip(moduleName, csvStream, res) {
 }
 
 module.exports = {
-  getModuleById,
+  getQueryData,
   getCsvStream,
   streamCsvAsZip,
 };

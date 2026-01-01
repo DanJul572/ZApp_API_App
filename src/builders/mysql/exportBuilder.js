@@ -1,5 +1,5 @@
-function getCsvStream(table) {
-  return `SELECT * FROM "${table}" INTO OUTFILE '/tmp/${table}.csv' FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n'`;
+function getCsvStream(query) {
+  return `SELECT * FROM (${query}) INTO OUTFILE '/tmp/${query}.csv' FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n'`;
 }
 
 module.exports = {
