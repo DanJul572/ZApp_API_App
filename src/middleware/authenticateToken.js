@@ -8,7 +8,12 @@ function authenticateToken(req, res, next) {
     return next();
   }
 
-  const token = req.header('Authorization');
+  let token = req.header('Authorization');
+
+  if (!token && req.query && req.query.token) {
+    token = req.query.token;
+  }
+
   if (!token) {
     return res.sendStatus(enums.statusCode.UNAUTHORIZED);
   }
