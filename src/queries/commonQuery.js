@@ -1,9 +1,7 @@
 const dayjs = require('dayjs');
 
 const db = require('../models');
-
 const {commonBuilder} = require('../builders');
-
 const dateTimeFormatConfig = require('../config/datetimeFormat');
 
 async function getRows(moduleName, fields, page, filter, sort, defaultFilter) {

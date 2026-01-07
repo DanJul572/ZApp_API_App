@@ -4,6 +4,7 @@ const builders = {
   postgres: {
     authBuilder: require('./postgres/authBuilder'),
     commonBuilder: require('./postgres/commonBuilder'),
+    exportBuilder: require('./postgres/exportBuilder'),
     fieldBuilder: require('./postgres/fieldBuilder'),
     fileBuilder: require('./postgres/fileBuilder'),
     menuBuilder: require('./postgres/menuBuilder'),
@@ -14,6 +15,7 @@ const builders = {
   mysql: {
     authBuilder: require('./mysql/authBuilder'),
     commonBuilder: require('./mysql/commonBuilder'),
+    exportBuilder: require('./mysql/exportBuilder'),
     fieldBuilder: require('./mysql/fieldBuilder'),
     fileBuilder: require('./mysql/fileBuilder'),
     menuBuilder: require('./mysql/menuBuilder'),
