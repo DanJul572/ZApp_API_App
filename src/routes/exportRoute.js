@@ -5,5 +5,6 @@ const middleware = require('../middleware');
 const router = Router();
 
 router.get('/api/export/csv', middleware.authenticateToken, exportController.csv);
+router.get('/api/export/excel', middleware.authenticateToken, exportController.excel);
 
 module.exports = router;
