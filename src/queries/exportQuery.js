@@ -6,36 +6,40 @@ const {exportBuilder} = require('../builders');
 
 async function getCsvStream(query) {
   const connection = await db.sequelize.connectionManager.getConnection();
-
   const sql = exportBuilder.getCsvStream(query);
 
   const stream = connection.query(copyTo(sql));
 
-  stream.on('end', () => {
+  let released = false;
+  const release = () => {
+    if (released) return;
+    released = true;
     db.sequelize.connectionManager.releaseConnection(connection);
-  });
+  };
 
-  stream.on('error', () => {
-    db.sequelize.connectionManager.releaseConnection(connection);
-  });
+  stream.on('end', release);
+  stream.on('error', release);
+  stream.on('close', release);
 
   return stream;
 }
 
 async function getExcelStream(sql) {
   const connection = await db.sequelize.connectionManager.getConnection();
-  const client = connection;
-
   const queryStream = new QueryStream(sql);
-  const stream = client.query(queryStream);
+  const stream = connection.query(queryStream);
 
-  stream.on('end', () => {
+  let released = false;
+  const release = () => {
+    if (released) return;
+    released = true;
+    queryStream.destroy();
     db.sequelize.connectionManager.releaseConnection(connection);
-  });
+  };
 
-  stream.on('error', () => {
-    db.sequelize.connectionManager.releaseConnection(connection);
-  });
+  stream.on('end', release);
+  stream.on('error', release);
+  stream.on('close', release);
 
   return stream;
 }

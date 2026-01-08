@@ -7,6 +7,7 @@ async function csv(req, res) {
 
     res.setHeader('Content-Type', 'application/zip');
     res.setHeader('Content-Disposition', 'attachment; filename=data.zip');
+    res.setHeader('Transfer-Encoding', 'chunked');
 
     const queryData = await exportService.getQueryData(id);
     if (!queryData) {
@@ -16,14 +17,16 @@ async function csv(req, res) {
       });
     }
 
-    const stream = await exportService.getCsvStream(queryData.sql);
-
-    return await exportService.streamCsvAsZip(queryData.label, stream, res);
-  } catch (error) {
-    res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      message: error.message,
-    });
+    await exportService.streamCsvAsZip(queryData.label, queryData.sql, res);
+  } catch (err) {
+    if (res.headersSent) {
+      res.destroy(err);
+    } else {
+      res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: err.message,
+      });
+    }
   }
 }
 

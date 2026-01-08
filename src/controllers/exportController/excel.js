@@ -5,11 +5,9 @@ async function excel(req, res) {
   try {
     const {id} = req.query;
 
-    res.setHeader(
-      'Content-Type',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    );
-    res.setHeader('Content-Disposition', 'attachment; filename=data.xlsx');
+    res.setHeader('Content-Type', 'application/zip');
+    res.setHeader('Content-Disposition', 'attachment; filename=data.zip');
+    res.setHeader('Transfer-Encoding', 'chunked');
 
     const queryData = await exportService.getQueryData(id);
     if (!queryData) {
@@ -19,9 +17,16 @@ async function excel(req, res) {
       });
     }
 
-    await exportService.streamToExcel(queryData.label, queryData.sql, res);
+    await exportService.streamExcelAsZip(queryData.label, queryData.sql, res);
   } catch (err) {
-    res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({success: false, message: err.message});
+    if (res.headersSent) {
+      res.destroy(err);
+    } else {
+      res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: err.message,
+      });
+    }
   }
 }
 
