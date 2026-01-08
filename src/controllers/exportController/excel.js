@@ -5,10 +5,6 @@ async function excel(req, res) {
   try {
     const {id} = req.query;
 
-    res.setHeader('Content-Type', 'application/zip');
-    res.setHeader('Content-Disposition', 'attachment; filename=data.zip');
-    res.setHeader('Transfer-Encoding', 'chunked');
-
     const queryData = await exportService.getQueryData(id);
     if (!queryData) {
       return res.status(enums.statusCode.NOT_FOUND).json({
@@ -16,6 +12,10 @@ async function excel(req, res) {
         message: 'Query not found',
       });
     }
+
+    res.setHeader('Content-Type', 'application/zip');
+    res.setHeader('Content-Disposition', 'attachment; filename=data.zip');
+    res.setHeader('Transfer-Encoding', 'chunked');
 
     await exportService.streamExcelAsZip(queryData.label, queryData.sql, res);
   } catch (err) {
