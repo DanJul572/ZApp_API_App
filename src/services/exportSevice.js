@@ -6,6 +6,10 @@ const enums = require('../enums');
 const commonQuery = require('../queries/commonQuery');
 const exportQuery = require('../queries/exportQuery');
 
+function sanitaize(label) {
+  return label.replace(/[^a-zA-Z0-9-_]/g, '_');
+}
+
 async function getQueryData(id) {
   return await commonQuery.getRowDetail('scripts', id, 'id');
 }
@@ -30,7 +34,7 @@ async function streamCsvAsZip(label, query, res) {
 
   archive.pipe(res);
   archive.append(csvStream, {name: `${label}.csv`});
-  archive.finalize();
+  await archive.finalize();
 }
 
 async function streamExcelAsZip(label, query, res) {
@@ -61,6 +65,7 @@ async function streamExcelAsZip(label, query, res) {
 
   const worksheet = workbook.addWorksheet(label);
   let headerWritten = false;
+  let hasData = false;
 
   try {
     for await (const row of rowStream) {
@@ -71,12 +76,16 @@ async function streamExcelAsZip(label, query, res) {
         }));
         headerWritten = true;
       }
-
+      hasData = true;
       worksheet.addRow(row).commit();
     }
 
+    if (!hasData) {
+      worksheet.addRow(['No data']).commit();
+    }
+
     await workbook.commit();
-    archive.finalize();
+    await archive.finalize();
   } catch (err) {
     archive.abort();
     excelStream.destroy(err);
@@ -85,6 +94,7 @@ async function streamExcelAsZip(label, query, res) {
 }
 
 module.exports = {
+  sanitaize,
   getQueryData,
   streamCsvAsZip,
   streamExcelAsZip,

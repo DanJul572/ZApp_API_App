@@ -13,11 +13,12 @@ async function csv(req, res) {
       });
     }
 
-    res.setHeader('Content-Type', 'application/zip');
-    res.setHeader('Content-Disposition', `attachment; filename=${queryData.label}.zip`);
-    res.setHeader('Transfer-Encoding', 'chunked');
+    const safeLabel = exportService.sanitaize(queryData.label);
 
-    await exportService.streamCsvAsZip(queryData.label, queryData.sql, res);
+    res.setHeader('Content-Type', 'application/zip');
+    res.setHeader('Content-Disposition', `attachment; filename=${safeLabel}.zip`);
+
+    await exportService.streamCsvAsZip(safeLabel, queryData.sql, res);
   } catch (err) {
     if (res.headersSent) {
       res.destroy(err);
