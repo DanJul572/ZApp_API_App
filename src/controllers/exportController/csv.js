@@ -14,7 +14,7 @@ async function csv(req, res) {
     }
 
     res.setHeader('Content-Type', 'application/zip');
-    res.setHeader('Content-Disposition', 'attachment; filename=data.zip');
+    res.setHeader('Content-Disposition', `attachment; filename=${queryData.label}.zip`);
     res.setHeader('Transfer-Encoding', 'chunked');
 
     await exportService.streamCsvAsZip(queryData.label, queryData.sql, res);

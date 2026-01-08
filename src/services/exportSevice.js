@@ -41,7 +41,7 @@ async function streamExcelAsZip(label, query, res) {
 
   archive.on('error', err => {
     if (!res.headersSent) {
-      res.status(500).end();
+      res.status(enums.statusCode.INTERNAL_SERVER_ERROR).end();
     } else {
       res.destroy(err);
     }
