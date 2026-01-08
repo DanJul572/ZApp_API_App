@@ -24,6 +24,7 @@ async function streamCsvAsZip(label, query, res) {
       res.destroy(err);
     }
   });
+
   res.on('close', () => archive.abort());
   res.on('aborted', () => archive.abort());
 
@@ -33,7 +34,9 @@ async function streamCsvAsZip(label, query, res) {
 }
 
 async function streamExcelAsZip(label, query, res) {
+  const excelStream = new PassThrough();
   const rowStream = await exportQuery.getExcelStream(query);
+
   const archive = archiver('zip', {
     zlib: {level: 9},
   });
@@ -46,15 +49,10 @@ async function streamExcelAsZip(label, query, res) {
     }
   });
 
-  const excelStream = new PassThrough();
-
-  archive.pipe(res);
-
   res.on('close', () => {
     archive.abort();
   });
-
-  archive.append(excelStream, {name: `${label}.xlsx`});
+  res.on('aborted', () => archive.abort());
 
   const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({
     stream: excelStream,
@@ -78,6 +76,9 @@ async function streamExcelAsZip(label, query, res) {
     }
 
     await workbook.commit();
+
+    archive.pipe(res);
+    archive.append(excelStream, {name: `${label}.xlsx`});
     archive.finalize();
   } catch (err) {
     archive.abort();
