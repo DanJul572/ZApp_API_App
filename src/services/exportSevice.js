@@ -37,22 +37,21 @@ async function streamExcelAsZip(label, query, res) {
   const excelStream = new PassThrough();
   const rowStream = await exportQuery.getExcelStream(query);
 
-  const archive = archiver('zip', {
-    zlib: {level: 9},
-  });
+  const archive = archiver('zip', {zlib: {level: 9}});
 
   archive.on('error', err => {
     if (!res.headersSent) {
-      res.status(enums.statusCode.INTERNAL_SERVER_ERROR).end();
+      res.status(500).end();
     } else {
       res.destroy(err);
     }
   });
 
-  res.on('close', () => {
-    archive.abort();
-  });
+  res.on('close', () => archive.abort());
   res.on('aborted', () => archive.abort());
+
+  archive.pipe(res);
+  archive.append(excelStream, {name: `${label}.xlsx`});
 
   const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({
     stream: excelStream,
@@ -72,13 +71,11 @@ async function streamExcelAsZip(label, query, res) {
         }));
         headerWritten = true;
       }
+
       worksheet.addRow(row).commit();
     }
 
     await workbook.commit();
-
-    archive.pipe(res);
-    archive.append(excelStream, {name: `${label}.xlsx`});
     archive.finalize();
   } catch (err) {
     archive.abort();
