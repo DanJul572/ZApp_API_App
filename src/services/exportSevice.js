@@ -29,43 +29,30 @@ async function streamCsvAsZip(label, csvStream, res) {
 }
 
 async function streamToExcel(label, query, res) {
+  const rowStream = await exportQuery.getExcelStream(query);
+
   const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({
     stream: res,
     useStyles: false,
     useSharedStrings: false,
   });
 
-  const MAX_ROWS_PER_SHEET = 1000000;
-  let currentSheet = null;
-  let rowCount = 0;
-  let sheetNumber = 1;
-  let columns = null;
+  const worksheet = workbook.addWorksheet(label);
 
-  await exportQuery.streamQueryResults(query, async rows => {
-    for (const row of rows) {
-      if (!currentSheet || rowCount >= MAX_ROWS_PER_SHEET) {
-        if (currentSheet) await currentSheet.commit();
+  let headerWritten = false;
 
-        currentSheet = workbook.addWorksheet(`Data_${sheetNumber++}`);
-
-        if (!columns) {
-          columns = Object.keys(row).map(key => ({
-            header: key,
-            key: key,
-            width: 15,
-          }));
-        }
-
-        currentSheet.columns = columns;
-        rowCount = 0;
-      }
-
-      currentSheet.addRow(row).commit();
-      rowCount++;
+  for await (const row of rowStream) {
+    if (!headerWritten) {
+      worksheet.columns = Object.keys(row).map(k => ({
+        header: k,
+        key: k,
+      }));
+      headerWritten = true;
     }
-  });
 
-  if (currentSheet) await currentSheet.commit();
+    worksheet.addRow(row).commit();
+  }
+
   await workbook.commit();
 }
 

@@ -19,12 +19,9 @@ async function excel(req, res) {
       });
     }
 
-    return await exportService.streamToExcel(queryData.label, queryData.sql, res);
-  } catch (error) {
-    res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      message: error.message,
-    });
+    await exportService.streamToExcel(queryData.label, queryData.sql, res);
+  } catch (err) {
+    res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({success: false, message: err.message});
   }
 }
 

@@ -1,4 +1,5 @@
 const copyTo = require('pg-copy-streams').to;
+const QueryStream = require('pg-query-stream');
 
 const db = require('../models');
 const {exportBuilder} = require('../builders');
@@ -21,36 +22,25 @@ async function getCsvStream(query) {
   return stream;
 }
 
-async function streamQueryResults(query, onBatch) {
-  const BATCH_SIZE = 1000;
-  let offset = 0;
-  let hasMore = true;
+async function getExcelStream(sql) {
+  const connection = await db.sequelize.connectionManager.getConnection();
+  const client = connection;
 
-  while (hasMore) {
-    const rows = await db.sequelize.query(query, {
-      type: db.sequelize.QueryTypes.SELECT,
-      raw: true,
-      nest: false,
-      offset: offset,
-      limit: BATCH_SIZE,
-    });
+  const queryStream = new QueryStream(sql);
+  const stream = client.query(queryStream);
 
-    if (rows.length === 0) {
-      hasMore = false;
-      break;
-    }
+  stream.on('end', () => {
+    db.sequelize.connectionManager.releaseConnection(connection);
+  });
 
-    await onBatch(rows);
+  stream.on('error', () => {
+    db.sequelize.connectionManager.releaseConnection(connection);
+  });
 
-    offset += BATCH_SIZE;
-
-    if (rows.length < BATCH_SIZE) {
-      hasMore = false;
-    }
-  }
+  return stream;
 }
 
 module.exports = {
   getCsvStream,
-  streamQueryResults,
+  getExcelStream,
 };
