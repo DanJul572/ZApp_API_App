@@ -14,7 +14,17 @@ var routes = require('./src/routes');
 const {specs, swaggerUi} = require('./swagger');
 
 var app = express();
-var upload = multer();
+var upload = multer({
+  storage: multer.diskStorage({
+    destination: 'uploads/',
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname);
+    },
+  }),
+  limits: {
+    fileSize: 1024 * 1024 * 100,
+  },
+});
 
 app.use(cors());
 app.use(logger('dev'));
