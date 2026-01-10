@@ -6,22 +6,38 @@ const {importBuilder} = require('../builders');
 async function getCopyStream(table, columns) {
   const connection = await db.sequelize.connectionManager.getConnection();
 
-  const sql = importBuilder.getCsvStream(table, columns);
+  try {
+    await connection.query('BEGIN');
 
-  const stream = connection.query(copyFrom(sql));
+    const sql = importBuilder.getCsvStream(table, columns);
+    const copyStream = connection.query(copyFrom(sql));
 
-  let released = false;
-  const release = () => {
-    if (released) return;
-    released = true;
+    let released = false;
+
+    const release = async err => {
+      if (released) return;
+      released = true;
+
+      try {
+        if (err) {
+          await connection.query('ROLLBACK');
+        } else {
+          await connection.query('COMMIT');
+        }
+      } finally {
+        db.sequelize.connectionManager.releaseConnection(connection);
+      }
+    };
+
+    copyStream.on('finish', () => release());
+    copyStream.on('error', err => release(err));
+
+    return copyStream;
+  } catch (err) {
+    await connection.query('ROLLBACK');
     db.sequelize.connectionManager.releaseConnection(connection);
-  };
-
-  stream.on('finish', release);
-  stream.on('error', release);
-  stream.on('close', release);
-
-  return stream;
+    throw err;
+  }
 }
 
 module.exports = {

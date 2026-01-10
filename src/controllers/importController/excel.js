@@ -7,12 +7,10 @@ async function importExcelController(req, res) {
     const files = req.files;
 
     if (!files || !files.length) {
-      if (!module) {
-        res.status(enums.statusCode.BAD_REQUEST).json({
-          success: false,
-          message: 'file is required',
-        });
-      }
+      res.status(enums.statusCode.BAD_REQUEST).json({
+        success: false,
+        message: 'file is required',
+      });
     }
 
     const module = await importService.getModuleById(id);
@@ -24,13 +22,15 @@ async function importExcelController(req, res) {
     }
 
     const fields = await importService.getModuleFields(module.id);
+    const filePath = files[0].path;
     const columns = importService.getColumnNameFromFields(fields);
-
-    await importService.importExcel(files[0].path, {
-      table: module.name,
+    const importOptions = {
+      table: importService.sanitaizeTableName(module.name),
       columns: columns,
       mapRow: row => importService.getRowsMapping(columns, row),
-    });
+    };
+
+    await importService.importExcel(filePath, importOptions);
 
     res.json({
       success: true,

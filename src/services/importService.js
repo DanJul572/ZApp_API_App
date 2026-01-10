@@ -13,11 +13,11 @@ async function getModuleFields(moduleId) {
   return await fieldQuery.getFields(moduleId);
 }
 
-function getColumnNameFromFields(fields) {
-  if (!fields || !fields.length) {
-    return false;
-  }
+function sanitaizeTableName(tableName) {
+  return tableName.replace(/[^a-zA-Z0-9-_]/g, '_');
+}
 
+function getColumnNameFromFields(fields = []) {
   return fields.map(field => field.name);
 }
 
@@ -49,6 +49,14 @@ function normalizeCell(cell) {
     return v.richText.map(t => t.text).join('');
   }
 
+  if (typeof v === 'object' && v.formula) {
+    return String(v.result ?? '');
+  }
+
+  if (typeof v === 'boolean') {
+    return v ? 'true' : 'false';
+  }
+
   return String(v);
 }
 
@@ -60,7 +68,11 @@ function escapeCsv(value) {
 }
 
 function getRowsMapping(columns, row) {
-  return columns.map((_, index) => escapeCsv(normalizeCell(row.getCell(index + 1)))).join(',');
+  if (row.cellCount < columns.length) {
+    throw new Error(`Invalid column count at row ${row.number}`);
+  }
+
+  return columns.map((_, i) => escapeCsv(normalizeCell(row.getCell(i + 1)))).join(',');
 }
 
 async function importExcel(filePath, options) {
@@ -111,4 +123,5 @@ module.exports = {
   getModuleFields,
   getRowsMapping,
   importExcel,
+  sanitaizeTableName,
 };
