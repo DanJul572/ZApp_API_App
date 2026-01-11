@@ -12,17 +12,18 @@ const errorHandler = require('./src/middleware/errorHandler');
 
 var routes = require('./src/routes');
 const {specs, swaggerUi} = require('./swagger');
+const {file} = require('./src/config');
 
 var app = express();
 var upload = multer({
   storage: multer.diskStorage({
-    destination: 'uploads/',
+    destination: file.fileUpload.destination,
     filename: (req, file, cb) => {
-      cb(null, Date.now() + '-' + file.originalname);
+      cb(null, `${Date.now()}-${file.originalname}`);
     },
   }),
   limits: {
-    fileSize: 1024 * 1024 * 100,
+    fileSize: 1024 * 1024 * file.fileUpload.maxSize,
   },
 });
 
@@ -35,15 +36,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
 app.use('/', routes);
 
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(errorHandler);
 
 module.exports = app;

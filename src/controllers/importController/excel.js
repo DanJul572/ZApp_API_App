@@ -1,7 +1,11 @@
+const fs = require('fs/promises');
+
 const enums = require('../../enums');
 const importService = require('../../services/importService');
 
 async function importExcelController(req, res) {
+  let filePath;
+
   try {
     const {id} = req.query;
     const files = req.files;
@@ -13,6 +17,8 @@ async function importExcelController(req, res) {
       });
     }
 
+    filePath = files[0].path;
+
     const module = await importService.getModuleById(id);
     if (!module) {
       res.status(enums.statusCode.NOT_FOUND).json({
@@ -22,7 +28,6 @@ async function importExcelController(req, res) {
     }
 
     const fields = await importService.getModuleFields(module.id);
-    const filePath = files[0].path;
     const columns = importService.getColumnNameFromFields(fields);
     const importOptions = {
       table: importService.sanitaizeTableName(module.name),
@@ -41,6 +46,14 @@ async function importExcelController(req, res) {
       success: false,
       message: err.message,
     });
+  } finally {
+    if (filePath) {
+      try {
+        await fs.unlink(filePath);
+      } catch (err) {
+        console.error('Failed to delete file:', err.message);
+      }
+    }
   }
 }
 
