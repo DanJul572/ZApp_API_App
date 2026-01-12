@@ -3,11 +3,7 @@ const enums = require('../enums');
 const jwtConfig = require('../config/jwt');
 
 function authenticateToken(req, res, next) {
-  let token = req.header('Authorization');
-
-  if (!token && req.query && req.query.token) {
-    token = req.query.token;
-  }
+  const token = req.cookies.access_token;
 
   if (!token) {
     return res.sendStatus(enums.statusCode.UNAUTHORIZED);

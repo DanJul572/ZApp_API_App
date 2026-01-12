@@ -27,7 +27,12 @@ var upload = multer({
   },
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.UI_URL,
+    credentials: true,
+  }),
+);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

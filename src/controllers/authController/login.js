@@ -14,6 +14,7 @@ async function login(req, res) {
     }
 
     const passwordIsMatch = await authService.checkPassword(request.password, user.password);
+
     if (!passwordIsMatch) {
       return res.status(enums.statusCode.BAD_REQUEST).send({
         success: false,
@@ -22,13 +23,16 @@ async function login(req, res) {
     }
 
     const menu = await authService.getMenu(user.roleId);
-    const newToken = authService.generateToken(user, menu);
+    const token = authService.generateToken(user, menu);
+    const cookieSetting = authService.getCookieSetting();
+
+    res.cookie('access_token', token, cookieSetting);
+
     return res.json({
       success: true,
       message: 'successful_login',
       data: {
         afterLogin: menu.afterLogin,
-        accessToken: newToken,
       },
     });
   } catch (error) {

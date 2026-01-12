@@ -43,9 +43,19 @@ function generateToken(user, menu) {
   return jwt.sign(tokenInfo, jwtConfig.secretKey, tokenOptions);
 }
 
+function getCookieSetting() {
+  return {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 1000 * 60 * 60,
+  };
+}
+
 module.exports = {
   checkPassword,
   generateToken,
+  getCookieSetting,
   getMenu,
   getUserByEmail,
   hashPassword,
