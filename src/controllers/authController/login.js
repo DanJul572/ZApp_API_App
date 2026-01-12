@@ -14,7 +14,6 @@ async function login(req, res) {
     }
 
     const passwordIsMatch = await authService.checkPassword(request.password, user.password);
-
     if (!passwordIsMatch) {
       return res.status(enums.statusCode.BAD_REQUEST).send({
         success: false,
@@ -23,7 +22,7 @@ async function login(req, res) {
     }
 
     const menu = await authService.getMenu(user.roleId);
-    const token = authService.generateToken(user, menu);
+    const token = authService.generateToken(user, menu.afterLogin);
     const cookieSetting = authService.getCookieSetting();
 
     res.cookie('access_token', token, cookieSetting);
