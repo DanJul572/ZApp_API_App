@@ -27,37 +27,49 @@ function excelSerialToDate(serial) {
 }
 
 function normalizeCell(cell) {
-  if (!cell || cell.value === null) return '';
+  if (!cell || cell.value === null || cell.value === '') return '';
 
-  let v = cell.value;
+  const v = cell.value;
 
-  if (typeof v === 'number' || (typeof v === 'string' && !isNaN(v))) {
-    const n = Number(v);
-
-    if (n > 20000 && n < 60000) {
-      return excelSerialToDate(n).toISOString();
-    }
-
-    return String(v);
+  if (typeof v === 'object' && v.error) {
+    return '';
   }
 
   if (v instanceof Date) {
     return v.toISOString();
   }
 
-  if (typeof v === 'object' && v.richText) {
-    return v.richText.map(t => t.text).join('');
+  if (typeof v === 'object' && v.formula) {
+    const r = v.result;
+    if (typeof r === 'number') {
+      return excelSerialToDate(r).toISOString();
+    }
+    return String(r ?? '');
   }
 
-  if (typeof v === 'object' && v.formula) {
-    return String(v.result ?? '');
+  if (typeof v === 'number') {
+    return String(v);
+  }
+
+  if (typeof v === 'string' && !isNaN(v)) {
+    return String(v);
+  }
+
+  if (typeof v === 'object' && v.richText) {
+    return v.richText.map(t => t.text).join('');
   }
 
   if (typeof v === 'boolean') {
     return v ? 'true' : 'false';
   }
 
-  return String(v);
+  let str = String(v);
+
+  if (/^[=+\-@]/.test(str)) {
+    str = `'${str}`;
+  }
+
+  return str;
 }
 
 function escapeCsv(value) {
