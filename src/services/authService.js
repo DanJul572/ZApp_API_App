@@ -27,13 +27,12 @@ async function getMenu(roleId) {
   return await menuQuery.findByRoleId(roleId);
 }
 
-function generateToken(user, afterLogin) {
+function generateToken(user) {
   const tokenInfo = {
     userId: user.id,
     email: user.email,
     roleId: user.roleId,
     userName: user.name,
-    afterLogin: afterLogin,
   };
 
   const tokenOptions = {
@@ -52,11 +51,50 @@ function getCookieSetting() {
   };
 }
 
+function getTokenExpiredSecond(expiredIn) {
+  const regex = /^(\d+)([smhd])$/;
+  const match = expiredIn.match(regex);
+
+  if (!match) {
+    throw new Error('Invalid expiredIn Format');
+  }
+
+  const value = parseInt(match[1], 10);
+  const unit = match[2];
+
+  let seconds;
+
+  switch (unit) {
+    case 's':
+      seconds = value;
+      break;
+    case 'm':
+      seconds = value * 60;
+      break;
+    case 'h':
+      seconds = value * 60 * 60;
+      break;
+    case 'd':
+      seconds = value * 60 * 60 * 24;
+      break;
+    default:
+      throw new Error('ExpiredIn unit not recognized');
+  }
+
+  return seconds;
+}
+
+function getTokenExpiredDate(seconds) {
+  return new Date(Date.now() + seconds * 1000);
+}
+
 module.exports = {
   checkPassword,
   generateToken,
   getCookieSetting,
   getMenu,
+  getTokenExpiredDate,
+  getTokenExpiredSecond,
   getUserByEmail,
   hashPassword,
   insertUser,

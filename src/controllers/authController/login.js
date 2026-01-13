@@ -1,5 +1,6 @@
 const authService = require('../../services/authService');
 const enums = require('../../enums');
+const jwt = require('../../config/jwt');
 
 async function login(req, res) {
   try {
@@ -22,8 +23,11 @@ async function login(req, res) {
     }
 
     const menu = await authService.getMenu(user.roleId);
-    const token = authService.generateToken(user, menu.afterLogin);
+    const token = authService.generateToken(user);
     const cookieSetting = authService.getCookieSetting();
+
+    const expiredIn = authService.getTokenExpiredSecond(jwt.expiredIn);
+    const expiredAt = authService.getTokenExpiredDate(expiredIn);
 
     res.cookie('access_token', token, cookieSetting);
 
@@ -32,6 +36,8 @@ async function login(req, res) {
       message: 'successful_login',
       data: {
         afterLogin: menu.afterLogin,
+        expiredIn: expiredIn,
+        expiredAt: expiredAt,
       },
     });
   } catch (error) {
