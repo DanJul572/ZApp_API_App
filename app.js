@@ -29,7 +29,7 @@ var upload = multer({
 
 app.use(
   cors({
-    origin: process.env.UI_URL,
+    origin: 'http://localhost:3000',
     credentials: true,
   }),
 );

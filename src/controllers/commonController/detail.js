@@ -8,7 +8,7 @@ const jwtConfig = require('../../config/jwt');
 async function detail(req, res) {
   try {
     const request = req.query;
-    const token = req.header('Authorization');
+    const token = req.cookies.access_token;
     const user = jwt.verify(token, jwtConfig.secretKey);
 
     const module = await commonService.getModuleById(request.moduleId);

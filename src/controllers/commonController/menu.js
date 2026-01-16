@@ -4,7 +4,7 @@ const enums = require('../../enums');
 
 async function menu(req, res) {
   try {
-    const token = req.header('Authorization');
+    const token = req.cookies.access_token;
 
     const user = helpers.decodeToken(token);
     const menu = await commonService.getMenu(user.roleId);

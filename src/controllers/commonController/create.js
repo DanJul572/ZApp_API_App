@@ -9,7 +9,7 @@ async function create(req, res) {
   try {
     const request = req.body;
     const files = req.files;
-    const token = req.header('Authorization');
+    const token = req.cookies.access_token;
 
     const user = helpers.decodeToken(token);
     const module = await commonService.getModuleById(request.moduleId);

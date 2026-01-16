@@ -108,7 +108,7 @@ router.post(
  */
 
 router.post('/api/auth/register', middleware.parseJsonData, authController.register);
-
+router.get('/api/auth/me', middleware.authenticateToken, authController.me);
 router.get('/api/auth/logout', middleware.authenticateToken, authController.logout);
 
 module.exports = router;

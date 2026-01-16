@@ -23,7 +23,7 @@ async function login(req, res) {
     }
 
     const menu = await authService.getMenu(user.roleId);
-    const token = authService.generateToken(user);
+    const token = authService.generateToken(user, menu.afterLogin);
     const cookieSetting = authService.getCookieSetting();
 
     const expiredIn = authService.getTokenExpiredSecond(jwt.expiredIn);
