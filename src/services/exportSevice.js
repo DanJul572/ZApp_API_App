@@ -2,6 +2,7 @@ const ExcelJS = require('exceljs');
 const archiver = require('archiver');
 const {PassThrough} = require('stream');
 
+const databaseConfig = require('../config/database');
 const enums = require('../enums');
 const commonQuery = require('../queries/commonQuery');
 const exportQuery = require('../queries/exportQuery');
@@ -15,7 +16,12 @@ async function getQueryData(id) {
 }
 
 async function streamCsvAsZip(label, query, res) {
-  const csvStream = await exportQuery.getCsvStream(query);
+  let csvStream = null;
+  if (databaseConfig.dialect === 'postgres') {
+    csvStream = await exportQuery.getPostgreCsvStream(query);
+  } else {
+    csvStream = await exportQuery.getMysqlCsvStream(query);
+  }
 
   const archive = archiver('zip', {
     zlib: {level: 9},
