@@ -37,7 +37,7 @@ async function importExcelController(req, res) {
 
     await importService.importExcel(filePath, importOptions);
 
-    res.json({
+    return res.status(enums.statusCode.OK).send({
       success: true,
       message: 'import is success',
     });

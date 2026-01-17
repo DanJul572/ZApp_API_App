@@ -31,7 +31,7 @@ async function login(req, res) {
 
     res.cookie('access_token', token, cookieSetting);
 
-    return res.json({
+    return res.status(enums.statusCode.OK).send({
       success: true,
       message: 'successful_login',
       data: {
