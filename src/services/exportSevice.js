@@ -1,6 +1,7 @@
 const ExcelJS = require('exceljs');
 const archiver = require('archiver');
 const {PassThrough} = require('stream');
+const fastCsv = require('fast-csv');
 
 const databaseConfig = require('../config/database');
 const enums = require('../enums');
@@ -15,12 +16,44 @@ async function getQueryData(id) {
   return await commonQuery.getRowDetail('scripts', id, 'id');
 }
 
+async function getMysqlCsvStream(query) {
+  const queryStream = await exportQuery.getMysqlRowStream(query);
+  const csvStream = fastCsv.format({
+    headers: true,
+  });
+
+  const output = new PassThrough();
+
+  let released = false;
+  const release = () => {
+    if (released) return;
+    released = true;
+  };
+
+  queryStream
+    .on('error', err => {
+      csvStream.destroy(err);
+      release();
+    })
+    .on('end', release)
+    .on('close', release);
+
+  csvStream.on('error', err => {
+    queryStream.destroy(err);
+    release();
+  });
+
+  queryStream.pipe(csvStream).pipe(output);
+
+  return output;
+}
+
 async function streamCsvAsZip(label, query, res) {
   let csvStream = null;
   if (databaseConfig.dialect === 'postgres') {
-    csvStream = await exportQuery.getPostgreCsvStream(query);
+    csvStream = await exportQuery.getPostgreCopyStream(query);
   } else {
-    csvStream = await exportQuery.getMysqlCsvStream(query);
+    csvStream = await getMysqlCsvStream(query);
   }
 
   const archive = archiver('zip', {
@@ -45,7 +78,12 @@ async function streamCsvAsZip(label, query, res) {
 
 async function streamExcelAsZip(label, query, res) {
   const excelStream = new PassThrough();
-  const rowStream = await exportQuery.getExcelStream(query);
+  let rowStream;
+  if (databaseConfig.dialect === 'postgres') {
+    rowStream = await exportQuery.getPostgreQueryStream(query);
+  } else {
+    rowStream = await exportQuery.getMysqlRowStream(query);
+  }
 
   const archive = archiver('zip', {zlib: {level: 9}});
 

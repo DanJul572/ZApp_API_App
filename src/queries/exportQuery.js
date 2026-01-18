@@ -1,12 +1,10 @@
 const copyTo = require('pg-copy-streams').to;
 const QueryStream = require('pg-query-stream');
-const {PassThrough} = require('stream');
-const fastCsv = require('fast-csv');
 
 const db = require('../models');
 const {exportBuilder} = require('../builders');
 
-async function getPostgreCsvStream(query) {
+async function getPostgreCopyStream(query) {
   const connection = await db.sequelize.connectionManager.getConnection();
   const sql = exportBuilder.getCsvStream(query);
 
@@ -26,18 +24,11 @@ async function getPostgreCsvStream(query) {
   return stream;
 }
 
-async function getMysqlCsvStream(query) {
+async function getMysqlRowStream(sql) {
   const connection = await db.sequelize.connectionManager.getConnection();
 
-  const queryStream = connection.query(query).stream({
-    highWaterMark: 1000,
-  });
-
-  const csvStream = fastCsv.format({
-    headers: true,
-  });
-
-  const output = new PassThrough();
+  const query = connection.query(sql);
+  const stream = query.stream({highWaterMark: 1000});
 
   let released = false;
   const release = () => {
@@ -46,25 +37,14 @@ async function getMysqlCsvStream(query) {
     db.sequelize.connectionManager.releaseConnection(connection);
   };
 
-  queryStream
-    .on('error', err => {
-      csvStream.destroy(err);
-      release();
-    })
-    .on('end', release)
-    .on('close', release);
+  stream.on('end', release);
+  stream.on('error', release);
+  stream.on('close', release);
 
-  csvStream.on('error', err => {
-    queryStream.destroy(err);
-    release();
-  });
-
-  queryStream.pipe(csvStream).pipe(output);
-
-  return output;
+  return stream;
 }
 
-async function getExcelStream(sql) {
+async function getPostgreQueryStream(sql) {
   const connection = await db.sequelize.connectionManager.getConnection();
   const queryStream = new QueryStream(sql);
   const stream = connection.query(queryStream);
@@ -85,7 +65,7 @@ async function getExcelStream(sql) {
 }
 
 module.exports = {
-  getPostgreCsvStream,
-  getMysqlCsvStream,
-  getExcelStream,
+  getPostgreQueryStream,
+  getMysqlRowStream,
+  getPostgreCopyStream,
 };
