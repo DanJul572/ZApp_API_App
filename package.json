@@ -6,7 +6,7 @@
     "build": "node esbuild.config.js",
     "dev": "node ./bin/www",
     "format": "prettier --write .",
-    "lint": "eslint . --max-warnings=0",
+    "check": "eslint . --max-warnings=0",
     "migrate:undo": "sequelize db:migrate:undo:all",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",

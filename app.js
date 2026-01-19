@@ -1,24 +1,23 @@
 require('dotenv').config();
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var cors = require('cors');
-var createError = require('http-errors');
-var express = require('express');
-var logger = require('morgan');
-var multer = require('multer');
-var path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const express = require('express');
+const logger = require('morgan');
+const multer = require('multer');
+const path = require('path');
 
 const errorHandler = require('./src/middleware/errorHandler');
 
-var routes = require('./src/routes');
-const {specs, swaggerUi} = require('./swagger');
+const routes = require('./src/routes');
 const {file} = require('./src/config');
 
-var app = express();
-var upload = multer({
+const app = express();
+
+const upload = multer({
   storage: multer.diskStorage({
     destination: file.fileUpload.destination,
-    filename: (req, file, cb) => {
+    filename: (_req, file, cb) => {
       cb(null, `${Date.now()}-${file.originalname}`);
     },
   }),
@@ -29,7 +28,7 @@ var upload = multer({
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL,
     credentials: true,
   }),
 );
@@ -39,13 +38,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(upload.array('files'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/', routes);
 
-app.use(function (req, res, next) {
-  next(createError(404));
-});
+if (process.env.NODE_ENV !== 'production') {
+  const {specs, swaggerUi} = require('./swagger');
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+}
 
 app.use(errorHandler);
 

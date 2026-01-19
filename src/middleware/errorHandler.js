@@ -2,8 +2,7 @@ const {ValidationError} = require('express-validation');
 
 const enums = require('../enums');
 
-// eslint-disable-next-line no-unused-vars
-function errorHandler(err, req, res, next) {
+function errorHandler(err, _req, res) {
   if (err instanceof ValidationError) {
     return res.status(err.statusCode).json(err);
   }
