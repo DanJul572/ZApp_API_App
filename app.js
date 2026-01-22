@@ -10,7 +10,7 @@ const path = require('path');
 const errorHandler = require('./src/middleware/errorHandler');
 
 const routes = require('./src/routes');
-const {file} = require('./src/config');
+const {file, rateLimit} = require('./src/config');
 
 const app = express();
 
@@ -38,6 +38,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(upload.array('files'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/api', rateLimit);
 app.use('/', routes);
 
 if (process.env.NODE_ENV !== 'production') {
