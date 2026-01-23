@@ -18,7 +18,7 @@
     "bcryptjs": "^3.0.3",
     "body-parser": "^2.2.2",
     "cookie-parser": "~1.4.7",
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "cross-env": "^10.1.0",
     "dayjs": "^1.11.19",
     "debug": "~4.4.3",
