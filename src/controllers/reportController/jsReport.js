@@ -8,7 +8,20 @@ async function jsReport(req, res, next) {
     const dataSchemaId = req.query.dataSchemaId;
 
     const dataSchema = await reportService.getDataSchema(dataSchemaId);
+    if (!dataSchema) {
+      return res.status(enums.statusCode.BAD_REQUEST).send({
+        success: false,
+        message: 'data schema not found',
+      });
+    }
+
     const jsreportData = await reportService.getJSReportData(dataSchema);
+    if (!jsreportData) {
+      return res.status(enums.statusCode.BAD_REQUEST).send({
+        success: false,
+        message: 'no data available for the report',
+      });
+    }
 
     res.set({
       'Content-Type': `application/${reportType}`,

@@ -7,18 +7,12 @@ async function login(req, res) {
     const request = req.body;
 
     const user = await authService.getUserByEmail(request.email);
-    if (!user) {
+    const passwordIsMatch = await authService.checkPassword(request.password, user.password);
+
+    if (!user || passwordIsMatch) {
       return res.status(enums.statusCode.NOT_FOUND).send({
         success: false,
-        message: 'user_not_found',
-      });
-    }
-
-    const passwordIsMatch = await authService.checkPassword(request.password, user.password);
-    if (!passwordIsMatch) {
-      return res.status(enums.statusCode.BAD_REQUEST).send({
-        success: false,
-        message: 'invalid_password',
+        message: 'invalid email and password',
       });
     }
 
