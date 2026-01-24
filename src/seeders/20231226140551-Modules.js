@@ -111,6 +111,12 @@ module.exports = {
           createdAt: now,
           updatedAt: now,
         },
+        {
+          name: 'jsreportdataschema',
+          label: 'JS Report Data Schema',
+          createdAt: now,
+          updatedAt: now,
+        },
       ],
       {},
     );

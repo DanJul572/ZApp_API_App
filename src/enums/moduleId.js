@@ -14,4 +14,5 @@ module.exports = {
   validationtimes: 13,
   validations: 14,
   logError: 15,
+  jsReportDataSchema: 16,
 };

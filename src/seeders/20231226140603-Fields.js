@@ -6,6 +6,7 @@ const dataTypes = require('./fields/dataTypes');
 const fields = require('./fields/fields');
 const files = require('./fields/files');
 const inputTypes = require('./fields/inputTypes');
+const jsReportDataSchema = require('./fields/jsReportDataSchema');
 const logError = require('./fields/logError');
 const menus = require('./fields/menus');
 const modules = require('./fields/modules');
@@ -26,6 +27,7 @@ module.exports = {
       fields,
       files,
       inputTypes,
+      jsReportDataSchema,
       logError,
       menus,
       roles,
