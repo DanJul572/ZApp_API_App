@@ -19,16 +19,17 @@ async function executeDataSchema(schema) {
   const result = {};
 
   for (const [key, config] of Object.entries(schema)) {
-    const [rows] = await db.sequelize.query(config.sql, {
+    const rows = await db.sequelize.query(config.sql, {
       type: db.sequelize.QueryTypes.SELECT,
     });
 
     if (config.singleResult) {
-      result[key] = Array.isArray(rows) ? rows[0] : rows;
+      result[key] = rows[0] ?? null;
     } else {
-      result[key] = rows;
+      result[key] = Array.isArray(rows) ? rows : [];
     }
   }
+
   return result;
 }
 
