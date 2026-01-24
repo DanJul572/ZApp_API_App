@@ -13,4 +13,11 @@ router.get(
   reportController.jsReport,
 );
 
+router.get(
+  '/api/report/previewDataSchema',
+  middleware.authenticateToken,
+  middleware.validateRequest(reportValidation.getPreviewDataSchema),
+  reportController.previewDataSchema,
+);
+
 module.exports = router;

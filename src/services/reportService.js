@@ -5,7 +5,7 @@ const scriptQuery = require('../queries/scriptQuery');
 
 async function getDataSchema(schemaId) {
   const dataSchema = await commonQuery.getRowDetail('jsreportdataschema', schemaId, 'id');
-  return dataSchema ? dataSchema : null;
+  return dataSchema ? dataSchema.schema : null;
 }
 
 async function getJSReportData(schema) {

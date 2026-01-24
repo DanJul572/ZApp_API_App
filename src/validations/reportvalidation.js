@@ -8,6 +8,13 @@ const getjsReport = {
   }).options({abortEarly: false}),
 };
 
+const getPreviewDataSchema = {
+  query: Joi.object({
+    dataSchemaId: Joi.number().integer().positive().required(),
+  }).options({abortEarly: false}),
+};
+
 module.exports = {
   getjsReport,
+  getPreviewDataSchema,
 };
