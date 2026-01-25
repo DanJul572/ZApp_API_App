@@ -1,5 +1,6 @@
 const db = require('../../models');
 const enums = require('../../enums');
+const helpers = require('../../helpers');
 const authService = require('../../services/authService');
 
 async function register(req, res) {
@@ -18,8 +19,12 @@ async function register(req, res) {
       message: 'Registration successful',
       data: createdUser,
     });
-  } catch (error) {
+  } catch (err) {
     await t.rollback();
+
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+
     return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
       success: false,
       message: error.message,

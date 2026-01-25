@@ -1,10 +1,10 @@
 const enums = require('../../enums');
-const {decodeToken} = require('../../helpers');
+const helpers = require('../../helpers');
 
 async function me(req, res) {
   try {
     const token = req.cookies.access_token;
-    const user = decodeToken(token);
+    const user = helpers.decodeToken(token);
 
     if (!user) {
       return res.status(enums.statusCode.NOT_FOUND).json({
@@ -23,7 +23,10 @@ async function me(req, res) {
         afterLogin: user.afterLogin,
       },
     });
-  } catch (error) {
+  } catch (err) {
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+    
     return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
       success: false,
       message: error.message,

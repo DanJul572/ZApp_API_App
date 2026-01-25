@@ -1,5 +1,6 @@
 const authService = require('../../services/authService');
 const enums = require('../../enums');
+const helpers = require('../../helpers');
 const jwt = require('../../config/jwt');
 
 async function login(req, res) {
@@ -34,7 +35,10 @@ async function login(req, res) {
         expiredAt: expiredAt,
       },
     });
-  } catch (error) {
+  } catch (err) {
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+    
     return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
       success: false,
       message: error.message,

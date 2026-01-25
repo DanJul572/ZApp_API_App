@@ -1,4 +1,5 @@
 const viewService = require('../../services/viewService');
+const helpers = require('../../helpers');
 const enums = require('../../enums');
 
 async function options(req, res) {
@@ -11,7 +12,10 @@ async function options(req, res) {
       success: true,
       data: options,
     });
-  } catch (error) {
+  } catch (err) {
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+
     return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
       success: false,
       message: error.message,

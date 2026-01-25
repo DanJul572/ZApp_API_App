@@ -1,9 +1,11 @@
+const enums = require('../enums');
+
 function getErrorResponse(error) {
   const separatorIndex = error.indexOf(':');
   if (separatorIndex === -1) {
     return {
       message: error,
-      code: 500,
+      code: enums.statusCode.INTERNAL_SERVER_ERROR,
     };
   }
 

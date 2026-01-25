@@ -1,5 +1,6 @@
 const enums = require('../../enums');
 const exportService = require('../../services/exportSevice');
+const helpers = require('../../helpers');
 
 async function csv(req, res) {
   try {
@@ -20,6 +21,9 @@ async function csv(req, res) {
 
     await exportService.streamCsvAsZip(safeLabel, queryData.sql, res);
   } catch (err) {
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+
     if (res.headersSent) {
       res.destroy(err);
     } else {

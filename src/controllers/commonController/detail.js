@@ -27,7 +27,8 @@ async function detail(req, res) {
     });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
-    await commonService.insertInternalError(req, error.code, error.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+
     return res.status(error.code).send({
       success: false,
       message: error.message,

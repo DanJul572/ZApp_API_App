@@ -1,4 +1,5 @@
 const reportService = require('../../services/reportService');
+const helpers = require('../../helpers');
 const enums = require('../../enums');
 
 async function jsReport(req, res) {
@@ -25,7 +26,10 @@ async function jsReport(req, res) {
       success: true,
       data: jsreportData,
     });
-  } catch (error) {
+  } catch (err) {
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+
     return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
       success: false,
       message: error.message,

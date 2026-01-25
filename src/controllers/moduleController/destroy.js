@@ -1,5 +1,6 @@
 const db = require('../../models');
 const enums = require('../../enums');
+const helpers = require('../../helpers');
 const moduleService = require('../../services/moduleService');
 
 async function destory(req, res) {
@@ -23,8 +24,12 @@ async function destory(req, res) {
       success: true,
       message: 'module_is_deleted',
     });
-  } catch (error) {
+  } catch (err) {
     await t.rollback();
+
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+
     return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
       success: false,
       message: error.message,

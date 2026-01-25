@@ -13,7 +13,7 @@ function errorHandler(err, _req, res) {
 
   return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
     success: false,
-    message: err.message,
+    message: 'An unexpected error occurred. Please try again later.',
   });
 }
 

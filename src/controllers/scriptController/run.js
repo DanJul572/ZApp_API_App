@@ -1,5 +1,5 @@
 const enums = require('../../enums');
-
+const helpers = require('../../helpers');
 const scriptService = require('../../services/scriptService');
 
 async function run(req, res) {
@@ -16,10 +16,13 @@ async function run(req, res) {
 
     return res.status(enums.statusCode.OK).send({
       success: true,
-      message: 'script_executed_successfully',
+      message: 'Script executed successfully',
       data: data,
     });
-  } catch (error) {
+  } catch (err) {
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+
     return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
       success: false,
       message: error.message,

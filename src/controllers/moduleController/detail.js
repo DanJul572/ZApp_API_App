@@ -1,4 +1,5 @@
 const enums = require('../../enums');
+const helpers = require('../../helpers');
 const moduleService = require('../../services/moduleService');
 
 async function detail(req, res) {
@@ -14,7 +15,10 @@ async function detail(req, res) {
       success: true,
       data: module,
     });
-  } catch (error) {
+  } catch (err) {
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+    
     return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
       success: false,
       message: error.message,

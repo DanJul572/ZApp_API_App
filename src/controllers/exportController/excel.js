@@ -1,4 +1,5 @@
 const enums = require('../../enums');
+const helpers = require('../../helpers');
 const exportService = require('../../services/exportSevice');
 
 async function excel(req, res) {
@@ -20,6 +21,9 @@ async function excel(req, res) {
 
     await exportService.streamExcelAsZip(safeLabel, queryData.sql, res);
   } catch (err) {
+    const error = helpers.getErrorResponse(err.message);
+    await helpers.insertInternalError(req, error.code, error.message);
+
     if (res.headersSent) {
       res.destroy(err);
     } else {
