@@ -1,7 +1,7 @@
 const enums = require('../../enums');
 const helpers = require('../../helpers');
 
-async function me(req, res) {
+async function me(req, res, next) {
   try {
     const token = req.cookies.access_token;
     const user = helpers.decodeToken(token);
@@ -26,11 +26,7 @@ async function me(req, res) {
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
-    
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
-      success: false,
-      message: error.message,
-    });
+    next(err);
   }
 }
 

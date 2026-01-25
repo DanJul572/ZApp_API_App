@@ -2,7 +2,7 @@ const commonService = require('../../services/commonService');
 const helpers = require('../../helpers');
 const enums = require('../../enums');
 
-async function menu(req, res) {
+async function menu(req, res, next) {
   try {
     const token = req.cookies.access_token;
 
@@ -17,10 +17,14 @@ async function menu(req, res) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
 
-    return res.status(error.code).send({
-      success: false,
-      message: error.message,
-    });
+    if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
+      next(err);
+    } else {
+      return res.status(error.code).send({
+        success: false,
+        message: error.message,
+      });
+    }
   }
 }
 

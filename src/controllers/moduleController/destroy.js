@@ -3,7 +3,7 @@ const enums = require('../../enums');
 const helpers = require('../../helpers');
 const moduleService = require('../../services/moduleService');
 
-async function destory(req, res) {
+async function destory(req, res, next) {
   const t = await db.sequelize.transaction();
 
   try {
@@ -30,10 +30,7 @@ async function destory(req, res) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
 
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
-      success: false,
-      message: error.message,
-    });
+    next(err);
   }
 }
 

@@ -2,7 +2,7 @@ const enums = require('../../enums');
 const exportService = require('../../services/exportSevice');
 const helpers = require('../../helpers');
 
-async function csv(req, res) {
+async function csv(req, res, next) {
   try {
     const {id} = req.query;
 
@@ -27,10 +27,7 @@ async function csv(req, res) {
     if (res.headersSent) {
       res.destroy(err);
     } else {
-      res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
-        success: false,
-        message: err.message,
-      });
+      next(err);
     }
   }
 }

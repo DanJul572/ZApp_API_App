@@ -4,7 +4,7 @@ const enums = require('../../enums');
 const helpers = require('../../helpers');
 const importService = require('../../services/importService');
 
-async function importExcelController(req, res) {
+async function importExcelController(req, res, next) {
   let filePath;
 
   try {
@@ -45,11 +45,7 @@ async function importExcelController(req, res) {
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
-    
-    res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      message: err.message,
-    });
+    next(err);
   } finally {
     if (filePath) {
       try {

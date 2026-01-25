@@ -2,7 +2,7 @@ const fileService = require('../../services/fileService');
 const helpers = require('../../helpers');
 const enums = require('../../enums');
 
-async function download(req, res) {
+async function download(req, res, next) {
   try {
     const param = req.query;
 
@@ -16,10 +16,7 @@ async function download(req, res) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
 
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
-      success: false,
-      message: error.message,
-    });
+    next(err);
   }
 }
 

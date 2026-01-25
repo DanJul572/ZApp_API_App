@@ -3,7 +3,7 @@ const enums = require('../../enums');
 const helpers = require('../../helpers');
 const authService = require('../../services/authService');
 
-async function register(req, res) {
+async function register(req, res, next) {
   const t = await db.sequelize.transaction();
 
   try {
@@ -25,10 +25,7 @@ async function register(req, res) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
 
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
-      success: false,
-      message: error.message,
-    });
+    next(err);
   }
 }
 

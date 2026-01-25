@@ -36,11 +36,7 @@ async function jsReport(req, res, next) {
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
-
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
-      success: false,
-      message: error.message,
-    });
+    next(err);
   }
 }
 

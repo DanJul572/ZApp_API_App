@@ -5,7 +5,7 @@ const helpers = require('../../helpers');
 const enums = require('../../enums');
 const jwtConfig = require('../../config/jwt');
 
-async function detail(req, res) {
+async function detail(req, res, next) {
   try {
     const request = req.query;
     const token = req.cookies.access_token;
@@ -29,10 +29,14 @@ async function detail(req, res) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
 
-    return res.status(error.code).send({
-      success: false,
-      message: error.message,
-    });
+    if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
+      next(err);
+    } else {
+      return res.status(error.code).send({
+        success: false,
+        message: error.message,
+      });
+    }
   }
 }
 

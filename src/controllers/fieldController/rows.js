@@ -2,7 +2,7 @@ const fieldService = require('../../services/fieldService');
 const helpers = require('../../helpers');
 const enums = require('../../enums');
 
-async function rows(req, res) {
+async function rows(req, res, next) {
   try {
     const request = req.query;
     const data = await fieldService.getFields(request.moduleId);
@@ -14,10 +14,7 @@ async function rows(req, res) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
 
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
-      success: false,
-      message: error.message,
-    });
+    next(err);
   }
 }
 

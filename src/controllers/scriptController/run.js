@@ -2,7 +2,7 @@ const enums = require('../../enums');
 const helpers = require('../../helpers');
 const scriptService = require('../../services/scriptService');
 
-async function run(req, res) {
+async function run(req, res, next) {
   try {
     const param = req.query;
 
@@ -23,10 +23,7 @@ async function run(req, res) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
 
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
-      success: false,
-      message: error.message,
-    });
+    next(err);
   }
 }
 

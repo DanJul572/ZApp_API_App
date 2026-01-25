@@ -3,7 +3,7 @@ const helpers = require('../../helpers');
 const enums = require('../../enums');
 const commonService = require('../../services/commonService');
 
-async function update(req, res) {
+async function update(req, res, next) {
   const t = await db.sequelize.transaction();
 
   try {
@@ -44,10 +44,14 @@ async function update(req, res) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
 
-    return res.status(error.code).send({
-      success: false,
-      message: error.message,
-    });
+    if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
+      next(err);
+    } else {
+      return res.status(error.code).send({
+        success: false,
+        message: error.message,
+      });
+    }
   }
 }
 

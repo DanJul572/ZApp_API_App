@@ -2,7 +2,7 @@ const enums = require('../../enums');
 const helpers = require('../../helpers');
 const exportService = require('../../services/exportSevice');
 
-async function excel(req, res) {
+async function excel(req, res, next) {
   try {
     const {id} = req.query;
 
@@ -27,10 +27,7 @@ async function excel(req, res) {
     if (res.headersSent) {
       res.destroy(err);
     } else {
-      res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
-        success: false,
-        message: err.message,
-      });
+      next(err);
     }
   }
 }

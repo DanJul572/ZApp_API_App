@@ -2,7 +2,7 @@ const reportService = require('../../services/reportService');
 const helpers = require('../../helpers');
 const enums = require('../../enums');
 
-async function jsReport(req, res) {
+async function previewDataSchema(req, res, next) {
   try {
     const dataSchemaId = req.query.dataSchemaId;
 
@@ -29,12 +29,8 @@ async function jsReport(req, res) {
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
-
-    return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).send({
-      success: false,
-      message: error.message,
-    });
+    next(err);
   }
 }
 
-module.exports = jsReport;
+module.exports = previewDataSchema;

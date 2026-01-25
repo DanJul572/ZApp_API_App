@@ -2,7 +2,7 @@ const commonService = require('../../services/commonService');
 const helpers = require('../../helpers');
 const enums = require('../../enums');
 
-async function rows(req, res) {
+async function rows(req, res, next) {
   try {
     const request = req.body;
 
@@ -25,10 +25,14 @@ async function rows(req, res) {
     const error = helpers.getErrorResponse(err.message);
     await helpers.insertInternalError(req, error.code, error.message);
 
-    return res.status(error.code).send({
-      success: false,
-      message: error.message,
-    });
+    if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
+      next(err);
+    } else {
+      return res.status(error.code).send({
+        success: false,
+        message: error.message,
+      });
+    }
   }
 }
 
