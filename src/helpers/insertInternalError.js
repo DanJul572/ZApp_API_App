@@ -1,18 +1,35 @@
-const enums = require('../enums');
 const commonQuery = require('../queries/commonQuery');
+const config = require('../config');
+const enums = require('../enums');
 
-async function insertInternalError(request, code, message) {
-  if (code !== enums.statusCode.INTERNAL_SERVER_ERROR) {
-    return;
-  }
-  const url = request.originalUrl;
-  const method = request.method;
-  const data = {
-    url,
-    method,
+const fileLogger = require('./fileLogger');
+
+async function insertInternalError(req, code, message) {
+  if (code !== enums.statusCode.INTERNAL_SERVER_ERROR) return;
+
+  const payload = {
+    url: req.originalUrl,
+    method: req.method,
     message,
   };
-  return await commonQuery.insertRow('logerror', data);
+
+  switch (config.errorLogTarget) {
+    case 'database':
+      try {
+        await commonQuery.insertRow('logerror', payload);
+      } catch (err) {
+        console.error('Failed to write error log to DB', err);
+      }
+      break;
+
+    case 'file':
+      fileLogger.createLog.error(payload);
+      break;
+
+    case 'none':
+    default:
+      return;
+  }
 }
 
 module.exports = insertInternalError;
