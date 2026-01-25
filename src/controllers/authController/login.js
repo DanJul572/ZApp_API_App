@@ -9,10 +9,10 @@ async function login(req, res) {
     const user = await authService.getUserByEmail(request.email);
     const passwordIsMatch = await authService.checkPassword(request.password, user.password);
 
-    if (!user || passwordIsMatch) {
+    if (!user || !passwordIsMatch) {
       return res.status(enums.statusCode.NOT_FOUND).send({
         success: false,
-        message: 'invalid email and password',
+        message: 'invalid email or password',
       });
     }
 
@@ -27,7 +27,7 @@ async function login(req, res) {
 
     return res.status(enums.statusCode.OK).send({
       success: true,
-      message: 'successful_login',
+      message: 'You have successfully logged in',
       data: {
         afterLogin: menu.afterLogin,
         expiredIn: expiredIn,

@@ -26,7 +26,7 @@ async function destory(req, res) {
     await t.commit();
     return res.status(enums.statusCode.OK).send({
       success: true,
-      message: 'data_is_deleted',
+      message: 'Data deleted successfully',
     });
   } catch (err) {
     await t.rollback();

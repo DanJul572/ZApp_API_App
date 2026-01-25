@@ -4,7 +4,7 @@ function logout(_req, res) {
   res.clearCookie('access_token');
   return res.status(enums.statusCode.OK).send({
     success: true,
-    message: 'logout_success',
+    message: 'You have successfully logged out',
   });
 }
 
