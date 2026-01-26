@@ -2,7 +2,7 @@ const {ValidationError} = require('express-validation');
 
 const enums = require('../enums');
 
-function errorHandler(err, _req, res, _next) {
+function errorHandler(err, _req, res) {
   if (err instanceof ValidationError) {
     return res.status(err.statusCode).json({
       success: false,

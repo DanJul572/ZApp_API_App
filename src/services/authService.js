@@ -52,9 +52,9 @@ function getCookieSetting() {
   };
 }
 
-function getTokenExpiredSecond(expiredIn) {
+function getTokenExpiredSecond() {
   const regex = /^(\d+)([smhd])$/;
-  const match = expiredIn.match(regex);
+  const match = jwtConfig.expiredIn.match(regex);
 
   if (!match) {
     throw new Error('Invalid expiredIn Format');

@@ -1,7 +1,6 @@
 const authService = require('../../services/authService');
 const enums = require('../../enums');
 const helpers = require('../../helpers');
-const jwt = require('../../config/jwt');
 
 async function login(req, res, next) {
   try {
@@ -21,7 +20,7 @@ async function login(req, res, next) {
     const token = authService.generateToken(user, menu.afterLogin);
     const cookieSetting = authService.getCookieSetting();
 
-    const expiredIn = authService.getTokenExpiredSecond(jwt.expiredIn);
+    const expiredIn = authService.getTokenExpiredSecond();
     const expiredAt = authService.getTokenExpiredDate(expiredIn);
 
     res.cookie('access_token', token, cookieSetting);
