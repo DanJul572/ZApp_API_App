@@ -22,7 +22,7 @@ async function excel(req, res, next) {
     await exportService.streamExcelAsZip(safeLabel, queryData.sql, res);
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
-    await helpers.insertInternalError(req, error.code, error.message);
+    await helpers.createErrorLog(req, error.code, error.message);
 
     if (res.headersSent) {
       res.destroy(err);

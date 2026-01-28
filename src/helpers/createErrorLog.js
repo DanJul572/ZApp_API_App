@@ -4,7 +4,7 @@ const enums = require('../enums');
 
 const fileLogger = require('./fileLogger');
 
-async function insertInternalError(req, code, message) {
+async function createLogError(req, code, message) {
   if (code !== enums.statusCode.INTERNAL_SERVER_ERROR) return;
 
   const payload = {
@@ -32,4 +32,4 @@ async function insertInternalError(req, code, message) {
   }
 }
 
-module.exports = insertInternalError;
+module.exports = createLogError;

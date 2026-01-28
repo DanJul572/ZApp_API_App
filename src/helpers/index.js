@@ -1,8 +1,8 @@
 const decodeToken = require('./decodeToken');
+const createErrorLog = require('./createErrorLog');
 const fileLogger = require('./fileLogger');
 const generateColumnByField = require('./generateColumnByField');
 const getErrorResponse = require('./getErrorResponse');
-const insertInternalError = require('./insertInternalError');
 const replacePlaceholders = require('./replacePlaceholders');
 
 module.exports = {
@@ -10,6 +10,6 @@ module.exports = {
   fileLogger,
   generateColumnByField,
   getErrorResponse,
-  insertInternalError,
+  createErrorLog,
   replacePlaceholders,
 };

@@ -12,7 +12,7 @@ async function rows(req, res, next) {
     });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
-    await helpers.insertInternalError(req, error.code, error.message);
+    await helpers.createErrorLog(req, error.code, error.message);
 
     next(err);
   }

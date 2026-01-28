@@ -27,7 +27,7 @@ async function detail(req, res, next) {
     });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
-    await helpers.insertInternalError(req, error.code, error.message);
+    await helpers.createErrorLog(req, error.code, error.message);
 
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);
