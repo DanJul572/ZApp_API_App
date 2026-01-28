@@ -1,5 +1,4 @@
-const XLSX = require('xlsx');
-const {Readable} = require('stream');
+const ExcelJS = require('exceljs');
 
 const moduleQuery = require('../queries/moduleQuery');
 const fieldQuery = require('../queries/fieldQuery');
@@ -54,22 +53,32 @@ async function importExcel(filePath, options) {
 
   const copyStream = await importQuery.getCopyStream(table, columns);
 
-  const workbook = XLSX.readFile(filePath, {
-    cellDates: true,
-    raw: true,
+  const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader(filePath, {
+    entries: 'emit',
+    worksheets: 'emit',
+    sharedStrings: 'cache',
+    styles: 'cache',
   });
 
-  const sheetName = workbook.SheetNames[0];
-  const worksheet = workbook.Sheets[sheetName];
+  for await (const worksheet of workbookReader) {
+    let isHeader = true;
 
-  const rows = XLSX.utils.sheet_to_json(worksheet, {
-    defval: '',
-    raw: true,
-  });
+    for await (const row of worksheet) {
+      if (isHeader) {
+        isHeader = false;
+        continue;
+      }
 
-  const csvStream = Readable.from(rows.map(row => mapRow(row) + '\n'));
+      const mapped = mapRow(row.values);
+      if (mapped) {
+        copyStream.write(mapped + '\n');
+      }
+    }
 
-  csvStream.pipe(copyStream);
+    break;
+  }
+
+  copyStream.end();
 
   await new Promise((resolve, reject) => {
     copyStream.on('finish', resolve);
