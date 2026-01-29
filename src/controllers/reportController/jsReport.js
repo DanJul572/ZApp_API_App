@@ -10,7 +10,7 @@ async function jsReport(req, res, next) {
 
     const dataSchema = await reportService.getDataSchema(dataSchemaId);
     if (!dataSchema) {
-      return res.status(enums.statusCode.BAD_REQUEST).send({
+      return res.status(enums.statusCode.BAD_REQUEST).json({
         success: false,
         message: 'data schema not found',
       });
@@ -18,7 +18,7 @@ async function jsReport(req, res, next) {
 
     const jsreportData = await reportService.getJSReportData(dataSchema);
     if (!jsreportData) {
-      return res.status(enums.statusCode.BAD_REQUEST).send({
+      return res.status(enums.statusCode.BAD_REQUEST).json({
         success: false,
         message: 'no data available for the report',
       });

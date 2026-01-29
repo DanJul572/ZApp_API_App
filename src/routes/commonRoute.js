@@ -5,34 +5,34 @@ const {commonController} = require('../controllers');
 
 const router = Router();
 
-router.get('/api/common/columns', middleware.authenticateToken, commonController.columns);
-router.get('/api/common/detail', middleware.authenticateToken, commonController.detail);
-router.get('/api/common/menu', middleware.authenticateToken, commonController.menu);
-router.get('/api/common/options', commonController.options);
+router.get('/common/columns', middleware.authenticateToken, commonController.columns);
+router.get('/common/detail', middleware.authenticateToken, commonController.detail);
+router.get('/common/menu', middleware.authenticateToken, commonController.menu);
+router.get('/common/options', commonController.options);
 
 router.post(
-  '/api/common/create',
+  '/common/create',
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.create,
 );
 
 router.post(
-  '/api/common/delete',
+  '/common/delete',
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.destroy,
 );
 
 router.post(
-  '/api/common/rows',
+  '/common/rows',
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.rows,
 );
 
 router.post(
-  '/api/common/update',
+  '/common/update',
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.update,

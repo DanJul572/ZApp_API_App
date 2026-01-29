@@ -21,7 +21,7 @@ async function detail(req, res, next) {
       request.rowId,
       primaryField.name,
     );
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       data: detailData,
     });
@@ -32,7 +32,7 @@ async function detail(req, res, next) {
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);
     } else {
-      return res.status(error.code).send({
+      return res.status(error.code).json({
         success: false,
         message: error.message,
       });

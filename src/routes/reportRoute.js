@@ -7,14 +7,14 @@ const reportValidation = require('../validations/reportvalidation');
 const router = Router();
 
 router.get(
-  '/api/report/jsreport',
+  '/report/jsreport',
   middleware.authenticateToken,
   middleware.validateRequest(reportValidation.getjsReport),
   reportController.jsReport,
 );
 
 router.get(
-  '/api/report/previewDataSchema',
+  '/report/previewDataSchema',
   middleware.authenticateToken,
   middleware.validateRequest(reportValidation.getPreviewDataSchema),
   reportController.previewDataSchema,

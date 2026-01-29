@@ -5,6 +5,6 @@ const {fieldController} = require('../controllers');
 
 const router = Router();
 
-router.get('/api/field/rows', middleware.authenticateToken, fieldController.rows);
+router.get('/field/rows', middleware.authenticateToken, fieldController.rows);
 
 module.exports = router;

@@ -9,7 +9,7 @@ async function columns(req, res, next) {
     const fields = await commonService.getModuleFields(request.id);
     const columns = await helpers.generateColumnByField(fields);
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       data: columns,
     });
@@ -20,7 +20,7 @@ async function columns(req, res, next) {
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);
     } else {
-      return res.status(error.code).send({
+      return res.status(error.code).json({
         success: false,
         message: error.message,
       });

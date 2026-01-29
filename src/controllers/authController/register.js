@@ -14,7 +14,7 @@ async function register(req, res, next) {
     const createdUser = await authService.insertUser(userData, t);
 
     await t.commit();
-    return res.status(enums.statusCode.CREATED).send({
+    return res.status(enums.statusCode.CREATED).json({
       success: true,
       message: 'Registration successful',
       data: createdUser,

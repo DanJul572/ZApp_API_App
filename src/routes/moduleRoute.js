@@ -5,16 +5,16 @@ const {moduleController} = require('../controllers');
 
 const router = Router();
 
-router.get('/api/module/detail', middleware.authenticateToken, moduleController.detail);
+router.get('/module/detail', middleware.authenticateToken, moduleController.detail);
 
 router.post(
-  '/api/module/create',
+  '/module/create',
   middleware.parseJsonData,
   middleware.authenticateToken,
   moduleController.create,
 );
 router.post(
-  '/api/module/delete',
+  '/module/delete',
   middleware.parseJsonData,
   middleware.authenticateToken,
   moduleController.destroy,

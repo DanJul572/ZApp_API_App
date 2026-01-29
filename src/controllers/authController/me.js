@@ -13,7 +13,7 @@ async function me(req, res, next) {
       });
     }
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       data: {
         userId: user.userId,

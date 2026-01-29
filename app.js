@@ -16,11 +16,10 @@ app.use(config.cors);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(config.multer);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', config.rateLimit);
-app.use('/', routes);
+app.use('/api', routes);
 app.use(errorHandler);
 
 module.exports = app;

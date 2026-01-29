@@ -9,7 +9,7 @@ async function options(req, res, next) {
     const field = await commonService.getField(request.id);
     const fieldOptions = await commonService.getFieldOptions(field);
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       data: fieldOptions,
     });
@@ -20,7 +20,7 @@ async function options(req, res, next) {
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);
     } else {
-      return res.status(error.code).send({
+      return res.status(error.code).json({
         success: false,
         message: error.message,
       });

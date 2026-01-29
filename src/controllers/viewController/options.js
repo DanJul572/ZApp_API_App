@@ -8,7 +8,7 @@ async function options(req, res, next) {
 
     const options = await viewService.getOptions(request.moduleId);
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       data: options,
     });

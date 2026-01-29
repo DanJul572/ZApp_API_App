@@ -62,7 +62,7 @@ async function streamCsvAsZip(label, query, res) {
 
   archive.on('error', err => {
     if (!res.headersSent) {
-      res.status(enums.statusCode.INTERNAL_SERVER_ERROR).end();
+      return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).end();
     } else {
       res.destroy(err);
     }
@@ -89,7 +89,7 @@ async function streamExcelAsZip(label, query, res) {
 
   archive.on('error', err => {
     if (!res.headersSent) {
-      res.status(enums.statusCode.INTERNAL_SERVER_ERROR).end();
+      return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).end();
     } else {
       res.destroy(err);
     }

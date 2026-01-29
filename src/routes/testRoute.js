@@ -4,6 +4,6 @@ const {testController} = require('../controllers');
 
 const router = Router();
 
-router.get('/api/test', testController.test);
+router.get('/test', testController.test);
 
 module.exports = router;

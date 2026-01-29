@@ -1,7 +1,7 @@
 const enums = require('../../enums');
 
 async function test(_req, res) {
-  res.status(enums.statusCode.OK).send({
+  return res.status(enums.statusCode.OK).json({
     success: true,
     message: 'hello world!',
   });

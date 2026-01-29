@@ -10,7 +10,7 @@ async function login(req, res, next) {
     const passwordIsMatch = await authService.checkPassword(request.password, user.password);
 
     if (!user || !passwordIsMatch) {
-      return res.status(enums.statusCode.BAD_REQUEST).send({
+      return res.status(enums.statusCode.BAD_REQUEST).json({
         success: false,
         message: 'Invalid email or password',
       });
@@ -25,7 +25,7 @@ async function login(req, res, next) {
 
     res.cookie('access_token', token, cookieSetting);
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       message: 'You have successfully logged in',
       data: {

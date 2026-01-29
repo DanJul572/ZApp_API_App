@@ -9,20 +9,27 @@ async function importExcelController(req, res, next) {
 
   try {
     const {id} = req.query;
-    const files = req.files;
+    const file = req.file;
 
-    if (!files || !files.length) {
-      res.status(enums.statusCode.BAD_REQUEST).json({
+    if (!file) {
+      return res.status(enums.statusCode.BAD_REQUEST).json({
         success: false,
         message: 'file is required',
       });
     }
 
-    filePath = files[0].path;
+    if (!id) {
+      return res.status(enums.statusCode.BAD_REQUEST).json({
+        success: false,
+        message: 'id is required',
+      });
+    }
+
+    filePath = file.path;
 
     const module = await importService.getModuleById(id);
     if (!module) {
-      res.status(enums.statusCode.BAD_REQUEST).json({
+      return res.status(enums.statusCode.BAD_REQUEST).json({
         success: false,
         message: 'Module not found',
       });
@@ -30,6 +37,7 @@ async function importExcelController(req, res, next) {
 
     const fields = await importService.getModuleFields(module.id);
     const columns = importService.getColumnNameFromFields(fields);
+
     const importOptions = {
       table: importService.sanitaizeTableName(module.name),
       columns: columns,
@@ -38,9 +46,9 @@ async function importExcelController(req, res, next) {
 
     await importService.importExcel(filePath, importOptions);
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
-      message: 'import is success',
+      message: 'Import is success',
     });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);

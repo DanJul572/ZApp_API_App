@@ -5,6 +5,6 @@ const {viewController} = require('../controllers');
 
 const router = Router();
 
-router.get('/api/view/options', middleware.authenticateToken, viewController.options);
+router.get('/view/options', middleware.authenticateToken, viewController.options);
 
 module.exports = router;

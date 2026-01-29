@@ -20,7 +20,7 @@ async function destory(req, res, next) {
     await moduleService.dropTable(module.name, identity.name, t);
 
     await t.commit();
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       message: 'module_is_deleted',
     });

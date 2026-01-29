@@ -1,16 +1,16 @@
 const multer = require('multer');
 
-const file = require('./file');
+const fileConfig = require('./file');
 
 const multerConfig = multer({
   storage: multer.diskStorage({
-    destination: file.fileUpload.destination,
+    destination: fileConfig.fileUpload.destination,
     filename: (_req, file, cb) => {
       cb(null, `${Date.now()}-${file.originalname}`);
     },
   }),
   limits: {
-    fileSize: 1024 * 1024 * file.fileUpload.maxSize,
+    fileSize: 1024 * 1024 * fileConfig.fileUpload.maxSize,
   },
 });
 

@@ -14,7 +14,7 @@ async function run(req, res, next) {
     const script = await scriptService.getDetailData(module.name, param.id, identity.name);
     const data = await scriptService.executeScript(script.sql);
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       message: 'Script executed successfully',
       data: data,

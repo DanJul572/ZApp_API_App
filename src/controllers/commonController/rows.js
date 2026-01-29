@@ -17,7 +17,7 @@ async function rows(req, res, next) {
       request.defaultFilter,
     );
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       data: data,
     });
@@ -28,7 +28,7 @@ async function rows(req, res, next) {
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);
     } else {
-      return res.status(error.code).send({
+      return res.status(error.code).json({
         success: false,
         message: error.message,
       });

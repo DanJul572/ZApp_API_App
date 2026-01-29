@@ -19,7 +19,7 @@ async function create(req, res, next) {
     await moduleService.generateTable(request.name, request.fields, t);
 
     await t.commit();
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       message: 'module_is_created',
     });

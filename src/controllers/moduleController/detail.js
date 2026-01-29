@@ -11,7 +11,7 @@ async function detail(req, res, next) {
 
     module.fields = fields;
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       data: module,
     });

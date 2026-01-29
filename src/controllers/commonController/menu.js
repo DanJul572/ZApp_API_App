@@ -9,7 +9,7 @@ async function menu(req, res, next) {
     const user = helpers.decodeToken(token);
     const menu = await commonService.getMenu(user.roleId);
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       data: menu,
     });
@@ -20,7 +20,7 @@ async function menu(req, res, next) {
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);
     } else {
-      return res.status(error.code).send({
+      return res.status(error.code).json({
         success: false,
         message: error.message,
       });

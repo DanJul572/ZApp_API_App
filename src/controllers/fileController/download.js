@@ -8,7 +8,7 @@ async function download(req, res, next) {
 
     const data = await fileService.download(param.name);
 
-    return res.status(enums.statusCode.OK).send({
+    return res.status(enums.statusCode.OK).json({
       success: true,
       data: data,
     });
