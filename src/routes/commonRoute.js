@@ -1,5 +1,6 @@
 const {Router} = require('express');
 
+const config = require('../config');
 const middleware = require('../middleware');
 const {commonController} = require('../controllers');
 
@@ -12,6 +13,7 @@ router.get('/common/options', commonController.options);
 
 router.post(
   '/common/create',
+  config.multer.fields(),
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.create,
@@ -19,6 +21,7 @@ router.post(
 
 router.post(
   '/common/delete',
+  config.multer.none(),
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.destroy,
@@ -26,6 +29,7 @@ router.post(
 
 router.post(
   '/common/rows',
+  config.multer.none(),
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.rows,
@@ -33,6 +37,7 @@ router.post(
 
 router.post(
   '/common/update',
+  config.multer.fields(),
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.update,
