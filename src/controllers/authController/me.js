@@ -7,9 +7,9 @@ async function me(req, res, next) {
     const user = helpers.decodeToken(token);
 
     if (!user) {
-      return res.status(enums.statusCode.NOT_FOUND).json({
+      return res.status(enums.statusCode.BAD_REQUEST).json({
         success: false,
-        message: 'user_not_found',
+        message: 'User not found',
       });
     }
 

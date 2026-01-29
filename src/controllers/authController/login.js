@@ -10,9 +10,9 @@ async function login(req, res, next) {
     const passwordIsMatch = await authService.checkPassword(request.password, user.password);
 
     if (!user || !passwordIsMatch) {
-      return res.status(enums.statusCode.NOT_FOUND).send({
+      return res.status(enums.statusCode.BAD_REQUEST).send({
         success: false,
-        message: 'invalid email or password',
+        message: 'Invalid email or password',
       });
     }
 

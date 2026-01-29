@@ -22,9 +22,9 @@ async function importExcelController(req, res, next) {
 
     const module = await importService.getModuleById(id);
     if (!module) {
-      res.status(enums.statusCode.NOT_FOUND).json({
+      res.status(enums.statusCode.BAD_REQUEST).json({
         success: false,
-        message: 'module not found',
+        message: 'Module not found',
       });
     }
 
