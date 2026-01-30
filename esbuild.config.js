@@ -9,6 +9,26 @@ esbuild
     target: 'node22',
     minify: false,
     sourcemap: true,
-    external: ['pg', 'mysql2', 'sqlite3', 'sequelize-cli'],
+    external: [
+      // database drivers
+      'pg',
+      'mysql2',
+      'sqlite3',
+
+      // pg ecosystem
+      'pg-copy-streams',
+      'pg-hstore',
+      'pg-query-stream',
+
+      // orm & cli
+      'sequelize',
+      'sequelize-cli',
+
+      // crypto / heavy runtime
+      'bcryptjs',
+
+      // runtime client
+      '@jsreport/nodejs-client',
+    ],
   })
   .catch(() => process.exit(1));
