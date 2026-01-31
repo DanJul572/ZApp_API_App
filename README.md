@@ -15,7 +15,6 @@ API ini menyediakan endpoint untuk autentikasi, manajemen data, serta integrasi 
 - 📦 **Multer** – dukungan upload file.
 - 🌍 **dotenv-flow** – manajemen konfigurasi environment.
 - 🛠️ **Husky & Prettier** – menjaga kualitas kode dan konsistensi format.
-- 📖 **Swagger** – dokumentasi API interaktif.
 
 ---
 

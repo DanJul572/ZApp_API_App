@@ -1,89 +1,112 @@
 const login = require('../../../controllers/authController/login');
 const authService = require('../../../services/authService');
+const helpers = require('../../../helpers');
+const enums = require('../../../enums');
 
 jest.mock('../../../services/authService');
-jest.mock('../../../enums', () => ({
-  statusCode: {
-    NOT_FOUND: 404,
-    BAD_REQUEST: 400,
-    INTERNAL_SERVER_ERROR: 500,
-  },
-}));
+jest.mock('../../../helpers');
 
-describe('login controller', () => {
-  let req, res;
+describe('Login Controller', () => {
+  let req, res, next;
 
   beforeEach(() => {
-    req = {body: {email: 'test@example.com', password: 'password123'}};
-    res = {
-      json: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn(),
+    req = {
+      body: {
+        email: 'test@mail.com',
+        password: 'password123',
+      },
     };
+
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+      cookie: jest.fn(),
+    };
+
+    next = jest.fn();
+
+    enums.statusCode = {
+      OK: 200,
+      BAD_REQUEST: 400,
+    };
+
+    helpers.getErrorResponse.mockReturnValue({
+      code: 'ERR_DEFAULT',
+      message: 'Unexpected error',
+    });
+
+    helpers.createErrorLog.mockResolvedValue();
+  });
+
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return accessToken and afterLogin on successful login', async () => {
-    const user = {email: 'test@example.com', password: 'hashed', roleId: 1};
-    const menu = {afterLogin: '/dashboard'};
-    const token = 'jwt.token';
+  it('should return 400 if email or password is invalid', async () => {
+    authService.getUserByEmail.mockResolvedValue(null);
 
-    authService.getUserByEmail.mockResolvedValue(user);
+    await login(req, res, next);
+
+    expect(authService.getUserByEmail).toHaveBeenCalledWith(req.body.email);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      message: 'Invalid email or password',
+    });
+  });
+
+  it('should return 200 and token data when login success', async () => {
+    const mockUser = {
+      id: 1,
+      email: 'test@mail.com',
+      password: 'hashed-password',
+      roleId: 2,
+    };
+
+    const mockMenu = {
+      afterLogin: '/dashboard',
+    };
+
+    authService.getUserByEmail.mockResolvedValue(mockUser);
     authService.checkPassword.mockResolvedValue(true);
-    authService.getMenu.mockResolvedValue(menu);
-    authService.generateToken.mockReturnValue(token);
+    authService.getMenu.mockResolvedValue(mockMenu);
+    authService.generateToken.mockReturnValue('mock-token');
+    authService.getCookieSetting.mockReturnValue({httpOnly: true});
+    authService.getTokenExpiredSecond.mockReturnValue(3600);
+    authService.getTokenExpiredDate.mockReturnValue('2026-01-30');
 
-    await login(req, res);
+    await login(req, res, next);
 
-    expect(authService.getUserByEmail).toHaveBeenCalledWith('test@example.com');
-    expect(authService.checkPassword).toHaveBeenCalledWith('password123', 'hashed');
-    expect(authService.getMenu).toHaveBeenCalledWith(1);
-    expect(authService.generateToken).toHaveBeenCalledWith(user, menu);
+    expect(authService.checkPassword).toHaveBeenCalledWith(req.body.password, mockUser.password);
+
+    expect(res.cookie).toHaveBeenCalledWith('access_token', 'mock-token', {httpOnly: true});
+
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       success: true,
-      message: 'successful login',
+      message: 'You have successfully logged in',
       data: {
         afterLogin: '/dashboard',
-        accessToken: 'jwt.token',
+        expiredIn: 3600,
+        expiredAt: '2026-01-30',
       },
     });
   });
 
-  it('should return BAD_REQUEST if user not found or password mismatch', async () => {
-    authService.getUserByEmail.mockResolvedValue(null);
+  it('should call next and create error log when error happens', async () => {
+    const error = new Error('DB Error');
 
-    await login(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.send).toHaveBeenCalledWith({
-      success: false,
-      message: 'user not found',
+    authService.getUserByEmail.mockRejectedValue(error);
+    helpers.getErrorResponse.mockReturnValue({
+      code: 'ERR_001',
+      message: 'DB Error',
     });
-  });
+    helpers.createErrorLog.mockResolvedValue();
 
-  it('should return BAD_REQUEST if password does not match', async () => {
-    const user = {email: 'test@example.com', password: 'hashed', roleId: 1};
-    authService.getUserByEmail.mockResolvedValue(user);
-    authService.checkPassword.mockResolvedValue(false);
+    await login(req, res, next);
 
-    await login(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith({
-      success: false,
-      message: 'invalid password',
-    });
-  });
-
-  it('should return INTERNAL_SERVER_ERROR on exception', async () => {
-    authService.getUserByEmail.mockRejectedValue(new Error('DB error'));
-
-    await login(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.send).toHaveBeenCalledWith({
-      success: false,
-      message: 'DB error',
-    });
+    expect(helpers.getErrorResponse).toHaveBeenCalledWith('DB Error');
+    expect(helpers.createErrorLog).toHaveBeenCalled();
+    expect(next).toHaveBeenCalledWith(error);
   });
 });

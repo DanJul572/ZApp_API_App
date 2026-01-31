@@ -6,4 +6,5 @@ module.exports = {
     '!src/seeders/**/*.js',
     '!src/routes/**/*.js',
   ],
+  testPathIgnorePatterns: ['/node_modules/', 'src/controllers/testController/test.js'],
 };

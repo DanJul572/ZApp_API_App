@@ -41,6 +41,7 @@ typings/
 
 # Optional npm cache directory
 .npm
+.npmrc
 
 # Optional eslint cache
 .eslintcache
@@ -71,4 +72,5 @@ dist
 !.vscode/extensions.json
 .idea
 
+# upload folder
 uploads
