@@ -1,7 +1,7 @@
 const dayjs = require('dayjs');
 
 const db = require('../models');
-const {commonBuilder} = require('../builders');
+const { commonBuilder } = require('../builders');
 const dateTimeFormatConfig = require('../config/datetimeFormat');
 
 async function getRows(moduleName, fields, page, filter, sort, defaultFilter) {
@@ -17,7 +17,7 @@ async function getRows(moduleName, fields, page, filter, sort, defaultFilter) {
     }
 
     const countQuery = commonBuilder.getRowsCount(moduleName);
-    const {rowsQuery, rowsValues} = commonBuilder.getRows(
+    const { rowsQuery, rowsValues } = commonBuilder.getRows(
       moduleName,
       fields,
       page,
@@ -52,7 +52,7 @@ async function getRows(moduleName, fields, page, filter, sort, defaultFilter) {
       rows: rows,
     };
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -72,7 +72,7 @@ async function getRowDetail(tableName, rowId, primaryFieldName) {
         throw new Error(error.message);
       });
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -93,7 +93,7 @@ async function deleteRow(tableName, primaryFieldName, rowId, transaction) {
         throw new Error(error.message);
       });
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -109,7 +109,7 @@ async function getOptions(field) {
         throw new Error(error.message);
       });
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -118,7 +118,7 @@ async function insertRow(table, data, transaction) {
     data.createdAt = dayjs().format(dateTimeFormatConfig.datetime.value);
     data.updatedAt = dayjs().format(dateTimeFormatConfig.datetime.value);
 
-    const {query, values} = commonBuilder.insertRow(table, data);
+    const { query, values } = commonBuilder.insertRow(table, data);
 
     const queryOptions = {
       replacements: values,
@@ -133,7 +133,7 @@ async function insertRow(table, data, transaction) {
 
     return results[0];
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -148,7 +148,7 @@ async function insertManyRows(table, dataArray, transaction) {
       updatedAt: timestamp,
     }));
 
-    const {query, values} = commonBuilder.insertManyRows(table, dataWithTimestamps);
+    const { query, values } = commonBuilder.insertManyRows(table, dataWithTimestamps);
 
     await db.sequelize.query(query, {
       replacements: values,
@@ -158,7 +158,7 @@ async function insertManyRows(table, dataArray, transaction) {
 
     return 'Data has been created.';
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -170,7 +170,7 @@ async function updateRow(moduleName, primaryFieldName, rowId, data, transaction)
 
     data.updatedAt = dayjs().format(dateTimeFormatConfig.datetime.value);
 
-    const {query, values} = commonBuilder.updateRow(moduleName, data, condition);
+    const { query, values } = commonBuilder.updateRow(moduleName, data, condition);
 
     return await db.sequelize
       .query(query, {
@@ -185,7 +185,7 @@ async function updateRow(moduleName, primaryFieldName, rowId, data, transaction)
         throw new Error(error.message);
       });
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -205,7 +205,7 @@ async function getMenu(roleId) {
         throw new Error(error.message);
       });
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 

@@ -1,5 +1,5 @@
 const db = require('../models');
-const {viewBuilder} = require('../builders');
+const { viewBuilder } = require('../builders');
 
 async function getOptions(moduleId) {
   try {
@@ -16,7 +16,7 @@ async function getOptions(moduleId) {
         throw new Error(error.message);
       });
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 

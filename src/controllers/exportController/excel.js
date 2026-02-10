@@ -4,7 +4,7 @@ const exportService = require('../../services/exportSevice');
 
 async function excel(req, res, next) {
   try {
-    const {id} = req.query;
+    const { id } = req.query;
 
     const queryData = await exportService.getQueryData(id);
     if (!queryData) {

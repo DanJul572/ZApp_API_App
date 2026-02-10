@@ -1,6 +1,6 @@
 const db = require('../models');
 const enums = require('../enums');
-const {fieldBuilder} = require('../builders');
+const { fieldBuilder } = require('../builders');
 
 module.exports = {
   async getFields(moduleId) {
@@ -62,7 +62,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 
@@ -79,7 +79,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 
@@ -98,7 +98,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 
@@ -117,7 +117,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 };

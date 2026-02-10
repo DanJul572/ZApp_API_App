@@ -1,6 +1,6 @@
 const ExcelJS = require('exceljs');
 const archiver = require('archiver');
-const {PassThrough} = require('stream');
+const { PassThrough } = require('stream');
 const fastCsv = require('fast-csv');
 
 const databaseConfig = require('../config/database');
@@ -49,7 +49,7 @@ async function getMysqlCsvStream(query) {
 }
 
 async function streamCsvAsZip(label, query, res) {
-  let csvStream = null;
+  let csvStream;
   if (databaseConfig.dialect === 'postgres') {
     csvStream = await exportQuery.getPostgreCopyStream(query);
   } else {
@@ -57,7 +57,7 @@ async function streamCsvAsZip(label, query, res) {
   }
 
   const archive = archiver('zip', {
-    zlib: {level: 9},
+    zlib: { level: 9 },
   });
 
   archive.on('error', err => {
@@ -72,7 +72,7 @@ async function streamCsvAsZip(label, query, res) {
   res.on('aborted', () => archive.abort());
 
   archive.pipe(res);
-  archive.append(csvStream, {name: `${label}.csv`});
+  archive.append(csvStream, { name: `${label}.csv` });
   await archive.finalize();
 }
 
@@ -85,7 +85,7 @@ async function streamExcelAsZip(label, query, res) {
     rowStream = await exportQuery.getMysqlRowStream(query);
   }
 
-  const archive = archiver('zip', {zlib: {level: 9}});
+  const archive = archiver('zip', { zlib: { level: 9 } });
 
   archive.on('error', err => {
     if (!res.headersSent) {
@@ -99,7 +99,7 @@ async function streamExcelAsZip(label, query, res) {
   res.on('aborted', () => archive.abort());
 
   archive.pipe(res);
-  archive.append(excelStream, {name: `${label}.xlsx`});
+  archive.append(excelStream, { name: `${label}.xlsx` });
 
   const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({
     stream: excelStream,

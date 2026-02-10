@@ -71,7 +71,7 @@ describe('Login Controller', () => {
     authService.checkPassword.mockResolvedValue(true);
     authService.getMenu.mockResolvedValue(mockMenu);
     authService.generateToken.mockReturnValue('mock-token');
-    authService.getCookieSetting.mockReturnValue({httpOnly: true});
+    authService.getCookieSetting.mockReturnValue({ httpOnly: true });
     authService.getTokenExpiredSecond.mockReturnValue(3600);
     authService.getTokenExpiredDate.mockReturnValue('2026-01-30');
 
@@ -79,7 +79,7 @@ describe('Login Controller', () => {
 
     expect(authService.checkPassword).toHaveBeenCalledWith(req.body.password, mockUser.password);
 
-    expect(res.cookie).toHaveBeenCalledWith('access_token', 'mock-token', {httpOnly: true});
+    expect(res.cookie).toHaveBeenCalledWith('access_token', 'mock-token', { httpOnly: true });
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({

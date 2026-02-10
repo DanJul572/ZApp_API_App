@@ -8,7 +8,7 @@ function parseJsonData(req, res, next) {
     } catch {
       return res
         .status(enums.statusCode.BAD_REQUEST)
-        .json({message: 'Invalid JSON format in "data" field'});
+        .json({ message: 'Invalid JSON format in "data" field' });
     }
   }
   next();

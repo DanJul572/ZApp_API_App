@@ -1,4 +1,4 @@
-const {ValidationError} = require('express-validation');
+const { ValidationError } = require('express-validation');
 
 const enums = require('../enums');
 

@@ -1,6 +1,6 @@
 const db = require('../models');
 
-const {authBuilder} = require('../builders');
+const { authBuilder } = require('../builders');
 
 async function findByEmail(email) {
   try {
@@ -17,7 +17,7 @@ async function findByEmail(email) {
         throw new Error(error.message);
       });
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 

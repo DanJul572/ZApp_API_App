@@ -9,13 +9,13 @@ function save(files, moduleId) {
     values.push(file.originalname, fileBuffer, file.mimetype, file.encoding, file.size, moduleId);
   });
 
-  return {query, values};
+  return { query, values };
 }
 
 function deleteFile(files) {
   let placeholders = files.map(() => '?').join(', ');
   let query = `DELETE FROM "files" WHERE "name" IN (${placeholders})`;
-  return {query, values: files};
+  return { query, values: files };
 }
 
 function deleteByModuleId() {

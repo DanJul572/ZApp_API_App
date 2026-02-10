@@ -2,9 +2,9 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 
 export default [
-  {ignores: ['dist/**']},
-  {files: ['**/*.js'], languageOptions: {sourceType: 'commonjs'}},
-  {languageOptions: {globals: globals.node}},
+  { ignores: ['dist/**'] },
+  { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
+  { languageOptions: { globals: globals.node } },
   pluginJs.configs.recommended,
   {
     files: ['**/*.test.js', '**/*.spec.js'],
@@ -16,12 +16,12 @@ export default [
   },
   {
     rules: {
-      'array-bracket-spacing': 'warn',
+      'array-bracket-spacing': 'off',
       'comma-spacing': 'warn',
       eqeqeq: 'warn',
       'func-call-spacing': 'warn',
       'key-spacing': 'warn',
-      'object-curly-spacing': 'warn',
+      'object-curly-spacing': 'off',
       semi: 'warn',
     },
   },

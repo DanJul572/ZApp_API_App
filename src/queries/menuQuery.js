@@ -1,5 +1,5 @@
 const db = require('../models');
-const {menuBuilder} = require('../builders');
+const { menuBuilder } = require('../builders');
 
 module.exports = {
   findByRoleId(roleId) {
@@ -17,7 +17,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 };

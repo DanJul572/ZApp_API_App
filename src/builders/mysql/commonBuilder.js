@@ -40,7 +40,7 @@ function getRows(table, fields, page, filter, sort, defaultFilter) {
   rowsQuery += ` LIMIT ${tableConfig.rowsPerPage} OFFSET ?`;
   rowsValues.push(offset);
 
-  return {rowsQuery, rowsValues};
+  return { rowsQuery, rowsValues };
 }
 
 function getRowDetail(table, field) {
@@ -75,7 +75,7 @@ function insertRow(table, data) {
 
   const query = `INSERT INTO \`${table}\` (${fieldQuery}) VALUES (${valuePlaceholders})`;
 
-  return {query, values};
+  return { query, values };
 }
 
 function insertManyRows(table, data) {
@@ -93,7 +93,7 @@ function insertManyRows(table, data) {
 
   const query = `INSERT INTO \`${table}\` (${fieldQuery}) VALUES ${valuePlaceholders}`;
 
-  return {query, values};
+  return { query, values };
 }
 
 function updateRow(table, newData, condition) {
@@ -120,7 +120,7 @@ function updateRow(table, newData, condition) {
     query += ' WHERE ' + whereClauses.join(' AND ');
   }
 
-  return {query, values};
+  return { query, values };
 }
 
 function getMenu() {

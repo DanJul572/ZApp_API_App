@@ -1,13 +1,13 @@
 const db = require('../models');
 const enums = require('../enums');
-const {fileBuilder} = require('../builders');
+const { fileBuilder } = require('../builders');
 
 module.exports = {
   save(files, moduleId, transaction) {
     try {
       if (!files || !files.length) return;
 
-      const {query, values} = fileBuilder.save(files, moduleId);
+      const { query, values } = fileBuilder.save(files, moduleId);
 
       return db.sequelize
         .query(query, {
@@ -19,7 +19,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 
@@ -42,7 +42,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 
@@ -60,7 +60,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 
@@ -80,7 +80,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 };

@@ -13,7 +13,7 @@ async function generateColumnByField(fields) {
     });
     return columns;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 

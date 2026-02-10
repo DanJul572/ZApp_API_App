@@ -1,8 +1,8 @@
-const {Router} = require('express');
+const { Router } = require('express');
 
 const config = require('../config');
 const middleware = require('../middleware');
-const {moduleController} = require('../controllers');
+const { moduleController } = require('../controllers');
 
 const router = Router();
 

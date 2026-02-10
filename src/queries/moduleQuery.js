@@ -1,5 +1,5 @@
 const db = require('../models');
-const {moduleBuilder} = require('../builders');
+const { moduleBuilder } = require('../builders');
 
 module.exports = {
   async createTable(name, fields, transaction) {
@@ -13,7 +13,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 
@@ -28,7 +28,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 
@@ -47,7 +47,7 @@ module.exports = {
           throw new Error(error.message);
         });
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
   },
 };

@@ -12,7 +12,7 @@ module.exports = {
       values.push(file.originalname, fileBuffer, file.mimetype, file.encoding, file.size, moduleId);
     });
 
-    return {query, values};
+    return { query, values };
   },
 
   delete(files) {
@@ -24,7 +24,7 @@ module.exports = {
       }
     }
     query += ')';
-    return {query, values: files};
+    return { query, values: files };
   },
 
   deleteByModuleId() {

@@ -1,6 +1,6 @@
 const db = require('../models');
 const helpers = require('../helpers');
-const {validationBuilder} = require('../builders');
+const { validationBuilder } = require('../builders');
 
 function getValidations(moduleId, actionId, validationTimeId) {
   try {
@@ -17,7 +17,7 @@ function getValidations(moduleId, actionId, validationTimeId) {
         throw new Error(error.message);
       });
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -41,7 +41,7 @@ async function runValidation(data, moduleId, actionId, validationTimeId, user = 
       return;
     }
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 

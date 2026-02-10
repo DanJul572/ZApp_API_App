@@ -2,7 +2,7 @@ const copyTo = require('pg-copy-streams').to;
 const QueryStream = require('pg-query-stream');
 
 const db = require('../models');
-const {exportBuilder} = require('../builders');
+const { exportBuilder } = require('../builders');
 
 async function getPostgreCopyStream(query) {
   const connection = await db.sequelize.connectionManager.getConnection();
@@ -28,7 +28,7 @@ async function getMysqlRowStream(sql) {
   const connection = await db.sequelize.connectionManager.getConnection();
 
   const query = connection.query(sql);
-  const stream = query.stream({highWaterMark: 1000});
+  const stream = query.stream({ highWaterMark: 1000 });
 
   let released = false;
   const release = () => {

@@ -1,6 +1,6 @@
 const multer = require('multer');
 
-const {fileUpload} = require('../config/file');
+const { fileUpload } = require('../config/file');
 
 function multerErrorHandler(err, req, res, next) {
   if (err instanceof multer.MulterError) {

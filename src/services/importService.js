@@ -49,7 +49,7 @@ function getRowsMapping(columns, row) {
 }
 
 async function importExcel(filePath, options) {
-  const {table, columns, mapRow} = options;
+  const { table, columns, mapRow } = options;
 
   const copyStream = await importQuery.getCopyStream(table, columns);
 

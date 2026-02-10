@@ -8,7 +8,7 @@ async function importExcelController(req, res, next) {
   let filePath;
 
   try {
-    const {id} = req.query;
+    const { id } = req.query;
     const file = req.file;
 
     if (!file) {

@@ -1,7 +1,7 @@
 const copyFrom = require('pg-copy-streams').from;
 
 const db = require('../models');
-const {importBuilder} = require('../builders');
+const { importBuilder } = require('../builders');
 
 async function getCopyStream(table, columns) {
   const connection = await db.sequelize.connectionManager.getConnection();
