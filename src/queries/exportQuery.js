@@ -24,26 +24,6 @@ async function getPostgreCopyStream(query) {
   return stream;
 }
 
-async function getMysqlRowStream(sql) {
-  const connection = await db.sequelize.connectionManager.getConnection();
-
-  const query = connection.query(sql);
-  const stream = query.stream({ highWaterMark: 1000 });
-
-  let released = false;
-  const release = () => {
-    if (released) return;
-    released = true;
-    db.sequelize.connectionManager.releaseConnection(connection);
-  };
-
-  stream.on('end', release);
-  stream.on('error', release);
-  stream.on('close', release);
-
-  return stream;
-}
-
 async function getPostgreQueryStream(sql) {
   const connection = await db.sequelize.connectionManager.getConnection();
   const queryStream = new QueryStream(sql);
@@ -66,6 +46,5 @@ async function getPostgreQueryStream(sql) {
 
 module.exports = {
   getPostgreQueryStream,
-  getMysqlRowStream,
   getPostgreCopyStream,
 };

@@ -1,9 +1,7 @@
 const ExcelJS = require('exceljs');
 const archiver = require('archiver');
 const { PassThrough } = require('stream');
-const fastCsv = require('fast-csv');
 
-const databaseConfig = require('../config/database');
 const enums = require('../enums');
 const commonQuery = require('../queries/commonQuery');
 const exportQuery = require('../queries/exportQuery');
@@ -16,46 +14,8 @@ async function getQueryData(id) {
   return await commonQuery.getRowDetail('scripts', id, 'id');
 }
 
-async function getMysqlCsvStream(query) {
-  const queryStream = await exportQuery.getMysqlRowStream(query);
-  const csvStream = fastCsv.format({
-    headers: true,
-  });
-
-  const output = new PassThrough();
-
-  let released = false;
-  const release = () => {
-    if (released) return;
-    released = true;
-  };
-
-  queryStream
-    .on('error', err => {
-      csvStream.destroy(err);
-      release();
-    })
-    .on('end', release)
-    .on('close', release);
-
-  csvStream.on('error', err => {
-    queryStream.destroy(err);
-    release();
-  });
-
-  queryStream.pipe(csvStream).pipe(output);
-
-  return output;
-}
-
 async function streamCsvAsZip(label, query, res) {
-  let csvStream;
-  if (databaseConfig.dialect === 'postgres') {
-    csvStream = await exportQuery.getPostgreCopyStream(query);
-  } else {
-    csvStream = await getMysqlCsvStream(query);
-  }
-
+  const csvStream = await exportQuery.getPostgreCopyStream(query);
   const archive = archiver('zip', {
     zlib: { level: 9 },
   });
@@ -78,13 +38,7 @@ async function streamCsvAsZip(label, query, res) {
 
 async function streamExcelAsZip(label, query, res) {
   const excelStream = new PassThrough();
-  let rowStream;
-  if (databaseConfig.dialect === 'postgres') {
-    rowStream = await exportQuery.getPostgreQueryStream(query);
-  } else {
-    rowStream = await exportQuery.getMysqlRowStream(query);
-  }
-
+  const rowStream = await exportQuery.getPostgreQueryStream(query);
   const archive = archiver('zip', { zlib: { level: 9 } });
 
   archive.on('error', err => {

@@ -12,7 +12,6 @@ esbuild
     external: [
       // database drivers
       'pg',
-      'mysql2',
       'sqlite3',
 
       // pg ecosystem
