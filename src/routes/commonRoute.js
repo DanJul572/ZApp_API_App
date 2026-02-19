@@ -13,7 +13,7 @@ router.get('/common/options', commonController.options);
 
 router.post(
   '/common/create',
-  config.multer.fields(),
+  config.multer.any(),
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.create,
@@ -37,7 +37,7 @@ router.post(
 
 router.post(
   '/common/update',
-  config.multer.fields(),
+  config.multer.any(),
   middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.update,

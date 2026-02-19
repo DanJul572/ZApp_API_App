@@ -1,4 +1,5 @@
 const multer = require('multer');
+const { randomUUID } = require('crypto');
 
 const fileConfig = require('./file');
 
@@ -6,7 +7,7 @@ const multerConfig = multer({
   storage: multer.diskStorage({
     destination: fileConfig.fileUpload.destination,
     filename: (_req, file, cb) => {
-      cb(null, `${Date.now()}-${file.originalname}`);
+      cb(null, `${randomUUID()}-${file.originalname}`);
     },
   }),
   limits: {
