@@ -22,7 +22,6 @@ router.post(
 router.post(
   '/common/delete',
   config.multer.none(),
-  middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.destroy,
 );
@@ -30,7 +29,6 @@ router.post(
 router.post(
   '/common/rows',
   config.multer.none(),
-  middleware.parseJsonData,
   middleware.authenticateToken,
   commonController.rows,
 );

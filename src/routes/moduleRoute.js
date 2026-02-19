@@ -18,7 +18,6 @@ router.post(
 router.post(
   '/module/delete',
   config.multer.none(),
-  middleware.parseJsonData,
   middleware.authenticateToken,
   moduleController.destroy,
 );
