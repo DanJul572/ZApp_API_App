@@ -23,14 +23,6 @@ function normalizeValue(value) {
   return String(value);
 }
 
-async function getModuleById(moduleId) {
-  return await moduleQuery.getModule(moduleId);
-}
-
-async function getModuleFields(moduleId) {
-  return await fieldQuery.getFields(moduleId);
-}
-
 function sanitaizeTableName(tableName) {
   return tableName.replace(/[^a-zA-Z0-9-_]/g, '_');
 }
@@ -46,6 +38,14 @@ function getRowsMapping(columns, row) {
       return `"${value.replace(/"/g, '""')}"`;
     })
     .join(',');
+}
+
+async function getModuleById(moduleId) {
+  return await moduleQuery.getModule(moduleId);
+}
+
+async function getModuleFields(moduleId) {
+  return await fieldQuery.getFields(moduleId);
 }
 
 async function importExcel(filePath, options) {
