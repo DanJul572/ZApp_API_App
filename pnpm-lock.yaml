@@ -80,8 +80,8 @@ importers:
         specifier: ^4.14.0
         version: 4.14.0(pg@8.20.0)
       sequelize:
-        specifier: ^6.37.7
-        version: 6.37.7(pg-hstore@2.3.4)(pg@8.20.0)
+        specifier: ^6.37.8
+        version: 6.37.8(pg-hstore@2.3.4)(pg@8.20.0)
       sequelize-cli:
         specifier: ^6.6.5
         version: 6.6.5
@@ -4018,12 +4018,6 @@ packages:
         integrity: sha512-6lswVVSztmHiRtD6I8hw4qP/nDm1EJbKMRhf3HCYaqud7frGysPv7FYJ5noZQdhQtN2xJnimfMtvQq21pdbzyQ==,
       }
 
-  pg-connection-string@2.10.1:
-    resolution:
-      {
-        integrity: sha512-iNzslsoeSH2/gmDDKiyMqF64DATUCWj3YJ0wP14kqcsf2TUklwimd+66yYojKwZCA7h2yRNLGug71hCBA2a4sw==,
-      }
-
   pg-connection-string@2.12.0:
     resolution:
       {
@@ -4406,10 +4400,10 @@ packages:
       }
     engines: { node: '>= 10.0.0' }
 
-  sequelize@6.37.7:
+  sequelize@6.37.8:
     resolution:
       {
-        integrity: sha512-mCnh83zuz7kQxxJirtFD7q6Huy6liPanI67BSlbzSYgVNl5eXVdE2CN1FuAeZwG1SNpGsNRCV+bJAVVnykZAFA==,
+        integrity: sha512-HJ0IQFqcTsTiqbEgiuioYFMSD00TP6Cz7zoTti+zVVBwVe9fEhev9cH6WnM3XU31+ABS356durAb99ZuOthnKw==,
       }
     engines: { node: '>=10.0.0' }
     peerDependencies:
@@ -7557,8 +7551,6 @@ snapshots:
   pg-cloudflare@1.3.0:
     optional: true
 
-  pg-connection-string@2.10.1: {}
-
   pg-connection-string@2.12.0: {}
 
   pg-copy-streams@7.0.0: {}
@@ -7772,7 +7764,7 @@ snapshots:
 
   sequelize-pool@7.1.0: {}
 
-  sequelize@6.37.7(pg-hstore@2.3.4)(pg@8.20.0):
+  sequelize@6.37.8(pg-hstore@2.3.4)(pg@8.20.0):
     dependencies:
       '@types/debug': 4.1.12
       '@types/validator': 13.15.10
@@ -7782,7 +7774,7 @@ snapshots:
       lodash: 4.17.23
       moment: 2.30.1
       moment-timezone: 0.5.48
-      pg-connection-string: 2.10.1
+      pg-connection-string: 2.12.0
       retry-as-promised: 7.1.1
       semver: 7.7.3
       sequelize-pool: 7.1.0
