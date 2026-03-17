@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@jsreport/nodejs-client": "^4.1.0",
+    "amqplib": "^0.10.9",
     "archiver": "^7.0.1",
     "bcryptjs": "^3.0.3",
     "body-parser": "^2.2.2",

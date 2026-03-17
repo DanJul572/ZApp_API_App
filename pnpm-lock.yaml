@@ -10,6 +10,9 @@ importers:
       '@jsreport/nodejs-client':
         specifier: ^4.1.0
         version: 4.1.0(debug@4.4.3)
+      amqplib:
+        specifier: ^0.10.9
+        version: 0.10.9
       archiver:
         specifier: ^7.0.1
         version: 7.0.1
@@ -1486,6 +1489,13 @@ packages:
         integrity: sha512-IWrosm/yrn43eiKqkfkHis7QioDleaXQHdDVPKg0FSwwd/DuvyX79TZnFOnYpB7dcsFAMmtFztZuXPDvSePkFw==,
       }
 
+  amqplib@0.10.9:
+    resolution:
+      {
+        integrity: sha512-jwSftI4QjS3mizvnSnOrPGYiUnm1vI2OP1iXeOUz5pb74Ua0nbf6nPyyTzuiCLEE3fMpaJORXh2K/TQ08H5xGA==,
+      }
+    engines: { node: '>=10' }
+
   ansi-escapes@4.3.2:
     resolution:
       {
@@ -1811,6 +1821,12 @@ packages:
         integrity: sha512-I7wzHwA3t1/lwXQh+A5PbNvJxgfo5r3xulgpYDB5zckTu/Z9oUK9biouBKQUjEqzaz3HnAT6TYoovmE+GqSf7A==,
       }
     engines: { node: '>=0.10' }
+
+  buffer-more-ints@1.0.0:
+    resolution:
+      {
+        integrity: sha512-EMetuGFz5SLsT0QTnXzINh4Ksr+oo4i+UGTXEshiGCQWnsgSs7ZhJ8fzlwQ+OzEMs0MpDAMr1hxnblp5a4vcHg==,
+      }
 
   buffer@5.7.1:
     resolution:
@@ -4207,6 +4223,12 @@ packages:
       }
     engines: { node: '>=0.6' }
 
+  querystringify@2.2.0:
+    resolution:
+      {
+        integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==,
+      }
+
   range-parser@1.2.1:
     resolution:
       {
@@ -4259,6 +4281,12 @@ packages:
         integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==,
       }
     engines: { node: '>=0.10.0' }
+
+  requires-port@1.0.0:
+    resolution:
+      {
+        integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==,
+      }
 
   resolve-cwd@3.0.0:
     resolution:
@@ -4820,6 +4848,12 @@ packages:
     resolution:
       {
         integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==,
+      }
+
+  url-parse@1.5.10:
+    resolution:
+      {
+        integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==,
       }
 
   util-deprecate@1.0.2:
@@ -5842,6 +5876,11 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
+  amqplib@0.10.9:
+    dependencies:
+      buffer-more-ints: 1.0.0
+      url-parse: 1.5.10
+
   ansi-escapes@4.3.2:
     dependencies:
       type-fest: 0.21.3
@@ -6079,6 +6118,8 @@ snapshots:
   buffer-from@1.1.2: {}
 
   buffer-indexof-polyfill@1.0.2: {}
+
+  buffer-more-ints@1.0.0: {}
 
   buffer@5.7.1:
     dependencies:
@@ -7598,6 +7639,8 @@ snapshots:
     dependencies:
       side-channel: 1.1.0
 
+  querystringify@2.2.0: {}
+
   range-parser@1.2.1: {}
 
   raw-body@3.0.2:
@@ -7638,6 +7681,8 @@ snapshots:
       minimatch: 5.1.6
 
   require-directory@2.1.1: {}
+
+  requires-port@1.0.0: {}
 
   resolve-cwd@3.0.0:
     dependencies:
@@ -7996,6 +8041,11 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  url-parse@1.5.10:
+    dependencies:
+      querystringify: 2.2.0
+      requires-port: 1.0.0
 
   util-deprecate@1.0.2: {}
 

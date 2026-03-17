@@ -6,11 +6,14 @@ const logger = require('morgan');
 const path = require('path');
 
 const errorHandler = require('./src/middleware/errorHandler');
+const rabbitmq = require('./src/helpers/rabbitmq');
 
 const routes = require('./src/routes');
 const config = require('./src/config');
 
 const app = express();
+
+rabbitmq.connect();
 
 app.use(config.cors);
 app.use(logger('dev'));
