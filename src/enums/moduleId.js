@@ -11,8 +11,8 @@ module.exports = {
   scripts: 10,
   actions: 11,
   access: 12,
-  validationtimes: 13,
+  validationTypes: 13,
   validations: 14,
-  logError: 15,
-  jsReportDataSchema: 16,
+  logErrors: 15,
+  jsReportDataSchemas: 16,
 };

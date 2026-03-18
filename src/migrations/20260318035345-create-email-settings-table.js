@@ -3,24 +3,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('logerror', {
+    await queryInterface.createTable('emailSettings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      url: {
-        allowNull: false,
-        type: Sequelize.STRING,
+      openTracking: {
+        type: Sequelize.BOOLEAN,
       },
-      method: {
-        allowNull: false,
-        type: Sequelize.STRING,
+      clickTracking: {
+        type: Sequelize.BOOLEAN,
       },
-      message: {
+      unsubscribeLink: {
+        type: Sequelize.BOOLEAN,
+      },
+      emailId: {
         allowNull: false,
-        type: Sequelize.TEXT,
+        type: Sequelize.INTEGER,
+      },
+      emailPriorityLevelId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +39,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('logerror');
+    await queryInterface.dropTable('emailSettings');
   },
 };

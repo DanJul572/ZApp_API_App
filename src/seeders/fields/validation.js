@@ -92,7 +92,7 @@ module.exports = [
     label: 'validation Time ID',
     inputType: enums.inputType.dropdown,
     dataType: enums.dataType.tableReference,
-    tableRef: 'validationtimes',
+    tableRef: 'validationTypes',
     tableRefKey: 'id',
     tableRefName: 'label',
     tableRefAlias: null,

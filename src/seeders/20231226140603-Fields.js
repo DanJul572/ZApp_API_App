@@ -6,15 +6,15 @@ const dataTypes = require('./fields/dataTypes');
 const fields = require('./fields/fields');
 const files = require('./fields/files');
 const inputTypes = require('./fields/inputTypes');
-const jsReportDataSchema = require('./fields/jsReportDataSchema');
-const logError = require('./fields/logError');
+const jsReportDataSchemas = require('./fields/jsReportDataSchemas');
+const logErrors = require('./fields/logErrors');
 const menus = require('./fields/menus');
 const modules = require('./fields/modules');
 const roles = require('./fields/roles');
 const script = require('./fields/script');
 const users = require('./fields/users');
 const validation = require('./fields/validation');
-const validationTime = require('./fields/validationTime');
+const validationTypes = require('./fields/validationTypes');
 const views = require('./fields/views');
 
 /** @type {import('sequelize-cli').Migration} */
@@ -27,14 +27,14 @@ module.exports = {
       fields,
       files,
       inputTypes,
-      jsReportDataSchema,
-      logError,
+      jsReportDataSchemas,
+      logErrors,
       menus,
       roles,
       script,
       users,
       validation,
-      validationTime,
+      validationTypes,
       views,
     );
     await queryInterface.bulkInsert('fields', combine, {});

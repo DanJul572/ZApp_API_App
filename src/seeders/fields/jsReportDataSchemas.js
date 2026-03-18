@@ -7,7 +7,7 @@ const now = dayjs().format(dateTimeFormatConfig.datetime.value);
 
 module.exports = [
   {
-    moduleId: enums.moduleId.jsReportDataSchema,
+    moduleId: enums.moduleId.jsReportDataSchemas,
     name: 'id',
     label: 'ID',
     inputType: enums.inputType.number,
@@ -27,7 +27,7 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: enums.moduleId.jsReportDataSchema,
+    moduleId: enums.moduleId.jsReportDataSchemas,
     name: 'name',
     label: 'Name',
     inputType: enums.inputType.shortText,
@@ -47,7 +47,7 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: enums.moduleId.jsReportDataSchema,
+    moduleId: enums.moduleId.jsReportDataSchemas,
     name: 'schema',
     label: 'Schema',
     inputType: enums.inputType.code,

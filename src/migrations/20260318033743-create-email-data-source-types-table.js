@@ -3,20 +3,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('jsreportdataschema', {
+    await queryInterface.createTable('emailDataSourceTypes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
+      label: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      schema: {
+      emailId: {
         allowNull: false,
-        type: Sequelize.JSONB,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +30,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('jsreportdataschema');
+    await queryInterface.dropTable('emailDataSourceTypes');
   },
 };

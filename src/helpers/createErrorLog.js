@@ -16,7 +16,7 @@ async function createLogError(req, code, message) {
   switch (config.errorLogTarget) {
     case 'database':
       try {
-        await commonQuery.insertRow('logerror', payload);
+        await commonQuery.insertRow('logErrors', payload);
       } catch (err) {
         console.error('Failed to write error log to DB', err);
       }

@@ -34,13 +34,13 @@ module.exports = {
           updatedAt: now,
         },
         {
-          name: 'inputtypes',
+          name: 'inputTypes',
           label: 'Input Types',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'datatypes',
+          name: 'dataTypes',
           label: 'Data Types',
           createdAt: now,
           updatedAt: now,
@@ -94,7 +94,7 @@ module.exports = {
           updatedAt: now,
         },
         {
-          name: 'validationtimes',
+          name: 'validationTypes',
           label: 'Validation Times',
           createdAt: now,
           updatedAt: now,
@@ -106,13 +106,13 @@ module.exports = {
           updatedAt: now,
         },
         {
-          name: 'logerror',
+          name: 'logErrors',
           label: 'Log Error',
           createdAt: now,
           updatedAt: now,
         },
         {
-          name: 'jsreportdataschema',
+          name: 'jsReportDataSchemas',
           label: 'JS Report Data Schema',
           createdAt: now,
           updatedAt: now,

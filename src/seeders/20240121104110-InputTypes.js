@@ -19,7 +19,7 @@ module.exports = {
     const now = dayjs().format(dateTimeFormatConfig.datetime.value);
 
     await queryInterface.bulkInsert(
-      'inputtypes',
+      'inputTypes',
       [
         {
           value: 1,
@@ -129,6 +129,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('inputtypes', null, {});
+    await queryInterface.bulkDelete('inputTypes', null, {});
   },
 };

@@ -7,7 +7,7 @@ const now = dayjs().format(dateTimeFormatConfig.datetime.value);
 
 module.exports = [
   {
-    moduleId: enums.moduleId.validationtimes,
+    moduleId: enums.moduleId.validationTypes,
     name: 'id',
     label: 'ID',
     inputType: enums.inputType.number,
@@ -27,7 +27,7 @@ module.exports = [
     updatedAt: now,
   },
   {
-    moduleId: enums.moduleId.validationtimes,
+    moduleId: enums.moduleId.validationTypes,
     name: 'label',
     label: 'Label',
     inputType: enums.inputType.shortText,
