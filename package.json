@@ -14,7 +14,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@jsreport/nodejs-client": "^4.1.0",
+    "@jsreport/nodejs-client": "^4.1.1",
     "amqplib": "^1.0.3",
     "archiver": "^7.0.1",
     "bcryptjs": "^3.0.3",

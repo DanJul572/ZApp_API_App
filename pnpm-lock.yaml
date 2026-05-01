@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@jsreport/nodejs-client':
-        specifier: ^4.1.0
-        version: 4.1.0(debug@4.4.3)
+        specifier: ^4.1.1
+        version: 4.1.1(debug@4.4.3)
       amqplib:
         specifier: ^1.0.3
         version: 1.0.3
@@ -661,8 +661,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@jsreport/nodejs-client@4.1.0':
-    resolution: {integrity: sha512-QWupUQzMzxWFvY+AlSdUZGlinJv4cKhYmVE9rIe+he7rn4B24tezFmNdnrDcTSFv3hj4x7sTNqpeHT0fItfs5Q==}
+  '@jsreport/nodejs-client@4.1.1':
+    resolution: {integrity: sha512-PQfJmTKjb9tGtsunOkC6Z2DRixLBP8jg38N6gI0UW8vRTfnWOnz1lje/jcvJN8Ycc6+uGyc53kpBfgpbtOJpUQ==}
     engines: {node: '>=22.18'}
 
   '@napi-rs/wasm-runtime@0.2.12':
@@ -998,8 +998,8 @@ packages:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
     engines: {node: '>= 4.0.0'}
 
-  axios@1.13.2:
-    resolution: {integrity: sha512-VPk9ebNqPcy5lRGuSlKx752IlDatOjT9paPlm8A7yOuW2Fbvp4X3JznJtT4f0GzGLLiWE9W8onz51SqLYwzGaA==}
+  axios@1.15.2:
+    resolution: {integrity: sha512-wLrXxPtcrPTsNlJmKjkPnNPK2Ihe0hn0wGSaTEiHRPxwjvJwT3hKmXF4dpqxmPO9SoNb2FsYXj/xEo0gHN+D5A==}
 
   b4a@1.7.3:
     resolution: {integrity: sha512-5Q2mfq2WfGuFp3uS//0s6baOJLMoVduPYVeNmDYxu5OUA1/cBfvr2RIS7vi62LdNj/urk1hfmj867I3qt6uZ7Q==}
@@ -2462,8 +2462,9 @@ packages:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
     engines: {node: '>= 0.10'}
 
-  proxy-from-env@1.1.0:
-    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+  proxy-from-env@2.1.0:
+    resolution: {integrity: sha512-cJ+oHTW1VAEa8cJslgmUZrc+sjRKgAKl3Zyse6+PV38hZe/V6Z14TbCuXcan9F9ghlz4QrFr2c92TNF82UkYHA==}
+    engines: {node: '>=10'}
 
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
@@ -3527,9 +3528,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@jsreport/nodejs-client@4.1.0(debug@4.4.3)':
+  '@jsreport/nodejs-client@4.1.1(debug@4.4.3)':
     dependencies:
-      axios: 1.13.2(debug@4.4.3)
+      axios: 1.15.2(debug@4.4.3)
       concat-stream: 2.0.0
       mimic-response: 2.1.0
     transitivePeerDependencies:
@@ -3869,11 +3870,11 @@ snapshots:
 
   at-least-node@1.0.0: {}
 
-  axios@1.13.2(debug@4.4.3):
+  axios@1.15.2(debug@4.4.3):
     dependencies:
       follow-redirects: 1.15.11(debug@4.4.3)
       form-data: 4.0.5
-      proxy-from-env: 1.1.0
+      proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
 
@@ -5525,7 +5526,7 @@ snapshots:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
 
-  proxy-from-env@1.1.0: {}
+  proxy-from-env@2.1.0: {}
 
   punycode@2.3.1: {}
 
