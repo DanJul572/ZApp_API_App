@@ -2,18 +2,21 @@ const { ValidationError } = require('express-validation');
 
 const enums = require('../enums');
 
-function errorHandler(err, _req, res) {
+// eslint-disable-next-line no-unused-vars
+function errorHandler(err, _req, res, _next) {
   if (err instanceof ValidationError) {
     return res.status(err.statusCode).json({
-      success: false,
-      message: err.message,
       data: err.details,
+      message: err.message,
+      statusCode: err.statusCode,
+      success: false,
     });
   }
 
   return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
-    success: false,
     message: 'An unexpected error occurred. Please try again later.',
+    statusCode: enums.statusCode.INTERNAL_SERVER_ERROR,
+    success: false,
   });
 }
 
