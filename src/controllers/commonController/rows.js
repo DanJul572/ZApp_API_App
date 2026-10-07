@@ -23,7 +23,6 @@ async function rows(req, res, next) {
     });
   } catch (err) {
     const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
 
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);

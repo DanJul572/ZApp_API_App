@@ -1,3 +1,4 @@
+const config = require('../config');
 const enums = require('../enums');
 
 const commonQuery = require('../queries/commonQuery');
@@ -8,6 +9,12 @@ const validationQuery = require('../queries/validationQuery');
 
 async function getModuleById(moduleId) {
   return await moduleQuery.getModule(moduleId);
+}
+
+function assertWritableModule(module) {
+  if (config.audit.readOnlyModuleIds.includes(module.id)) {
+    throw new Error(`${enums.statusCode.METHOD_NOT_ALLOWED}:${module.label} is read-only`);
+  }
 }
 
 async function getModuleFields(moduleId) {
@@ -48,16 +55,16 @@ async function deleteFile(fields, detailData, transaction) {
   return await fileQuery.delete(fields, detailData, transaction);
 }
 
-async function insertData(table, data, user, transaction) {
-  return await commonQuery.insertRow(table, data, user, transaction);
+async function insertData(table, data, transaction) {
+  return await commonQuery.insertRow(table, data, transaction);
 }
 
 async function getData(moduleName, fields, page, filter, sort, defaultFilter) {
   return await commonQuery.getRows(moduleName, fields, page, filter, sort, defaultFilter);
 }
 
-async function getDetailData(tableName, rowId, primaryFieldName) {
-  return await commonQuery.getRowDetail(tableName, rowId, primaryFieldName);
+async function getDetailData(tableName, rowId, primaryFieldName, transaction) {
+  return await commonQuery.getRowDetail(tableName, rowId, primaryFieldName, transaction);
 }
 
 async function deleteData(tableName, primaryFieldName, rowId, transaction) {
@@ -81,6 +88,7 @@ async function getMenu(roleId) {
 }
 
 module.exports = {
+  assertWritableModule,
   deleteData,
   deleteFile,
   getData,

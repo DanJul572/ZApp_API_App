@@ -13,6 +13,10 @@ async function create(req, res, next) {
 
     const user = helpers.decodeToken(token);
     const module = await commonService.getModuleById(request.moduleId);
+    commonService.assertWritableModule(module);
+
+    const fields = await commonService.getModuleFields(module.id);
+    const primaryField = fields.find(field => field.identity);
 
     await commonService.runValidationBefore(
       request.data,
@@ -23,7 +27,19 @@ async function create(req, res, next) {
     );
 
     await commonService.insertFile(files, module.id, t);
-    await commonService.insertData(module.name, request.data, t);
+    const createdData = await commonService.insertData(module.name, request.data, t);
+
+    await helpers.createAuditTrail(
+      req,
+      {
+        module,
+        fields,
+        action: enums.auditAction.create,
+        rowId: createdData[primaryField.name],
+        newData: createdData,
+      },
+      t,
+    );
 
     await commonService.runValidationAfter(request.data, module.id, enums.actionId.create, user, t);
 
@@ -36,7 +52,6 @@ async function create(req, res, next) {
     await t.rollback();
 
     const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
 
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);

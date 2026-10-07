@@ -2,6 +2,8 @@
 
 const access = require('./fields/access');
 const actions = require('./fields/actions');
+const auditLogins = require('./fields/auditLogins');
+const auditTrails = require('./fields/auditTrails');
 const dataTypes = require('./fields/dataTypes');
 const fields = require('./fields/fields');
 const files = require('./fields/files');
@@ -23,6 +25,8 @@ module.exports = {
     const combine = modules.concat(
       access,
       actions,
+      auditLogins,
+      auditTrails,
       dataTypes,
       fields,
       files,

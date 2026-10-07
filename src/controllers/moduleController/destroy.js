@@ -1,6 +1,5 @@
 const db = require('../../models');
 const enums = require('../../enums');
-const helpers = require('../../helpers');
 const moduleService = require('../../services/moduleService');
 
 async function destory(req, res, next) {
@@ -12,12 +11,12 @@ async function destory(req, res, next) {
     const module = await moduleService.getModuleById(request.id);
     const fields = await moduleService.getModuleFields(module.id);
 
-    const identity = fields.find(field => field.identity);
+    const sequence = fields.find(field => field.autoIncrement);
 
     await moduleService.deleteModule(module.id, t);
     await moduleService.deleteFields(module.id, t);
     await moduleService.deleteFiles(module.id, t);
-    await moduleService.dropTable(module.name, identity.name, t);
+    await moduleService.dropTable(module.name, sequence?.name, t);
 
     await t.commit();
     return res.status(enums.statusCode.OK).json({
@@ -26,10 +25,6 @@ async function destory(req, res, next) {
     });
   } catch (err) {
     await t.rollback();
-
-    const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
-
     next(err);
   }
 }

@@ -56,13 +56,14 @@ async function getRows(moduleName, fields, page, filter, sort, defaultFilter) {
   }
 }
 
-async function getRowDetail(tableName, rowId, primaryFieldName) {
+async function getRowDetail(tableName, rowId, primaryFieldName, transaction) {
   try {
     const query = commonBuilder.getRowDetail(tableName, primaryFieldName);
 
     return await db.sequelize
       .query(query, {
         replacements: [rowId],
+        transaction,
         type: db.sequelize.QueryTypes.SELECT,
       })
       .then(result => {

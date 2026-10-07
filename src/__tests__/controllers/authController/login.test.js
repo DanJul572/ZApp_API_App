@@ -80,6 +80,11 @@ describe('Login Controller', () => {
     expect(authService.checkPassword).toHaveBeenCalledWith(req.body.password, mockUser.password);
 
     expect(res.cookie).toHaveBeenCalledWith('access_token', 'mock-token', { httpOnly: true });
+    expect(helpers.createLoginAudit).toHaveBeenCalledWith(req, {
+      action: 'LOGIN_SUCCESS',
+      email: mockUser.email,
+      userId: mockUser.id,
+    });
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
@@ -93,20 +98,41 @@ describe('Login Controller', () => {
     });
   });
 
-  it('should call next and create error log when error happens', async () => {
-    const error = new Error('DB Error');
-
-    authService.getUserByEmail.mockRejectedValue(error);
-    helpers.getErrorResponse.mockReturnValue({
-      code: 'ERR_001',
-      message: 'DB Error',
-    });
-    helpers.createErrorLog.mockResolvedValue();
+  it('should record a failed login when the user is not found', async () => {
+    authService.getUserByEmail.mockResolvedValue(null);
 
     await login(req, res, next);
 
-    expect(helpers.getErrorResponse).toHaveBeenCalledWith('DB Error');
-    expect(helpers.createErrorLog).toHaveBeenCalled();
+    expect(helpers.createLoginAudit).toHaveBeenCalledWith(req, {
+      action: 'LOGIN_FAILED',
+      email: req.body.email,
+      reason: 'User not found',
+    });
+  });
+
+  it('should record a failed login when the password is wrong', async () => {
+    authService.getUserByEmail.mockResolvedValue({ id: 1, email: 'test@mail.com' });
+    authService.checkPassword.mockResolvedValue(false);
+
+    await login(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(helpers.createLoginAudit).toHaveBeenCalledWith(req, {
+      action: 'LOGIN_FAILED',
+      email: 'test@mail.com',
+      userId: 1,
+      reason: 'Invalid password',
+    });
+  });
+
+  it('should pass the error to next so errorHandler can log it', async () => {
+    const error = new Error('DB Error');
+
+    authService.getUserByEmail.mockRejectedValue(error);
+
+    await login(req, res, next);
+
     expect(next).toHaveBeenCalledWith(error);
+    expect(helpers.createLoginAudit).not.toHaveBeenCalled();
   });
 });

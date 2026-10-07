@@ -10,6 +10,8 @@ async function destory(req, res, next) {
     const request = req.body;
 
     const module = await commonService.getModuleById(request.moduleId);
+    commonService.assertWritableModule(module);
+
     const fields = await commonService.getModuleFields(request.moduleId);
 
     const primaryField = fields.find(field => field.identity);
@@ -23,6 +25,18 @@ async function destory(req, res, next) {
     await commonService.deleteFile(fields, detailData, t);
     await commonService.deleteData(module.name, primaryField.name, request.id, t);
 
+    await helpers.createAuditTrail(
+      req,
+      {
+        module,
+        fields,
+        action: enums.auditAction.delete,
+        rowId: request.id,
+        oldData: detailData,
+      },
+      t,
+    );
+
     await t.commit();
     return res.status(enums.statusCode.OK).json({
       success: true,
@@ -32,7 +46,6 @@ async function destory(req, res, next) {
     await t.rollback();
 
     const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
 
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);

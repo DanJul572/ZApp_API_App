@@ -3,6 +3,7 @@
 const dayjs = require('dayjs');
 
 const dateTimeFormatConfig = require('../config/datetimeFormat');
+const logMenu = require('./menus/logMenu');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -43,6 +44,7 @@ module.exports = {
           },
         ],
       },
+      logMenu,
     ]);
 
     await queryInterface.bulkInsert(

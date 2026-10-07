@@ -1,5 +1,4 @@
 const fileService = require('../../services/fileService');
-const helpers = require('../../helpers');
 const enums = require('../../enums');
 
 async function download(req, res, next) {
@@ -13,9 +12,6 @@ async function download(req, res, next) {
       data: data,
     });
   } catch (err) {
-    const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
-
     next(err);
   }
 }

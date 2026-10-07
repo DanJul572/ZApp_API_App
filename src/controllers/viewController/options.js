@@ -1,5 +1,4 @@
 const viewService = require('../../services/viewService');
-const helpers = require('../../helpers');
 const enums = require('../../enums');
 
 async function options(req, res, next) {
@@ -13,9 +12,6 @@ async function options(req, res, next) {
       data: options,
     });
   } catch (err) {
-    const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
-
     next(err);
   }
 }

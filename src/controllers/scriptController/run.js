@@ -1,5 +1,4 @@
 const enums = require('../../enums');
-const helpers = require('../../helpers');
 const scriptService = require('../../services/scriptService');
 
 async function run(req, res, next) {
@@ -20,9 +19,6 @@ async function run(req, res, next) {
       data: data,
     });
   } catch (err) {
-    const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
-
     next(err);
   }
 }

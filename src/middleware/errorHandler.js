@@ -1,9 +1,10 @@
 const { ValidationError } = require('express-validation');
 
 const enums = require('../enums');
+const createErrorLog = require('../helpers/createErrorLog');
 
 // eslint-disable-next-line no-unused-vars
-function errorHandler(err, _req, res, _next) {
+async function errorHandler(err, req, res, _next) {
   if (err instanceof ValidationError) {
     return res.status(err.statusCode).json({
       data: err.details,
@@ -12,6 +13,8 @@ function errorHandler(err, _req, res, _next) {
       success: false,
     });
   }
+
+  await createErrorLog(req, err);
 
   return res.status(enums.statusCode.INTERNAL_SERVER_ERROR).json({
     message: 'An unexpected error occurred. Please try again later.',

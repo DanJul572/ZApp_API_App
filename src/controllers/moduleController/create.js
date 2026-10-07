@@ -1,9 +1,15 @@
 const db = require('../../models');
 const enums = require('../../enums');
-const helpers = require('../../helpers');
 const moduleService = require('../../services/moduleService');
 
 async function create(req, res, next) {
+  if (!req.body.fields?.some(field => field.identity)) {
+    return res.status(enums.statusCode.BAD_REQUEST).json({
+      success: false,
+      message: 'module_requires_identity_field',
+    });
+  }
+
   const t = await db.sequelize.transaction();
 
   try {
@@ -25,10 +31,6 @@ async function create(req, res, next) {
     });
   } catch (err) {
     await t.rollback();
-
-    const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
-
     next(err);
   }
 }

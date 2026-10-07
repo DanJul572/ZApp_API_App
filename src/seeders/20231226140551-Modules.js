@@ -117,6 +117,18 @@ module.exports = {
           createdAt: now,
           updatedAt: now,
         },
+        {
+          name: 'auditTrails',
+          label: 'Audit Trail',
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          name: 'auditLogins',
+          label: 'Login History',
+          createdAt: now,
+          updatedAt: now,
+        },
       ],
       {},
     );

@@ -40,12 +40,12 @@ function createTable(name, fields) {
   columns.push(`"updatedAt" timestamp with time zone NOT NULL DEFAULT now()`);
 
   let primaryKey = fields.find(field => field.identity).name;
-  let sequence = fields.find(field => field.autoIncrement).name;
+  let sequence = fields.find(field => field.autoIncrement)?.name;
 
   columns = columns.join(',');
 
   return `
-    CREATE SEQUENCE "${name}_${sequence}_seq";
+    ${sequence ? `CREATE SEQUENCE "${name}_${sequence}_seq";` : ''}
     CREATE TABLE IF NOT EXISTS public."${name}" (${columns}, PRIMARY KEY ("${primaryKey}"))
     TABLESPACE pg_default;
     ALTER TABLE IF EXISTS public."${name}" OWNER to postgres;
@@ -55,7 +55,7 @@ function createTable(name, fields) {
 function deleteTable(name, sequence) {
   return `
     DROP TABLE IF EXISTS public."${name}";
-    DROP SEQUENCE IF EXISTS "${name}_${sequence}_seq";
+    ${sequence ? `DROP SEQUENCE IF EXISTS "${name}_${sequence}_seq";` : ''}
   `;
 }
 

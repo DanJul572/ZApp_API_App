@@ -6,6 +6,7 @@ const builders = {
     fieldBuilder: require('./postgres/fieldBuilder'),
     fileBuilder: require('./postgres/fileBuilder'),
     importBuilder: require('./postgres/importBuilder'),
+    logBuilder: require('./postgres/logBuilder'),
     menuBuilder: require('./postgres/menuBuilder'),
     moduleBuilder: require('./postgres/moduleBuilder'),
     validationBuilder: require('./postgres/validationBuilder'),

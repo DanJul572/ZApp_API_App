@@ -1,5 +1,4 @@
 const reportService = require('../../services/reportService');
-const helpers = require('../../helpers');
 const enums = require('../../enums');
 
 async function previewDataSchema(req, res, next) {
@@ -27,8 +26,6 @@ async function previewDataSchema(req, res, next) {
       data: jsreportData,
     });
   } catch (err) {
-    const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
     next(err);
   }
 }

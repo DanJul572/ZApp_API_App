@@ -1,5 +1,4 @@
 const fieldService = require('../../services/fieldService');
-const helpers = require('../../helpers');
 const enums = require('../../enums');
 
 async function rows(req, res, next) {
@@ -11,9 +10,6 @@ async function rows(req, res, next) {
       data: data,
     });
   } catch (err) {
-    const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
-
     next(err);
   }
 }

@@ -15,4 +15,6 @@ module.exports = {
   validations: 14,
   logErrors: 15,
   jsReportDataSchemas: 16,
+  auditTrails: 17,
+  auditLogins: 18,
 };

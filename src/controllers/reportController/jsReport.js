@@ -1,5 +1,4 @@
 const reportService = require('../../services/reportService');
-const helpers = require('../../helpers');
 const enums = require('../../enums');
 
 async function jsReport(req, res, next) {
@@ -34,8 +33,6 @@ async function jsReport(req, res, next) {
       .then(response => response.pipe(res))
       .catch(next);
   } catch (err) {
-    const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
     next(err);
   }
 }

@@ -8,12 +8,14 @@ const path = require('path');
 const errorHandler = require('./src/middleware/errorHandler');
 const rabbitmq = require('./src/helpers/rabbitmq');
 
+const jobs = require('./src/jobs');
 const routes = require('./src/routes');
 const config = require('./src/config');
 
 const app = express();
 
 rabbitmq.connect();
+jobs.logRetention.start();
 
 app.use(config.cors);
 app.use(logger('dev'));

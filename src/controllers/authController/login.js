@@ -9,6 +9,12 @@ async function login(req, res, next) {
     const user = await authService.getUserByEmail(request.email);
 
     if (!user) {
+      await helpers.createLoginAudit(req, {
+        action: enums.auditAction.loginFailed,
+        email: request.email,
+        reason: 'User not found',
+      });
+
       return res.status(enums.statusCode.BAD_REQUEST).json({
         success: false,
         message: 'Invalid email or password',
@@ -18,6 +24,13 @@ async function login(req, res, next) {
     const passwordIsMatch = await authService.checkPassword(request.password, user.password);
 
     if (!passwordIsMatch) {
+      await helpers.createLoginAudit(req, {
+        action: enums.auditAction.loginFailed,
+        email: user.email,
+        userId: user.id,
+        reason: 'Invalid password',
+      });
+
       return res.status(enums.statusCode.BAD_REQUEST).json({
         success: false,
         message: 'Invalid email or password',
@@ -33,6 +46,12 @@ async function login(req, res, next) {
 
     res.cookie('access_token', token, cookieSetting);
 
+    await helpers.createLoginAudit(req, {
+      action: enums.auditAction.loginSuccess,
+      email: user.email,
+      userId: user.id,
+    });
+
     return res.status(enums.statusCode.OK).json({
       success: true,
       message: 'You have successfully logged in',
@@ -43,8 +62,6 @@ async function login(req, res, next) {
       },
     });
   } catch (err) {
-    const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
     next(err);
   }
 }

@@ -11,6 +11,8 @@ async function update(req, res, next) {
     const files = req.files;
 
     const module = await commonService.getModuleById(request.moduleId);
+    commonService.assertWritableModule(module);
+
     const fields = await commonService.getModuleFields(module.id);
 
     const primaryField = fields.find(field => field.identity);
@@ -32,6 +34,28 @@ async function update(req, res, next) {
       t,
     );
 
+    // The primary key itself may have been changed by this update.
+    const updatedRowId = request.data[primaryField.name] ?? request.rowId;
+    const updatedData = await commonService.getDetailData(
+      module.name,
+      updatedRowId,
+      primaryField.name,
+      t,
+    );
+
+    await helpers.createAuditTrail(
+      req,
+      {
+        module,
+        fields,
+        action: enums.auditAction.update,
+        rowId: updatedRowId,
+        oldData: detailData,
+        newData: updatedData,
+      },
+      t,
+    );
+
     await t.commit();
     return res.status(enums.statusCode.OK).json({
       success: true,
@@ -42,7 +66,6 @@ async function update(req, res, next) {
     await t.rollback();
 
     const error = helpers.getErrorResponse(err.message);
-    await helpers.createErrorLog(req, error.code, error.message);
 
     if (error.code === enums.statusCode.INTERNAL_SERVER_ERROR) {
       next(err);
