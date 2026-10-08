@@ -21,5 +21,11 @@ module.exports = {
       url: '/error-log',
       icon: null,
     },
+    {
+      id: 'email-log',
+      label: 'Email Log',
+      url: '/email-log',
+      icon: null,
+    },
   ],
 };

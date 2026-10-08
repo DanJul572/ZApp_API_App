@@ -55,8 +55,26 @@ function deleteAttachments(keepIds) {
   return `DELETE FROM "emailAttachments" WHERE "emailId" = ? AND "id" NOT IN (${placeholders})`;
 }
 
+// Locks the due schedules, so two API instances never send the same occurrence.
+function getDueSchedulers() {
+  return (
+    'SELECT s."id", s."emailId", s."emailSchedulerTypeId", s."startTime", s."endTime", ' +
+    's."nextRunAt" ' +
+    'FROM "emailSchedulers" s JOIN "emails" e ON e."id" = s."emailId" ' +
+    'WHERE e."useScheduler" = true AND s."nextRunAt" IS NOT NULL ' +
+    'AND s."nextRunAt" <= NOW() AND s."nextRunAt" <= s."endTime" ' +
+    'ORDER BY s."nextRunAt" FOR UPDATE OF s SKIP LOCKED'
+  );
+}
+
+function updateNextRunAt() {
+  return 'UPDATE "emailSchedulers" SET "nextRunAt" = ?, "updatedAt" = NOW() WHERE "id" = ?';
+}
+
 module.exports = {
   deleteAttachments,
+  getDueSchedulers,
+  updateNextRunAt,
   getAttachment,
   getAttachments,
   getByEmailId,

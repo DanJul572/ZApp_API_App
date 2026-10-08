@@ -16,6 +16,7 @@ const app = express();
 
 rabbitmq.connect();
 jobs.logRetention.start();
+jobs.emailScheduler.start();
 
 app.use(config.cors);
 app.use(logger('dev'));

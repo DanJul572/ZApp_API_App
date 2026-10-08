@@ -129,11 +129,60 @@ const destroy = {
   body: Joi.object({ id }).options({ abortEarly: false }),
 };
 
+const send = {
+  body: Joi.object({ id }).options({ abortEarly: false }),
+};
+
+const sendTest = {
+  body: Joi.object({
+    id,
+    recipient: emailAddress.required().messages({
+      'any.required': 'Test email address is required',
+      'string.empty': 'Test email address is required',
+      'string.email': 'Test email address is not valid',
+    }),
+  }).options({ abortEarly: false }),
+};
+
+const getExecutions = {
+  query: Joi.object({
+    page: Joi.number().integer().min(1),
+    status: Joi.string()
+      .valid(...Object.values(enums.emailExecutionStatus))
+      .allow(''),
+    emailId: Joi.number().integer().positive(),
+    search: Joi.string().allow(''),
+  }).options({ abortEarly: false }),
+};
+
+const getExecution = {
+  query: Joi.object({
+    id: Joi.number().integer().positive().required().messages({
+      'any.required': 'Email log id is required',
+      'number.base': 'Email log id must be a number',
+    }),
+  }).options({ abortEarly: false }),
+};
+
+const retryExecution = {
+  body: Joi.object({
+    id: Joi.number().integer().positive().required().messages({
+      'any.required': 'Email log id is required',
+      'number.base': 'Email log id must be a number',
+    }),
+  }).options({ abortEarly: false }),
+};
+
 module.exports = {
   create,
   destroy,
   getAttachment,
   getDetail,
+  getExecution,
+  getExecutions,
   getRows,
+  retryExecution,
+  send,
+  sendTest,
   update,
 };

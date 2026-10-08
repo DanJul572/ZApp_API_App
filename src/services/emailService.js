@@ -1,6 +1,7 @@
 const fs = require('fs/promises');
 
 const enums = require('../enums');
+const getNextRunAt = require('../helpers/getNextRunAt');
 const commonQuery = require('../queries/commonQuery');
 const emailQuery = require('../queries/emailQuery');
 
@@ -83,6 +84,8 @@ async function insertChildren(emailId, request, transaction) {
         startTime: request.scheduler.startTime,
         endTime: request.scheduler.endTime,
         emailSchedulerTypeId: enums.emailSchedulerType[request.scheduler.type],
+        // Occurrences that are already over when the template is saved are not sent.
+        nextRunAt: getNextRunAt(request.scheduler.startTime, request.scheduler.type),
         emailId,
       },
       transaction,

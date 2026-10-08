@@ -67,4 +67,39 @@ router.post(
   emailController.destroy,
 );
 
+router.post(
+  '/email/send',
+  middleware.authenticateToken,
+  middleware.validateRequest(emailValidation.send),
+  emailController.send,
+);
+
+router.post(
+  '/email/send-test',
+  middleware.authenticateToken,
+  middleware.validateRequest(emailValidation.sendTest),
+  emailController.sendTest,
+);
+
+router.get(
+  '/email/executions',
+  middleware.authenticateToken,
+  middleware.validateRequest(emailValidation.getExecutions),
+  emailController.executions,
+);
+
+router.get(
+  '/email/execution',
+  middleware.authenticateToken,
+  middleware.validateRequest(emailValidation.getExecution),
+  emailController.execution,
+);
+
+router.post(
+  '/email/execution/retry',
+  middleware.authenticateToken,
+  middleware.validateRequest(emailValidation.retryExecution),
+  emailController.retry,
+);
+
 module.exports = router;
