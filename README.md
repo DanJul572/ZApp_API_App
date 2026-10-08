@@ -70,6 +70,12 @@ Jalankan seeding data awal:
 pnpm seed:dev
 ```
 
+Seeder yang sudah dijalankan dicatat di tabel `SequelizeData` (seperti migrasi di `SequelizeMeta`), jadi seed aman dijalankan berulang kali dan hanya menjalankan seeder baru. Untuk mengubah data awal, **jangan edit seeder lama**. Buat seeder baru:
+
+```bash
+npx sequelize seed:generate --name update-menus
+```
+
 Menjalankan server di production:
 
 ```bash
