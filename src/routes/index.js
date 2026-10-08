@@ -3,6 +3,7 @@ var router = express.Router();
 
 const authRoute = require('./authRoute');
 const commonRoute = require('./commonRoute');
+const emailRoute = require('./emailRoute');
 const errorRoute = require('./errorRoute');
 const exportRoute = require('./exportRoute');
 const fieldRoute = require('./fieldRoute');
@@ -16,6 +17,7 @@ const viewRoute = require('./viewRoute');
 
 router.use(authRoute);
 router.use(commonRoute);
+router.use(emailRoute);
 router.use(exportRoute);
 router.use(fieldRoute);
 router.use(fileRoute);

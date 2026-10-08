@@ -2,6 +2,7 @@ const builders = {
   postgres: {
     authBuilder: require('./postgres/authBuilder'),
     commonBuilder: require('./postgres/commonBuilder'),
+    emailBuilder: require('./postgres/emailBuilder'),
     exportBuilder: require('./postgres/exportBuilder'),
     fieldBuilder: require('./postgres/fieldBuilder'),
     fileBuilder: require('./postgres/fileBuilder'),

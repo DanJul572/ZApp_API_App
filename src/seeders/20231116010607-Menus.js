@@ -3,6 +3,7 @@
 const dayjs = require('dayjs');
 
 const dateTimeFormatConfig = require('../config/datetimeFormat');
+const emailMenu = require('./menus/emailMenu');
 const logMenu = require('./menus/logMenu');
 
 /** @type {import('sequelize-cli').Migration} */
@@ -42,6 +43,7 @@ module.exports = {
             url: '/menu',
             icon: null,
           },
+          emailMenu,
         ],
       },
       logMenu,
