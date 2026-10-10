@@ -121,12 +121,11 @@ function removeMenuUrl(tree, url) {
 }
 
 /**
- * Adds the Test Module list and form views, and a "Test Module" menu item, to a database that
- * already has its core data seeded. The module and its table are created as well when the
- * database does not have them yet. Everything that already exists is left as it is.
+ * Adds the Test Module list and form views, and a "Test Module" menu item. The module and its
+ * table are created as well when the database does not have them yet. Everything that already
+ * exists is left as it is, so this also runs safely on databases that already have them.
  *
- * On a fresh database the modules table is still empty here (seeders run after migrations),
- * so this migration does nothing.
+ * Runs after the core seeders (Modules, Fields, Menus), so their data is already there.
  *
  * @type {import('sequelize-cli').Migration}
  */
@@ -141,12 +140,6 @@ module.exports = {
         const [rows] = await sequelize.query(query, { replacements, transaction });
         return rows[0];
       };
-
-      const [{ count }] = await select('SELECT COUNT(*) AS "count" FROM "modules"');
-      if (parseInt(count, 10) === 0) {
-        console.log('Skipped: core data is not seeded yet.');
-        return;
-      }
 
       const now = dayjs().format(dateTimeFormatConfig.datetime.value);
 
