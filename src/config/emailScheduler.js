@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('./loadEnv');
 
 module.exports = {
   // Sends scheduled emails automatically. Disabled unless EMAIL_SCHEDULER_ENABLED=true, so a

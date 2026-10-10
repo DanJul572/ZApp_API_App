@@ -20,4 +20,11 @@ router.get(
   reportController.previewDataSchema,
 );
 
+router.post(
+  '/report/render',
+  middleware.authenticateToken,
+  middleware.validateRequest(reportValidation.postRender),
+  reportController.render,
+);
+
 module.exports = router;

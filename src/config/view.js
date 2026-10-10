@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('./loadEnv');
 
 module.exports = {
   // Must match REACT_APP_ENCRYPTION_KEY of the web app, which decrypts view content.

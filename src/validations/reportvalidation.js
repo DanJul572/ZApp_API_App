@@ -33,7 +33,20 @@ const getPreviewDataSchema = {
   }).options({ abortEarly: false }),
 };
 
+const postRender = {
+  body: Joi.object({
+    template: Joi.string().min(1).required().messages({
+      'any.required': 'Template name is required',
+      'string.empty': 'Template name cannot be empty',
+      'string.min': 'Template name cannot be empty',
+    }),
+
+    data: Joi.object().default({}),
+  }).options({ abortEarly: false }),
+};
+
 module.exports = {
   getjsReport,
   getPreviewDataSchema,
+  postRender,
 };

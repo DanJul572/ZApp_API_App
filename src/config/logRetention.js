@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('./loadEnv');
 
 function toDays(value) {
   const days = parseInt(value, 10);

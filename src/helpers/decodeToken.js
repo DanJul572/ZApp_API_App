@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('../config/loadEnv');
 const jwt = require('jsonwebtoken');
 
 function decodeToken(token) {
