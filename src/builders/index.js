@@ -4,6 +4,7 @@ const builders = {
     commonBuilder: require('./postgres/commonBuilder'),
     emailBuilder: require('./postgres/emailBuilder'),
     emailExecutionBuilder: require('./postgres/emailExecutionBuilder'),
+    emailTrackingBuilder: require('./postgres/emailTrackingBuilder'),
     exportBuilder: require('./postgres/exportBuilder'),
     fieldBuilder: require('./postgres/fieldBuilder'),
     fileBuilder: require('./postgres/fileBuilder'),

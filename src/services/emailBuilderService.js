@@ -3,6 +3,7 @@ const dayjs = require('dayjs');
 const db = require('../models');
 const enums = require('../enums');
 const emailQuery = require('../queries/emailQuery');
+const emailTrackingService = require('./emailTrackingService');
 
 // {{tag}} in the subject, body and recipients.
 const TAG_PATTERN = /\{\{\s*([\w.]+)\s*\}\}/g;
@@ -165,7 +166,10 @@ function toAddresses(templates, values) {
   return [...new Set(addresses)];
 }
 
-function getErrorMessage(to, cc, bcc) {
+function getErrorMessage(to, cc, bcc, unsubscribed) {
+  if (!to.length && unsubscribed.length) {
+    return `Not sent: ${unsubscribed.join(', ')} unsubscribed from this email.`;
+  }
   if (!to.length) return 'No recipient: "Email To" is empty for this record.';
 
   const invalid = [...to, ...cc, ...bcc].filter(address => !isEmailAddress(address));
@@ -179,21 +183,38 @@ function getErrorMessage(to, cc, bcc) {
  * replaced and the recipients resolved. Rows whose recipients are missing or invalid are
  * returned as failed, so they show up in the email log.
  *
- * A test send uses only the first primary row and goes to `testRecipient` alone.
+ * Addresses that unsubscribed from the template are left out. The body gets the tracking pixel,
+ * tracked links and unsubscribe link the template settings ask for.
+ *
+ * A test send uses only the first primary row and goes to `testRecipient` alone, even when that
+ * address unsubscribed.
  */
 async function buildExecutions(email, { trigger, testRecipient } = {}) {
   const isTest = trigger === enums.emailExecutionTrigger.test;
+  const track = emailTrackingService.createTracker(email.settings);
+  const unsubscribed = isTest
+    ? new Set()
+    : await emailTrackingService.getUnsubscribedAddresses(email.id);
   const { primary, primaryRows, optionalSources } = await runSources(email, isTest ? 1 : null);
   const tags = resolveTags(email.mergeTags, primary, primaryRows, optionalSources);
+
+  const isSubscribed = address => !unsubscribed.has(address.toLowerCase());
 
   return primaryRows.map((primaryRow, index) => {
     const values = getValues(tags, primaryRow, index);
 
-    const to = isTest ? [testRecipient] : toAddresses([email.to], values);
-    const cc = isTest ? [] : toAddresses(email.cc, values);
-    const bcc = isTest ? [] : toAddresses(email.bcc, values);
+    const allTo = isTest ? [testRecipient] : toAddresses([email.to], values);
+    const to = allTo.filter(isSubscribed);
+    const cc = isTest ? [] : toAddresses(email.cc, values).filter(isSubscribed);
+    const bcc = isTest ? [] : toAddresses(email.bcc, values).filter(isSubscribed);
     const subject = render(email.subject, values, false);
-    const errorMessage = getErrorMessage(to, cc, bcc);
+    const errorMessage = getErrorMessage(
+      to,
+      cc,
+      bcc,
+      allTo.filter(address => !isSubscribed(address)),
+    );
+    const { trackingId, body, headers } = track(render(email.body, values, true));
 
     return {
       emailId: email.id,
@@ -203,8 +224,10 @@ async function buildExecutions(email, { trigger, testRecipient } = {}) {
       cc: cc.join(', ') || null,
       bcc: bcc.join(', ') || null,
       subject: isTest ? `[TEST] ${subject}` : subject,
-      body: render(email.body, values, true),
+      body,
       priority: email.settings.priority,
+      trackingId,
+      headers,
       status: errorMessage ? enums.emailExecutionStatus.failed : enums.emailExecutionStatus.onQueue,
       errorMessage,
     };

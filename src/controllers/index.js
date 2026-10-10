@@ -1,6 +1,7 @@
 const authController = require('./authController');
 const commonController = require('./commonController');
 const emailController = require('./emailController');
+const emailTrackingController = require('./emailTrackingController');
 const errorController = require('./errorController');
 const exportController = require('./exportController');
 const fieldController = require('./fieldController');
@@ -16,6 +17,7 @@ module.exports = {
   authController,
   commonController,
   emailController,
+  emailTrackingController,
   errorController,
   exportController,
   fieldController,

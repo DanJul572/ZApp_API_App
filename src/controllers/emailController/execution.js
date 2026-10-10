@@ -1,5 +1,7 @@
 const enums = require('../../enums');
+const emailTracking = require('../../helpers/emailTracking');
 const emailExecutionQuery = require('../../queries/emailExecutionQuery');
+const emailTrackingService = require('../../services/emailTrackingService');
 
 async function execution(req, res, next) {
   try {
@@ -11,9 +13,11 @@ async function execution(req, res, next) {
       });
     }
 
+    const clicks = await emailTrackingService.getClicks(data.id);
+
     return res.status(enums.statusCode.OK).json({
       success: true,
-      data: data,
+      data: { ...data, body: emailTracking.removeOpenPixel(data.body), clicks },
     });
   } catch (err) {
     next(err);

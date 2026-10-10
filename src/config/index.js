@@ -3,6 +3,7 @@ const cors = require('./cors');
 const database = require('./database');
 const datetimeFormat = require('./datetimeFormat');
 const emailScheduler = require('./emailScheduler');
+const emailTracking = require('./emailTracking');
 const errorLogTarget = require('./errorLogTarget');
 const file = require('./file');
 const jwt = require('./jwt');
@@ -19,6 +20,7 @@ module.exports = {
   database,
   datetimeFormat,
   emailScheduler,
+  emailTracking,
   errorLogTarget,
   file,
   jwt,

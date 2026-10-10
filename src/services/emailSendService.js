@@ -109,13 +109,14 @@ async function queueEmail(emailId, { trigger, testRecipient } = {}) {
 async function recordBuildFailure(emailId, trigger, message) {
   const email = await emailService.getEmailById(emailId);
   if (!email) return;
+  const { settings } = await emailService.getEmailDetail(email);
 
   await insertExecutions([
     {
       emailId,
       emailName: email.name,
       trigger,
-      priority: 'normal',
+      priority: settings.priority,
       status: failed,
       errorMessage: message,
     },

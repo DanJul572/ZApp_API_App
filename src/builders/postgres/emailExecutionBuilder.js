@@ -11,6 +11,8 @@ const insertFields = [
   'subject',
   'body',
   'priority',
+  'trackingId',
+  'headers',
   'status',
   'errorMessage',
   'createdAt',
