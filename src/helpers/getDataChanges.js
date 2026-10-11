@@ -1,6 +1,8 @@
 const ignoredFields = ['createdAt', 'updatedAt'];
 
+// Binary values are compared as base64; as JSON they would become a long array of numbers.
 function toComparable(value) {
+  if (Buffer.isBuffer(value)) return value.toString('base64');
   return JSON.stringify(value ?? null);
 }
 

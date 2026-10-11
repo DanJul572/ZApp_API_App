@@ -170,5 +170,35 @@ describe('createAuditTrail', () => {
 
       expect(commonQuery.insertRow).not.toHaveBeenCalled();
     });
+    it('should compare binary values and store only a label for them', async () => {
+      const pictureFields = [
+        { name: 'id', identity: true, inputType: enums.inputType.number },
+        { name: 'fileBuffer', inputType: enums.inputType.file, dataType: enums.dataType.byte },
+      ];
+
+      await createAuditTrail(
+        req,
+        {
+          module,
+          fields: pictureFields,
+          action: enums.auditAction.update,
+          rowId: 1,
+          oldData: { id: 1, fileBuffer: Buffer.from([1, 2, 3]) },
+          newData: { id: 1, fileBuffer: Buffer.from([4, 5, 6]) },
+        },
+        transaction,
+      );
+
+      const payload = commonQuery.insertRow.mock.calls[0][1];
+
+      expect(JSON.parse(payload.changes)).toEqual([
+        {
+          field: 'fileBuffer',
+          oldValue: '[Content not stored]',
+          newValue: '[Changed, content not stored]',
+        },
+      ]);
+      expect(JSON.parse(payload.oldData).fileBuffer).toBe('[Content not stored]');
+    });
   });
 });

@@ -11,6 +11,7 @@ const builders = {
     importBuilder: require('./postgres/importBuilder'),
     menuBuilder: require('./postgres/menuBuilder'),
     moduleBuilder: require('./postgres/moduleBuilder'),
+    profileBuilder: require('./postgres/profileBuilder'),
     validationBuilder: require('./postgres/validationBuilder'),
     viewBuilder: require('./postgres/viewBuilder'),
   },

@@ -1,6 +1,6 @@
 const enums = require('../../enums');
 const emailSendService = require('../../services/emailSendService');
-const respondError = require('./respondError');
+const respondError = require('../../helpers/respondError');
 
 async function sendTest(req, res, next) {
   try {

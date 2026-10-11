@@ -7,6 +7,7 @@ const errorLogTarget = require('./errorLogTarget');
 const file = require('./file');
 const jwt = require('./jwt');
 const multer = require('./multer');
+const profile = require('./profile');
 const rabbitmq = require('./rabbitmq');
 const rateLimit = require('./rateLimit');
 const table = require('./table');
@@ -22,6 +23,7 @@ module.exports = {
   file,
   jwt,
   multer,
+  profile,
   rabbitmq,
   rateLimit,
   table,

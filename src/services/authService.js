@@ -27,28 +27,42 @@ async function getMenu(roleId) {
   return await menuQuery.findByRoleId(roleId);
 }
 
-function generateToken(user, afterLogin) {
-  const tokenInfo = {
+function getTokenInfo(user, afterLogin) {
+  return {
     userId: user.id,
     email: user.email,
     roleId: user.roleId,
     userName: user.name,
     afterLogin: afterLogin,
   };
+}
 
+function generateToken(user, afterLogin) {
   const tokenOptions = {
     expiresIn: jwtConfig.expiredIn,
   };
 
-  return jwt.sign(tokenInfo, jwtConfig.secretKey, tokenOptions);
+  return jwt.sign(getTokenInfo(user, afterLogin), jwtConfig.secretKey, tokenOptions);
 }
 
-function getCookieSetting() {
+/**
+ * Signs a token with the user's current name and email that expires together with the token the
+ * request came with, so changing the profile does not lengthen the session.
+ */
+function renewToken(currentToken, user) {
+  return jwt.sign(
+    { ...getTokenInfo(user, currentToken.afterLogin), exp: currentToken.exp },
+    jwtConfig.secretKey,
+  );
+}
+
+// Pass the token's "exp" (in seconds) to keep the cookie only as long as that token is valid.
+function getCookieSetting(expiresAt) {
   return {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    maxAge: 1000 * 60 * 60,
+    maxAge: expiresAt ? Math.max(expiresAt * 1000 - Date.now(), 0) : 1000 * 60 * 60,
   };
 }
 
@@ -99,4 +113,5 @@ module.exports = {
   getUserByEmail,
   hashPassword,
   insertUser,
+  renewToken,
 };

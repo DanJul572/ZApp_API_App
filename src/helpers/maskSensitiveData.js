@@ -6,7 +6,7 @@ function maskSensitiveData(data, extraFieldNames = []) {
     return data.map(item => maskSensitiveData(item, extraFieldNames));
   }
 
-  if (!data || typeof data !== 'object' || data instanceof Date) {
+  if (!data || typeof data !== 'object' || data instanceof Date || Buffer.isBuffer(data)) {
     return data;
   }
 

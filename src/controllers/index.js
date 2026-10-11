@@ -8,6 +8,7 @@ const fieldController = require('./fieldController');
 const fileController = require('./fileController');
 const importController = require('./importController');
 const moduleController = require('./moduleController');
+const profileController = require('./profileController');
 const reportController = require('./reportController');
 const scriptController = require('./scriptController');
 const testController = require('./testController');
@@ -24,6 +25,7 @@ module.exports = {
   fileController,
   importController,
   moduleController,
+  profileController,
   scriptController,
   reportController,
   testController,
