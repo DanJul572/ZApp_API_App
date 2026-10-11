@@ -38,11 +38,12 @@ module.exports = {
     }
   },
 
-  async getAttachments(emailId) {
+  async getAttachments(emailId, transaction) {
     try {
       const query = emailBuilder.getAttachments();
       return await db.sequelize.query(query, {
         replacements: [emailId],
+        transaction,
         type: db.sequelize.QueryTypes.SELECT,
       });
     } catch (error) {

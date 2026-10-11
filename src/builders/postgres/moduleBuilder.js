@@ -4,6 +4,10 @@ function findOne() {
   return `SELECT * FROM "modules" WHERE "id" = ?`;
 }
 
+function findByName() {
+  return `SELECT * FROM "modules" WHERE "name" = ?`;
+}
+
 function createTable(name, fields) {
   let columns = fields.map(field => {
     let column = '';
@@ -61,6 +65,7 @@ function deleteTable(name, sequence) {
 
 module.exports = {
   findOne,
+  findByName,
   createTable,
   deleteTable,
 };

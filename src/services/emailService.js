@@ -1,9 +1,15 @@
 const fs = require('fs/promises');
 
 const enums = require('../enums');
+const createAuditTrail = require('../helpers/createAuditTrail');
 const getNextRunAt = require('../helpers/getNextRunAt');
 const commonQuery = require('../queries/commonQuery');
 const emailQuery = require('../queries/emailQuery');
+const fieldQuery = require('../queries/fieldQuery');
+const moduleQuery = require('../queries/moduleQuery');
+
+// The email builder saves through its own endpoints, so its audit rows are filed under this module.
+const emailModuleName = 'emails';
 
 // Child rows that are rebuilt from the request on every save. Attachments are handled apart
 // because the files that are kept are not sent again.
@@ -134,15 +140,15 @@ async function getEmailById(id, transaction) {
  * Returns the email in the same shape the email builder form uses, so the form can be filled
  * straight from it.
  */
-async function getEmailDetail(email) {
+async function getEmailDetail(email, transaction) {
   const [cc, bcc, dataSources, tags, schedulers, settings, attachments] = await Promise.all([
-    emailQuery.getByEmailId('emailCC', email.id),
-    emailQuery.getByEmailId('emailBCC', email.id),
-    emailQuery.getByEmailId('emailDataSources', email.id),
-    emailQuery.getByEmailId('emailTags', email.id),
-    emailQuery.getByEmailId('emailSchedulers', email.id),
-    emailQuery.getByEmailId('emailSettings', email.id),
-    emailQuery.getAttachments(email.id),
+    emailQuery.getByEmailId('emailCC', email.id, transaction),
+    emailQuery.getByEmailId('emailBCC', email.id, transaction),
+    emailQuery.getByEmailId('emailDataSources', email.id, transaction),
+    emailQuery.getByEmailId('emailTags', email.id, transaction),
+    emailQuery.getByEmailId('emailSchedulers', email.id, transaction),
+    emailQuery.getByEmailId('emailSettings', email.id, transaction),
+    emailQuery.getAttachments(email.id, transaction),
   ]);
 
   const primarySource = dataSources.find(
@@ -195,6 +201,39 @@ async function getEmailDetail(email) {
   };
 }
 
+/**
+ * Returns the whole template, child rows included, as one audit snapshot. The ids of the child
+ * rows that are rebuilt on every save are left out, so an unchanged list is not reported as
+ * changed.
+ */
+async function getEmailAuditData(id, transaction) {
+  const email = await getEmailById(id, transaction);
+  if (!email) return null;
+
+  const detail = await getEmailDetail(email, transaction);
+
+  return {
+    ...detail,
+    optionalSources: detail.optionalSources.map(source => ({ name: source.name, sql: source.sql })),
+    mergeTags: detail.mergeTags.map(tag => ({
+      tag: tag.tag,
+      column: tag.column,
+      defaultValue: tag.defaultValue,
+    })),
+  };
+}
+
+async function createEmailAuditTrail(req, audit, transaction) {
+  const module = await moduleQuery.getModuleByName(emailModuleName, transaction);
+  if (!module) {
+    throw new Error(`Module "${emailModuleName}" is not registered`);
+  }
+
+  const fields = await fieldQuery.getFields(module.id);
+
+  await createAuditTrail(req, { module, fields, ...audit }, transaction);
+}
+
 async function insertEmail(request, files, transaction) {
   const email = await commonQuery.insertRow('emails', toEmailRow(request), transaction);
 
@@ -232,8 +271,10 @@ async function removeUploadedFiles(files) {
 }
 
 module.exports = {
+  createEmailAuditTrail,
   deleteEmail,
   getAttachment,
+  getEmailAuditData,
   getEmailById,
   getEmailDetail,
   getEmails,

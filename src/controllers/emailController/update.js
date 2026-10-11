@@ -17,7 +17,20 @@ async function update(req, res, next) {
       });
     }
 
+    const oldData = await emailService.getEmailAuditData(email.id, t);
+
     await emailService.updateEmail(email.id, request, req.files, t);
+
+    await emailService.createEmailAuditTrail(
+      req,
+      {
+        action: enums.auditAction.update,
+        rowId: email.id,
+        oldData,
+        newData: await emailService.getEmailAuditData(email.id, t),
+      },
+      t,
+    );
 
     await t.commit();
     return res.status(enums.statusCode.OK).json({

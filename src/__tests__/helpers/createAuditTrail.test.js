@@ -2,6 +2,7 @@ const createAuditTrail = require('../../helpers/createAuditTrail');
 const commonQuery = require('../../queries/commonQuery');
 const enums = require('../../enums');
 
+jest.mock('../../models', () => ({}));
 jest.mock('../../queries/commonQuery');
 
 describe('createAuditTrail', () => {
@@ -93,5 +94,81 @@ describe('createAuditTrail', () => {
     expect(JSON.parse(payload.oldData)).toEqual({ id: 1, name: 'Gone' });
     expect(payload.newData).toBeNull();
     expect(payload.changes).toBeNull();
+  });
+  describe('large fields', () => {
+    const emailFields = [
+      { name: 'id', identity: true, inputType: enums.inputType.number },
+      { name: 'subject', inputType: enums.inputType.shortText, dataType: enums.dataType.varchar },
+      { name: 'body', inputType: enums.inputType.richText, dataType: enums.dataType.text },
+      { name: 'design', inputType: enums.inputType.code, dataType: enums.dataType.json },
+    ];
+
+    it('should store a label instead of HTML and JSON values', async () => {
+      await createAuditTrail(
+        req,
+        {
+          module,
+          fields: emailFields,
+          action: enums.auditAction.create,
+          rowId: 1,
+          newData: { id: 1, subject: 'Hi', body: '<p>Hello</p>', design: { rows: [] } },
+        },
+        transaction,
+      );
+
+      const payload = commonQuery.insertRow.mock.calls[0][1];
+
+      expect(JSON.parse(payload.newData)).toEqual({
+        id: 1,
+        subject: 'Hi',
+        body: '[Content not stored]',
+        design: '[Content not stored]',
+      });
+    });
+
+    it('should list a changed large field with labels and keep empty values', async () => {
+      await createAuditTrail(
+        req,
+        {
+          module,
+          fields: emailFields,
+          action: enums.auditAction.update,
+          rowId: 1,
+          oldData: { id: 1, subject: 'Hi', body: '<p>Old</p>', design: null },
+          newData: { id: 1, subject: 'Hi', body: '<p>New</p>', design: { rows: [] } },
+        },
+        transaction,
+      );
+
+      const payload = commonQuery.insertRow.mock.calls[0][1];
+
+      expect(JSON.parse(payload.changes)).toEqual([
+        {
+          field: 'body',
+          oldValue: '[Content not stored]',
+          newValue: '[Changed, content not stored]',
+        },
+        { field: 'design', oldValue: null, newValue: '[Changed, content not stored]' },
+      ]);
+      expect(JSON.parse(payload.oldData).design).toBeNull();
+      expect(JSON.parse(payload.newData).body).toBe('[Content not stored]');
+    });
+
+    it('should not record an update when large fields are unchanged', async () => {
+      await createAuditTrail(
+        req,
+        {
+          module,
+          fields: emailFields,
+          action: enums.auditAction.update,
+          rowId: 1,
+          oldData: { id: 1, body: '<p>Same</p>' },
+          newData: { id: 1, body: '<p>Same</p>' },
+        },
+        transaction,
+      );
+
+      expect(commonQuery.insertRow).not.toHaveBeenCalled();
+    });
   });
 });

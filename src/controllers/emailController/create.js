@@ -8,6 +8,16 @@ async function create(req, res, next) {
   try {
     const email = await emailService.insertEmail(req.body, req.files, t);
 
+    await emailService.createEmailAuditTrail(
+      req,
+      {
+        action: enums.auditAction.create,
+        rowId: email.id,
+        newData: await emailService.getEmailAuditData(email.id, t),
+      },
+      t,
+    );
+
     await t.commit();
     return res.status(enums.statusCode.CREATED).json({
       success: true,

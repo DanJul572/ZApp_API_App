@@ -50,4 +50,18 @@ module.exports = {
       throw new Error(error.message, { cause: error });
     }
   },
+
+  async getModuleByName(name, transaction) {
+    try {
+      const query = moduleBuilder.findByName();
+      const result = await db.sequelize.query(query, {
+        replacements: [name],
+        transaction,
+        type: db.sequelize.QueryTypes.SELECT,
+      });
+      return result.length > 0 ? result[0] : null;
+    } catch (error) {
+      throw new Error(error.message, { cause: error });
+    }
+  },
 };

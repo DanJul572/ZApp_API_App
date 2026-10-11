@@ -1,4 +1,5 @@
 const commonQuery = require('../queries/commonQuery');
+const config = require('../config');
 const enums = require('../enums');
 
 const getDataChanges = require('./getDataChanges');
@@ -7,6 +8,30 @@ const maskSensitiveData = require('./maskSensitiveData');
 
 function toJson(value) {
   return value === null || value === undefined ? null : JSON.stringify(value);
+}
+
+function isLargeField(field) {
+  return (
+    field.inputType === enums.inputType.richText ||
+    field.dataType === enums.dataType.json ||
+    field.dataType === enums.dataType.byte
+  );
+}
+
+function hasValue(value) {
+  return value !== null && value !== undefined;
+}
+
+// Replaces the value of each large field with a label; an empty value is kept as it is.
+function omitLargeValues(data, largeFields, label = config.audit.omittedValue) {
+  if (!data) return data;
+
+  return Object.fromEntries(
+    Object.entries(data).map(([key, value]) => [
+      key,
+      largeFields.includes(key) && hasValue(value) ? label : value,
+    ]),
+  );
 }
 
 /**
@@ -20,7 +45,11 @@ async function createAuditTrail(req, audit, transaction) {
   const passwordFields = fields
     .filter(field => field.inputType === enums.inputType.password)
     .map(field => field.name);
+  const largeFields = fields.filter(isLargeField).map(field => field.name);
   const mask = data => maskSensitiveData(data, passwordFields);
+  const toSnapshot = data => toJson(omitLargeValues(mask(data), largeFields));
+  const hideValue = (field, value, label) =>
+    omitLargeValues(mask({ [field]: value }), largeFields, label)[field];
 
   let changes = null;
 
@@ -28,11 +57,11 @@ async function createAuditTrail(req, audit, transaction) {
     changes = getDataChanges(oldData, newData);
     if (!changes.length) return;
 
-    // A changed password is still listed, only its values are hidden.
+    // A changed password or large field is still listed, only its values are hidden.
     changes = changes.map(change => ({
       field: change.field,
-      oldValue: mask({ [change.field]: change.oldValue })[change.field],
-      newValue: mask({ [change.field]: change.newValue })[change.field],
+      oldValue: hideValue(change.field, change.oldValue),
+      newValue: hideValue(change.field, change.newValue, config.audit.omittedChangedValue),
     }));
   }
 
@@ -45,8 +74,8 @@ async function createAuditTrail(req, audit, transaction) {
       moduleName: module.name,
       rowId: String(rowId),
       action,
-      oldData: toJson(mask(oldData)),
-      newData: toJson(mask(newData)),
+      oldData: toSnapshot(oldData),
+      newData: toSnapshot(newData),
       changes: toJson(changes),
       userId,
       userName,

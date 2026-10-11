@@ -15,7 +15,19 @@ async function destroy(req, res, next) {
       });
     }
 
+    const oldData = await emailService.getEmailAuditData(email.id, t);
+
     await emailService.deleteEmail(email.id, t);
+
+    await emailService.createEmailAuditTrail(
+      req,
+      {
+        action: enums.auditAction.delete,
+        rowId: email.id,
+        oldData,
+      },
+      t,
+    );
 
     await t.commit();
     return res.status(enums.statusCode.OK).json({
