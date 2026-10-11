@@ -1,39 +1,8 @@
 const tableConfig = require('../../config/table');
 
-const insertFields = [
-  'batchId',
-  'emailId',
-  'emailName',
-  'trigger',
-  'to',
-  'cc',
-  'bcc',
-  'subject',
-  'body',
-  'priority',
-  'trackingId',
-  'headers',
-  'status',
-  'errorMessage',
-  'createdAt',
-  'updatedAt',
-];
-
 const listFields =
   '"id", "batchId", "emailId", "emailName", "trigger", "to", "subject", "priority", "status", ' +
   '"errorMessage", "attempts", "sentAt", "createdAt", "updatedAt"';
-
-function insertMany(rows) {
-  const fieldQuery = insertFields.map(field => `"${field}"`).join(', ');
-  const placeholders = `(${insertFields.map(() => '?').join(', ')})`;
-  const values = rows.flatMap(row => insertFields.map(field => row[field] ?? null));
-
-  const query =
-    `INSERT INTO "emailExecutions" (${fieldQuery}) ` +
-    `VALUES ${rows.map(() => placeholders).join(', ')} RETURNING "id", "status"`;
-
-  return { query, values };
-}
 
 function getWhere(filter) {
   const clauses = [];
@@ -86,10 +55,11 @@ function getById() {
   return 'SELECT * FROM "emailExecutions" WHERE "id" = ?';
 }
 
-function setStatus(ids) {
+// Puts a row back on queue; the worker app hands it to the email sender app again.
+function requeue() {
   return (
-    'UPDATE "emailExecutions" SET "status" = ?, "errorMessage" = ?, "updatedAt" = NOW() ' +
-    `WHERE "id" IN (${ids.map(() => '?').join(', ')})`
+    'UPDATE "emailExecutions" SET "status" = \'onQueue\', "errorMessage" = NULL, ' +
+    '"publishedAt" = NULL, "updatedAt" = NOW() WHERE "id" = ?'
   );
 }
 
@@ -97,6 +67,5 @@ module.exports = {
   countByStatus,
   getById,
   getRows,
-  insertMany,
-  setStatus,
+  requeue,
 };

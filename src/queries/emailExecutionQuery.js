@@ -2,20 +2,6 @@ const db = require('../models');
 const { emailExecutionBuilder } = require('../builders');
 
 module.exports = {
-  async insertMany(rows, transaction) {
-    try {
-      const { query, values } = emailExecutionBuilder.insertMany(rows);
-      const [result] = await db.sequelize.query(query, {
-        replacements: values,
-        transaction,
-        type: db.sequelize.QueryTypes.RAW,
-      });
-      return result;
-    } catch (error) {
-      throw new Error(error.message, { cause: error });
-    }
-  },
-
   async getRows(page, filter) {
     try {
       const rows = emailExecutionBuilder.getRows(page, filter);
@@ -53,13 +39,10 @@ module.exports = {
     }
   },
 
-  async setStatus(ids, status, errorMessage, transaction) {
+  async requeue(id) {
     try {
-      if (!ids.length) return;
-
-      await db.sequelize.query(emailExecutionBuilder.setStatus(ids), {
-        replacements: [status, errorMessage, ...ids],
-        transaction,
+      await db.sequelize.query(emailExecutionBuilder.requeue(), {
+        replacements: [id],
         type: db.sequelize.QueryTypes.UPDATE,
       });
     } catch (error) {

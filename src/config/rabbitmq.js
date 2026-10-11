@@ -2,7 +2,7 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 
 // The worker app consumes the same queue names, built from its own NODE_ENV.
 const queueName = {
-  sendEmail: process.env.EMAIL_QUEUE_NAME || `${nodeEnv}_send_email_queue`,
+  emailRequest: process.env.EMAIL_REQUEST_QUEUE_NAME || `${nodeEnv}_email_request_queue`,
 };
 
 module.exports = {

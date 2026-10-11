@@ -6,6 +6,8 @@ const emailExecutionStatus = require('./emailExecutionStatus');
 const emailExecutionTrigger = require('./emailExecutionTrigger');
 const emailPriorityLevel = require('./emailPriorityLevel');
 const emailSchedulerType = require('./emailSchedulerType');
+const emailSendRequestStatus = require('./emailSendRequestStatus');
+const emailWorkerMessageType = require('./emailWorkerMessageType');
 const inputType = require('./inputType');
 const moduleId = require('./moduleId');
 const statusCode = require('./statusCode');
@@ -20,6 +22,8 @@ module.exports = {
   emailExecutionTrigger,
   emailPriorityLevel,
   emailSchedulerType,
+  emailSendRequestStatus,
+  emailWorkerMessageType,
   inputType,
   moduleId,
   statusCode,

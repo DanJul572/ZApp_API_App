@@ -46,14 +46,9 @@ function insertUnsubscribes(count) {
   );
 }
 
-function getUnsubscribedAddresses() {
-  return 'SELECT "address" FROM "emailUnsubscribes" WHERE "emailId" = ?';
-}
-
 module.exports = {
   getByTrackingId,
   getClicks,
-  getUnsubscribedAddresses,
   insertUnsubscribes,
   recordClick,
   recordOpen,

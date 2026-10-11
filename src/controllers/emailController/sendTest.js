@@ -4,14 +4,14 @@ const respondError = require('./respondError');
 
 async function sendTest(req, res, next) {
   try {
-    const result = await emailSendService.queueEmail(req.body.id, {
+    const result = await emailSendService.requestSend(req.body.id, {
       trigger: enums.emailExecutionTrigger.test,
       testRecipient: req.body.recipient.trim(),
     });
 
     return res.status(enums.statusCode.OK).json({
       success: true,
-      message: 'Test email queued',
+      message: 'The test email is being prepared',
       data: result,
     });
   } catch (err) {

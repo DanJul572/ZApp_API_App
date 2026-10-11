@@ -53,13 +53,4 @@ module.exports = {
       transaction,
     );
   },
-
-  async getUnsubscribedAddresses(emailId) {
-    const rows = await run(
-      emailTrackingBuilder.getUnsubscribedAddresses(),
-      [emailId],
-      QueryTypes.SELECT,
-    );
-    return new Set(rows.map(row => row.address));
-  },
 };

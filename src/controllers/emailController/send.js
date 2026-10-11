@@ -4,15 +4,13 @@ const respondError = require('./respondError');
 
 async function send(req, res, next) {
   try {
-    const result = await emailSendService.queueEmail(req.body.id, {
+    const result = await emailSendService.requestSend(req.body.id, {
       trigger: enums.emailExecutionTrigger.manual,
     });
 
-    const failedNote = result.failed ? `, ${result.failed} failed (see the email log)` : '';
-
     return res.status(enums.statusCode.OK).json({
       success: true,
-      message: `${result.queued} email(s) queued${failedNote}`,
+      message: 'The email is being prepared',
       data: result,
     });
   } catch (err) {
