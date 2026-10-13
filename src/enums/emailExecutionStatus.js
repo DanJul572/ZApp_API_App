@@ -1,5 +1,4 @@
-// Values of "emailExecutions"."status". The worker and email sender apps use the
-// same values.
+// Values of "emailExecutions"."status". The email sender app uses the same values.
 module.exports = {
   onQueue: 'onQueue',
   success: 'success',

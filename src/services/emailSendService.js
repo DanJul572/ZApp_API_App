@@ -10,22 +10,23 @@ const emailExecutionQuery = require('../queries/emailExecutionQuery');
 const { success } = enums.emailExecutionStatus;
 
 /**
- * Tells the worker app there is work to do. The row is saved before this runs, so when the
- * broker cannot be reached the worker app still finds it on its next sweep and the caller is
- * not failed.
+ * Tells the email sender app there is work to do. The row is saved before this runs, so when
+ * the broker cannot be reached the email sender app still finds it on its next sweep and the
+ * caller is not failed.
  */
-async function notifyWorker(message) {
+async function notifyEmailSender(message) {
   try {
     await rabbitmq.sendToQueue(config.rabbitmq.queueName.emailRequest, message);
   } catch (err) {
     console.error(
-      `Email: could not notify the worker app (${err.message}); it picks the row up on its next sweep`,
+      `Email: could not notify the email sender app (${err.message}); it picks the row up on its next sweep`,
     );
   }
 }
 
 /**
- * Saves a send request; the worker app builds its emails into "emailExecutions" and queues them.
+ * Saves a send request; the email sender app builds its emails into "emailExecutions" and
+ * sends them.
  * Problems with the template (a broken source query, an unknown merge tag, no recipient) are
  * found there and shown in the email log.
  */
@@ -43,7 +44,10 @@ async function requestSend(emailId, { trigger, testRecipient } = {}) {
     status: enums.emailSendRequestStatus.pending,
   });
 
-  await notifyWorker({ type: enums.emailWorkerMessageType.build, requestId: sendRequest.id });
+  await notifyEmailSender({
+    type: enums.emailRequestMessageType.build,
+    requestId: sendRequest.id,
+  });
 
   return { requestId: sendRequest.id };
 }
@@ -63,7 +67,10 @@ async function retryExecution(id) {
   }
 
   await emailExecutionQuery.requeue(execution.id);
-  await notifyWorker({ type: enums.emailWorkerMessageType.publish, executionId: execution.id });
+  await notifyEmailSender({
+    type: enums.emailRequestMessageType.publish,
+    executionId: execution.id,
+  });
 }
 
 module.exports = {

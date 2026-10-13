@@ -55,7 +55,7 @@ function getById() {
   return 'SELECT * FROM "emailExecutions" WHERE "id" = ?';
 }
 
-// Puts a row back on queue; the worker app hands it to the email sender app again.
+// Puts a row back on queue; the email sender app sends it again.
 function requeue() {
   return (
     'UPDATE "emailExecutions" SET "status" = \'onQueue\', "errorMessage" = NULL, ' +
