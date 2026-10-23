@@ -3,7 +3,6 @@ const enums = require('../enums');
 
 const commonQuery = require('../queries/commonQuery');
 const fieldQuery = require('../queries/fieldQuery');
-const fileQuery = require('../queries/fileQuery');
 const moduleQuery = require('../queries/moduleQuery');
 const validationQuery = require('../queries/validationQuery');
 
@@ -47,14 +46,6 @@ async function runValidationAfter(data, moduleId, actionId, user, transaction) {
   );
 }
 
-async function insertFile(files, moduleId, transaction) {
-  return await fileQuery.save(files, moduleId, transaction);
-}
-
-async function deleteFile(fields, detailData, transaction) {
-  return await fileQuery.delete(fields, detailData, transaction);
-}
-
 async function insertData(table, data, transaction) {
   return await commonQuery.insertRow(table, data, transaction);
 }
@@ -90,7 +81,6 @@ async function getMenu(roleId) {
 module.exports = {
   assertWritableModule,
   deleteData,
-  deleteFile,
   getData,
   getDetailData,
   getField,
@@ -100,7 +90,6 @@ module.exports = {
   getModuleFields,
   getPrimaryField,
   insertData,
-  insertFile,
   runValidationAfter,
   runValidationBefore,
   updateData,

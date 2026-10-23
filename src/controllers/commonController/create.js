@@ -1,14 +1,15 @@
 const db = require('../../models');
 const commonService = require('../../services/commonService');
+const fileService = require('../../services/fileService');
 const helpers = require('../../helpers');
 const enums = require('../../enums');
 
 async function create(req, res, next) {
   const t = await db.sequelize.transaction();
+  const files = fileService.createFileChanges(t);
 
   try {
     const request = req.body;
-    const files = req.files;
     const token = req.cookies.access_token;
 
     const user = helpers.decodeToken(token);
@@ -26,7 +27,7 @@ async function create(req, res, next) {
       t,
     );
 
-    await commonService.insertFile(files, module.id, t);
+    await files.save(module, fields, req.files, request.data);
     const createdData = await commonService.insertData(module.name, request.data, t);
 
     await helpers.createAuditTrail(
@@ -44,12 +45,14 @@ async function create(req, res, next) {
     await commonService.runValidationAfter(request.data, module.id, enums.actionId.create, user, t);
 
     await t.commit();
+    await files.commit();
     return res.status(enums.statusCode.CREATED).json({
       success: true,
       message: 'Data was created successfully',
     });
   } catch (err) {
     await t.rollback();
+    await files.rollback();
 
     const error = helpers.getErrorResponse(err.message);
 

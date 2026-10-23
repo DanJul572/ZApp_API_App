@@ -6,6 +6,14 @@ const { commonController } = require('../controllers');
 
 const router = Router();
 
+// File fields are sent as multipart parts named after the field, the row itself as JSON in `data`.
+const uploadFiles = [
+  middleware.removeTempUploads,
+  config.multer.any(),
+  middleware.multerErrorHandler,
+  middleware.parseJsonData,
+];
+
 router.get('/common/columns', middleware.authenticateToken, commonController.columns);
 router.get('/common/detail', middleware.authenticateToken, commonController.detail);
 router.get('/common/menu', middleware.authenticateToken, commonController.menu);
@@ -13,9 +21,8 @@ router.get('/common/options', commonController.options);
 
 router.post(
   '/common/create',
-  config.multer.any(),
-  middleware.parseJsonData,
   middleware.authenticateToken,
+  ...uploadFiles,
   commonController.create,
 );
 
@@ -35,9 +42,8 @@ router.post(
 
 router.post(
   '/common/update',
-  config.multer.any(),
-  middleware.parseJsonData,
   middleware.authenticateToken,
+  ...uploadFiles,
   commonController.update,
 );
 

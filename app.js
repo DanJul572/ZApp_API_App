@@ -21,6 +21,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// The web app reads module files straight from here. The sandbox policy keeps an uploaded HTML
+// or SVG file from running scripts on the API origin.
+app.use(
+  `/${config.file.fileUpload.storage}`,
+  express.static(path.resolve(config.file.fileUpload.storage), {
+    index: false,
+    setHeaders: res => {
+      res.set('Content-Security-Policy', 'sandbox');
+      res.set('X-Content-Type-Options', 'nosniff');
+    },
+  }),
+);
 app.use('/api', config.rateLimit);
 app.use('/api', routes);
 app.use(errorHandler);

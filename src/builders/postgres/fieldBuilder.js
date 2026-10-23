@@ -48,6 +48,15 @@ function selectFormat(field, module) {
     `;
   }
 
+  // The row holds the file id; the table shows the file name and links to its public path.
+  if (field.inputType === enums.inputType.file) {
+    return `(
+      SELECT JSON_BUILD_OBJECT('id', "f"."id", 'name', "f"."name", 'path', "f"."path")
+      FROM "files" AS "f"
+      WHERE CAST("f"."id" AS VARCHAR(255)) = CAST("${module}"."${field.name}" AS VARCHAR(255))
+    ) AS "${field.name}"`;
+  }
+
   if (field.inputType === enums.inputType.dropdown || field.inputType === enums.inputType) {
     return `(
       SELECT CONCAT('(', "${field.tableRef}"."${field.tableRefKey}", ') - ', "${field.tableRef}"."${field.tableRefName}")

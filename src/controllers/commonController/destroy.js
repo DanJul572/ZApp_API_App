@@ -1,10 +1,12 @@
 const db = require('../../models');
 const commonService = require('../../services/commonService');
+const fileService = require('../../services/fileService');
 const helpers = require('../../helpers');
 const enums = require('../../enums');
 
 async function destory(req, res, next) {
   const t = await db.sequelize.transaction();
+  const files = fileService.createFileChanges(t);
 
   try {
     const request = req.body;
@@ -22,7 +24,7 @@ async function destory(req, res, next) {
       primaryField.name,
     );
 
-    await commonService.deleteFile(fields, detailData, t);
+    await files.removeUnused(fields, detailData);
     await commonService.deleteData(module.name, primaryField.name, request.id, t);
 
     await helpers.createAuditTrail(
@@ -38,6 +40,7 @@ async function destory(req, res, next) {
     );
 
     await t.commit();
+    await files.commit();
     return res.status(enums.statusCode.OK).json({
       success: true,
       message: 'Data deleted successfully',

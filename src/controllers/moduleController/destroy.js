@@ -1,9 +1,11 @@
 const db = require('../../models');
 const enums = require('../../enums');
+const fileService = require('../../services/fileService');
 const moduleService = require('../../services/moduleService');
 
 async function destory(req, res, next) {
   const t = await db.sequelize.transaction();
+  const files = fileService.createFileChanges(t);
 
   try {
     const request = req.body;
@@ -15,10 +17,11 @@ async function destory(req, res, next) {
 
     await moduleService.deleteModule(module.id, t);
     await moduleService.deleteFields(module.id, t);
-    await moduleService.deleteFiles(module.id, t);
+    await files.removeModule(module);
     await moduleService.dropTable(module.name, sequence?.name, t);
 
     await t.commit();
+    await files.commit();
     return res.status(enums.statusCode.OK).json({
       success: true,
       message: 'module_is_deleted',

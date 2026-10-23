@@ -1,17 +1,33 @@
 const db = require('../models');
-const enums = require('../enums');
 const { fileBuilder } = require('../builders');
 
 module.exports = {
-  save(files, moduleId, transaction) {
+  save(files, transaction) {
     try {
-      if (!files || !files.length) return;
-
-      const { query, values } = fileBuilder.save(files, moduleId);
+      const { query, values } = fileBuilder.save(files);
 
       return db.sequelize
         .query(query, {
           replacements: values,
+          transaction,
+          type: db.sequelize.QueryTypes.INSERT,
+        })
+        .catch(error => {
+          throw new Error(error.message);
+        });
+    } catch (error) {
+      throw new Error(error.message, { cause: error });
+    }
+  },
+
+  // Returns the deleted rows, so their files can be removed from the disk.
+  deleteByIds(ids, transaction) {
+    try {
+      const query = fileBuilder.deleteByIds(ids);
+
+      return db.sequelize
+        .query(query, {
+          replacements: ids,
           transaction,
           type: db.sequelize.QueryTypes.SELECT,
         })
@@ -23,32 +39,9 @@ module.exports = {
     }
   },
 
-  delete(fields, row, transaction) {
-    try {
-      const fileFields = fields.filter(field => field.inputType === enums.inputType.file);
-
-      if (!fileFields || !fileFields.length || !row) return;
-
-      const deletedFiles = fileFields.map(field => row[field.name]);
-      const query = fileBuilder.deleteFile(deletedFiles);
-
-      return db.sequelize
-        .query(query, {
-          replacements: deletedFiles,
-          transaction,
-          type: db.sequelize.QueryTypes.DELETE,
-        })
-        .catch(error => {
-          throw new Error(error.message);
-        });
-    } catch (error) {
-      throw new Error(error.message, { cause: error });
-    }
-  },
-
   deleteByModuleId(moduleId, transaction) {
     try {
-      const query = fileBuilder.deleteByModuleId(moduleId);
+      const query = fileBuilder.deleteByModuleId();
 
       return db.sequelize
         .query(query, {
@@ -64,13 +57,13 @@ module.exports = {
     }
   },
 
-  download(name) {
+  findById(id) {
     try {
-      const query = fileBuilder.download();
+      const query = fileBuilder.findById();
 
       return db.sequelize
         .query(query, {
-          replacements: [name],
+          replacements: [id],
           type: db.sequelize.QueryTypes.SELECT,
         })
         .then(result => {

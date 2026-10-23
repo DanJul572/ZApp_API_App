@@ -1,6 +1,5 @@
 const commonQuery = require('../queries/commonQuery');
 const fieldQuery = require('../queries/fieldQuery');
-const fileQuery = require('../queries/fileQuery');
 const moduleQuery = require('../queries/moduleQuery');
 
 async function getModuleById(moduleId) {
@@ -17,10 +16,6 @@ async function generateTable(name, fields, transaction) {
 
 async function dropTable(tableName, identityFieldName, transaction) {
   return await moduleQuery.dropTable(tableName, identityFieldName, transaction);
-}
-
-async function deleteFiles(moduleId, transaction) {
-  return await fileQuery.deleteByModuleId(moduleId, transaction);
 }
 
 async function deleteFields(moduleId, transaction) {
@@ -42,7 +37,6 @@ async function deleteModule(id, transaction) {
 
 module.exports = {
   deleteFields,
-  deleteFiles,
   deleteModule,
   dropTable,
   generateTable,

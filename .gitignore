@@ -73,5 +73,6 @@ dist
 !.vscode/extensions.json
 .idea
 
-# upload folder
+# upload folders
 uploads
+tmp

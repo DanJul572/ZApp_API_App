@@ -5,6 +5,6 @@ const { fileController } = require('../controllers');
 
 const router = Router();
 
-router.get('/file/download', middleware.authenticateToken, fileController.download);
+router.get('/file/detail', middleware.authenticateToken, fileController.detail);
 
 module.exports = router;

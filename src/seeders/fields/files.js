@@ -5,13 +5,15 @@ const dateTimeFormatConfig = require('../../config/datetimeFormat');
 
 const now = dayjs().format(dateTimeFormatConfig.datetime.value);
 
+// The order matches the earlier data/encoding fields (now path/fieldName), so a fresh database
+// gives every field the same id as before (the web app refers to CFieldID.files.moduleId).
 module.exports = [
   {
     moduleId: enums.moduleId.files,
     name: 'id',
     label: 'ID',
-    inputType: enums.inputType.number,
-    dataType: enums.dataType.integer,
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -48,10 +50,10 @@ module.exports = [
   },
   {
     moduleId: enums.moduleId.files,
-    name: 'data',
-    label: 'Data',
-    inputType: enums.inputType.file,
-    dataType: enums.dataType.byte,
+    name: 'path',
+    label: 'Path',
+    inputType: enums.inputType.shortText,
+    dataType: enums.dataType.varchar,
     tableRef: null,
     tableRefKey: null,
     tableRefName: null,
@@ -61,7 +63,7 @@ module.exports = [
     multiSelect: false,
     identity: false,
     notNull: true,
-    unique: false,
+    unique: true,
     sequence: 3,
     createdAt: now,
     updatedAt: now,
@@ -88,8 +90,8 @@ module.exports = [
   },
   {
     moduleId: enums.moduleId.files,
-    name: 'encoding',
-    label: 'Encoding',
+    name: 'fieldName',
+    label: 'Field Name',
     inputType: enums.inputType.shortText,
     dataType: enums.dataType.varchar,
     tableRef: null,

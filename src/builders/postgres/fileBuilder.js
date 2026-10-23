@@ -1,34 +1,37 @@
-function save(files, moduleId) {
-  let query =
-    'INSERT INTO "files" ("name", "data", "type", "encoding", "size", "moduleId") VALUES ';
-  const values = [];
-
-  files.forEach((file, index) => {
-    const fileBuffer = Buffer.from(file.buffer, 'base64');
-    query += `(?, ?, ?, ?, ?, ?)${index + 1 < files.length ? ', ' : ''}`;
-    values.push(file.originalname, fileBuffer, file.mimetype, file.encoding, file.size, moduleId);
-  });
+function save(files) {
+  const placeholders = files.map(() => '(?, ?, ?, ?, ?, ?, ?, NOW(), NOW())').join(', ');
+  const query =
+    'INSERT INTO "files" ("id", "name", "path", "type", "size", "moduleId", "fieldName", ' +
+    `"createdAt", "updatedAt") VALUES ${placeholders}`;
+  const values = files.flatMap(file => [
+    file.id,
+    file.name,
+    file.path,
+    file.type,
+    file.size,
+    file.moduleId,
+    file.fieldName,
+  ]);
 
   return { query, values };
 }
 
-function deleteFile(files) {
-  let placeholders = files.map(() => '?').join(', ');
-  let query = `DELETE FROM "files" WHERE "name" IN (${placeholders})`;
-  return { query, values: files };
+function deleteByIds(ids) {
+  const placeholders = ids.map(() => '?').join(', ');
+  return `DELETE FROM "files" WHERE "id" IN (${placeholders}) RETURNING "path"`;
 }
 
 function deleteByModuleId() {
   return 'DELETE FROM "files" WHERE "moduleId" = ?';
 }
 
-function download() {
-  return 'SELECT "id", "name", "data", "type", "encoding", "size" FROM "files" WHERE "name" = ?';
+function findById() {
+  return 'SELECT "id", "name", "path", "type", "size" FROM "files" WHERE "id" = ?';
 }
 
 module.exports = {
   save,
-  deleteFile,
+  deleteByIds,
   deleteByModuleId,
-  download,
+  findById,
 };

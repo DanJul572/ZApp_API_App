@@ -1,5 +1,5 @@
-const download = require('./download');
+const detail = require('./detail');
 
 module.exports = {
-  download,
+  detail,
 };

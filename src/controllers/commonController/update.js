@@ -2,13 +2,14 @@ const db = require('../../models');
 const helpers = require('../../helpers');
 const enums = require('../../enums');
 const commonService = require('../../services/commonService');
+const fileService = require('../../services/fileService');
 
 async function update(req, res, next) {
   const t = await db.sequelize.transaction();
+  const files = fileService.createFileChanges(t);
 
   try {
     const request = req.body;
-    const files = req.files;
 
     const module = await commonService.getModuleById(request.moduleId);
     commonService.assertWritableModule(module);
@@ -23,8 +24,8 @@ async function update(req, res, next) {
       primaryField.name,
     );
 
-    await commonService.deleteFile(fields, detailData, t);
-    await commonService.insertFile(files, module.id, t);
+    await files.save(module, fields, req.files, request.data, detailData);
+    await files.removeUnused(fields, detailData, request.data);
 
     const data = await commonService.updateData(
       module.name,
@@ -57,6 +58,7 @@ async function update(req, res, next) {
     );
 
     await t.commit();
+    await files.commit();
     return res.status(enums.statusCode.OK).json({
       success: true,
       message: 'Data updated successfully',
@@ -64,6 +66,7 @@ async function update(req, res, next) {
     });
   } catch (err) {
     await t.rollback();
+    await files.rollback();
 
     const error = helpers.getErrorResponse(err.message);
 
